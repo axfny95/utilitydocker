@@ -1,0 +1,48 @@
+---
+title: "SQL Formatter"
+description: "Format and beautify messy SQL queries instantly. Supports MySQL, PostgreSQL, and standard SQL syntax. Free, private, browser-based."
+category: "Developer Tools"
+icon: "database"
+component: "SqlFormatter"
+keywords: ["sql formatter", "sql beautifier", "format sql online", "sql pretty print", "sql indenter"]
+featured: false
+premium: false
+relatedTools: ["json-formatter", "code-minifier", "regex-tester"]
+faq:
+  - question: "Which SQL dialects does the formatter support?"
+    answer: "The tool supports standard SQL along with dialect-specific syntax for MySQL, PostgreSQL, Microsoft SQL Server, and SQLite. You can select your target dialect to ensure that keywords and functions specific to your database are recognized and formatted correctly."
+  - question: "Does the formatter modify the logic of my query?"
+    answer: "No. The formatter only changes whitespace, indentation, and line breaks. It does not alter keywords, table names, column names, operators, or any other part of your query's logic. The formatted output is semantically identical to your input."
+  - question: "Can I customize the formatting style?"
+    answer: "Yes. You can configure indentation size, choose between spaces and tabs, set keyword casing to uppercase or lowercase, and control whether commas appear at the beginning or end of lines. These options let you match your team's coding standards."
+howTo:
+  steps:
+    - name: "Paste your SQL query"
+      text: "Copy your unformatted SQL and paste it into the editor. The tool accepts queries of any length, from a single SELECT statement to multi-page stored procedures."
+    - name: "Select your dialect and style preferences"
+      text: "Choose your SQL dialect from the dropdown and adjust formatting options like indentation size, keyword casing, and comma placement to match your conventions."
+    - name: "Copy the formatted SQL"
+      text: "The query is reformatted instantly. Review the highlighted output, then click copy to place it on your clipboard. Paste it into your editor, documentation, or code review tool."
+publishedAt: 2026-03-28
+estimatedTime: "< 1 min"
+---
+
+## Make Any SQL Query Readable in One Click
+
+SQL queries have a way of becoming unreadable. What starts as a simple SELECT statement grows into a multi-join query with subqueries, CASE expressions, window functions, and Common Table Expressions. When a colleague pastes a long query into a chat message or when you pull a query from application logs, the entire thing is often compressed onto a single line or formatted inconsistently. Reading it, let alone debugging it, becomes a chore.
+
+This tool takes any SQL query, regardless of how messy or compressed it is, and reformats it into a clean, indented structure that reveals the logical flow at a glance. Each clause gets its own line, subqueries are indented, and keywords are consistently cased. The result is SQL that is easy to read, review, and maintain.
+
+## Why Consistent SQL Formatting Matters
+
+Readability directly affects code quality. When SQL queries are well-formatted, reviewers catch logical errors, missing join conditions, and incorrect filters more quickly. Teams that enforce consistent SQL style spend less time in code reviews debating formatting and more time discussing logic. Formatted queries are also easier to version control because diffs show meaningful changes rather than whitespace noise.
+
+Beyond code review, formatted SQL is essential for documentation. When you include a query in a wiki page, a runbook, or a technical specification, readers need to understand the logic quickly. A wall of unformatted SQL forces readers to mentally parse the structure before they can even begin to understand the intent.
+
+## Handling Complex Queries
+
+The formatter's parser understands the full grammar of modern SQL, including nested subqueries, CTEs using WITH clauses, window functions with OVER and PARTITION BY, CASE WHEN expressions, UNION and INTERSECT operations, and complex JOIN chains with multiple ON conditions. Each of these constructs is indented and aligned according to its nesting level, making even the most complex analytical queries approachable.
+
+## Entirely Client-Side
+
+Your SQL never leaves your browser. This is particularly important for database queries that often contain table names, column names, and filter values that reveal proprietary schema details or business logic. Format with confidence knowing your data stays private.

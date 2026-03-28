@@ -1,0 +1,148 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ToolCard from '../components/shared/ToolCard.astro';
+import { getCollection } from 'astro:content';
+
+const tools = await getCollection('tools');
+const categories = await getCollection('categories');
+const publishedTools = tools
+  .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
+const featuredTools = publishedTools.filter((t) => t.data.featured);
+---
+
+<BaseLayout
+  title="FreeToolStack - Free Online Tools That Respect Your Privacy"
+  description={`${tools.length} free online tools that run entirely in your browser. No uploads, no signups, no data collection. JSON formatter, image compressor, PDF merger, and more.`}
+>
+  <!-- Hero -->
+  <section class="bg-gradient-to-b from-primary-50 to-white px-4 py-16 sm:py-24">
+    <div class="mx-auto max-w-4xl text-center">
+      <h1 class="text-4xl font-bold tracking-tight text-surface-900 sm:text-5xl lg:text-6xl">
+        Free Tools That <span class="text-primary-600">Respect Your Privacy</span>
+      </h1>
+      <p class="mx-auto mt-6 max-w-2xl text-lg text-surface-600">
+        All tools run 100% in your browser. Your files never leave your device.
+        No signups, no uploads, no tracking. Just tools that work.
+      </p>
+      <div class="mt-8 flex flex-wrap justify-center gap-4">
+        <a
+          href="/tools"
+          class="rounded-xl bg-primary-600 px-6 py-3 font-medium text-white transition-colors hover:bg-primary-700"
+        >
+          Browse {tools.length} Tools
+        </a>
+        <a
+          href="#categories"
+          class="rounded-xl border border-surface-300 bg-white px-6 py-3 font-medium text-surface-700 transition-colors hover:bg-surface-50"
+        >
+          Explore Categories
+        </a>
+      </div>
+      <div class="mt-8 flex flex-wrap justify-center gap-6 text-sm text-surface-500">
+        <span class="flex items-center gap-1.5">
+          <svg class="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+          100% Free
+        </span>
+        <span class="flex items-center gap-1.5">
+          <svg class="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+          No Signup Required
+        </span>
+        <span class="flex items-center gap-1.5">
+          <svg class="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+          Client-Side Processing
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Tools -->
+  {featuredTools.length > 0 && (
+    <section class="mx-auto max-w-7xl px-4 py-12 sm:px-6">
+      <h2 class="mb-6 text-2xl font-bold text-surface-900">Featured Tools</h2>
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {featuredTools.map((tool) => (
+          <ToolCard
+            title={tool.data.title}
+            description={tool.data.description}
+            slug={tool.id}
+            category={tool.data.category}
+            featured={true}
+          />
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- All Tools -->
+  <section class="mx-auto max-w-7xl px-4 py-12 sm:px-6">
+    <h2 class="mb-6 text-2xl font-bold text-surface-900">All Tools</h2>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {publishedTools.map((tool) => (
+        <ToolCard
+          title={tool.data.title}
+          description={tool.data.description}
+          slug={tool.id}
+          category={tool.data.category}
+        />
+      ))}
+    </div>
+  </section>
+
+  <!-- Categories -->
+  <section id="categories" class="mx-auto max-w-7xl px-4 py-12 sm:px-6">
+    <h2 class="mb-6 text-2xl font-bold text-surface-900">Browse by Category</h2>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {categories.sort((a, b) => a.data.order - b.data.order).map((cat) => (
+        <a
+          href={`/category/${cat.id}`}
+          class="group rounded-xl border border-surface-200 bg-white p-5 transition-all hover:shadow-md"
+        >
+          <h3 class="font-semibold text-surface-900 group-hover:text-primary-600">{cat.data.name}</h3>
+          <p class="mt-1 text-sm text-surface-500">{cat.data.description}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- Trust section -->
+  <section class="border-t border-surface-200 bg-surface-50 px-4 py-16">
+    <div class="mx-auto max-w-4xl text-center">
+      <h2 class="text-2xl font-bold text-surface-900">Why FreeToolStack?</h2>
+      <div class="mt-8 grid gap-8 sm:grid-cols-3">
+        <div>
+          <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-primary-100 text-primary-600">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+          </div>
+          <h3 class="mt-4 font-semibold text-surface-900">Privacy First</h3>
+          <p class="mt-2 text-sm text-surface-600">Your files are processed locally in your browser. Nothing is uploaded to any server.</p>
+        </div>
+        <div>
+          <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-primary-100 text-primary-600">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <h3 class="mt-4 font-semibold text-surface-900">Lightning Fast</h3>
+          <p class="mt-2 text-sm text-surface-600">No server round-trips. Tools load instantly and process files at native speed.</p>
+        </div>
+        <div>
+          <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-primary-100 text-primary-600">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3 class="mt-4 font-semibold text-surface-900">Always Free</h3>
+          <p class="mt-2 text-sm text-surface-600">Core tools are free forever. No hidden limits, no forced signups, no paywalls.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

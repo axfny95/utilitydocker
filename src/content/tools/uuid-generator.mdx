@@ -1,0 +1,62 @@
+---
+title: "UUID Generator"
+description: "Generate random UUIDs (v4) and other versions instantly. Copy unique identifiers for databases, APIs, and testing workflows."
+category: "Developer Tools"
+icon: "fingerprint"
+component: "UuidGenerator"
+keywords: ["uuid generator", "guid generator", "unique id", "uuid v4", "random identifier"]
+featured: false
+premium: false
+relatedTools: ["hash-generator"]
+faq:
+  - question: "What is a UUID and when should I use one?"
+    answer: "A UUID (Universally Unique Identifier) is a 128-bit value used to identify resources without a central authority. Use UUIDs for database primary keys, API request IDs, session tokens, and any situation where you need a unique identifier that can be generated independently."
+  - question: "Are UUIDs generated here truly unique?"
+    answer: "Version 4 UUIDs are generated using cryptographically secure random numbers via the Web Crypto API. The probability of generating a duplicate is astronomically low — roughly 1 in 5.3 undecillion (5.3 x 10^36)."
+  - question: "What is the difference between UUID and GUID?"
+    answer: "They are the same thing. UUID is the official name from RFC 4122, while GUID (Globally Unique Identifier) is the term Microsoft uses. Both refer to the same 128-bit identifier format."
+  - question: "Is my generated UUID stored anywhere?"
+    answer: "No. All UUIDs are generated entirely in your browser using client-side JavaScript. Nothing is sent to our servers and no identifiers are logged or stored."
+  - question: "Which UUID version should I use?"
+    answer: "Version 4 (random) is the most commonly used for general purposes. Version 1 (timestamp-based) is useful when you need sortable IDs. Version 7 is a newer alternative that combines timestamp ordering with randomness and is gaining popularity for database keys."
+howTo:
+  steps:
+    - name: "Select UUID version"
+      text: "Choose the UUID version you need. Version 4 (random) is selected by default and works for most use cases."
+    - name: "Generate UUIDs"
+      text: "Click the Generate button to create one or more UUIDs. Adjust the count to generate multiple identifiers at once for batch operations."
+    - name: "Copy and use"
+      text: "Click the copy button to copy a single UUID or use the copy-all option to grab the entire batch. Choose between standard, uppercase, or no-dash formats."
+publishedAt: 2026-03-27
+estimatedTime: "Instant"
+---
+
+## Understanding UUIDs and Their Role in Software
+
+A Universally Unique Identifier, or UUID, is a 128-bit label designed to be unique across all systems without requiring a central registration authority. Standardized by RFC 4122, UUIDs follow a specific format: five groups of hexadecimal digits separated by hyphens, such as `550e8400-e29b-41d4-a716-446655440000`. This structure yields 2^128 possible combinations, making accidental collisions virtually impossible.
+
+UUIDs have become a cornerstone of modern software architecture. In distributed systems where multiple nodes create records independently, auto-incrementing integers fail because two servers might assign the same ID. UUIDs solve this problem elegantly. Each node generates identifiers independently, and the mathematical improbability of collision means no coordination is needed. Databases like PostgreSQL include native UUID types, and frameworks across every major language provide built-in UUID generation.
+
+Our free UUID generator runs entirely in your browser. It uses the Web Crypto API for randomness, which is the same source that powers encryption libraries and password managers. You can generate single identifiers for quick use or produce batches of hundreds for populating test databases and seeding development environments.
+
+## UUID Versions Explained
+
+Not all UUIDs are created equal. The standard defines several versions, each suited to different scenarios.
+
+**Version 1** embeds a timestamp and the MAC address of the generating machine. This makes v1 UUIDs sortable by creation time, which benefits database indexing. The downside is that the embedded MAC address can leak hardware information, which may be a privacy concern in certain contexts.
+
+**Version 4** is the most widely used version. Every bit (except the version and variant markers) is randomly generated, making v4 UUIDs completely opaque. There is no information about when or where the ID was created, which is ideal for security-sensitive applications like session tokens and API keys.
+
+**Version 7** is a newer draft standard gaining rapid adoption. It combines a Unix timestamp in the most significant bits with random data in the remaining bits. The result is a UUID that is both unique and naturally sortable by creation time. This property makes v7 particularly attractive for database primary keys because sequential inserts perform better with B-tree indexes compared to fully random v4 UUIDs.
+
+When choosing a version, consider your priorities. If you need maximum randomness and privacy, go with v4. If you need chronological ordering for database performance, v7 is the modern choice. Version 1 still appears in legacy systems but is less common in new projects.
+
+## Practical Use Cases for UUID Generation
+
+**Database primary keys** represent the most common application. UUIDs let you generate IDs on the client side before a record even reaches the database, which simplifies offline-first applications and reduces round trips. Many ORMs default to UUID primary keys for exactly this reason.
+
+**API idempotency keys** prevent duplicate operations. When a client sends a request with a UUID as an idempotency key, the server can detect retries and avoid processing the same action twice. Payment processors like Stripe require this pattern to prevent double charges.
+
+**Distributed tracing** relies on unique identifiers to correlate log entries across microservices. Assigning a UUID to each request at the API gateway and propagating it through every downstream call lets you reconstruct the full journey of a request when debugging production issues.
+
+**Test data generation** is another frequent need. When writing integration tests or seeding a development database, you often need hundreds of unique identifiers. Generating them in bulk with a tool like this is faster and more reliable than writing throwaway scripts. Copy the batch output directly into SQL insert statements, JSON fixtures, or CSV seed files to get your environment ready in seconds.

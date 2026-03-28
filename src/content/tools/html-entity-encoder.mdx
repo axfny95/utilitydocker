@@ -1,0 +1,48 @@
+---
+title: "HTML Entity Encoder & Decoder"
+description: "Encode special characters to HTML entities or decode entities back to text. Handles named and numeric entities. Free and private."
+category: "Developer Tools"
+icon: "code"
+component: "HtmlEntityEncoder"
+keywords: ["html entity encoder", "html escape", "html encode decode", "html special characters", "entity converter"]
+featured: false
+premium: false
+relatedTools: ["url-encoder", "base64-encoder", "json-formatter"]
+faq:
+  - question: "What is the difference between named and numeric HTML entities?"
+    answer: "Named entities use a human-readable label like &amp;amp; for the ampersand character. Numeric entities use the Unicode code point, like &amp;#38; for the same character. Both are valid HTML. Named entities are easier to read in source code, while numeric entities cover every Unicode character including those without assigned names."
+  - question: "When should I encode HTML entities?"
+    answer: "You should encode special characters whenever you are inserting user-generated content into HTML to prevent cross-site scripting attacks and rendering issues. Characters like angle brackets, ampersands, and quotation marks have special meaning in HTML and must be escaped to display as literal text."
+  - question: "Can this tool decode a mix of named and numeric entities in the same string?"
+    answer: "Yes. The decoder recognizes both named entities like &amp;lt; and numeric entities in both decimal and hexadecimal formats. It processes each entity independently, so you can decode strings that contain a mixture of all three types."
+howTo:
+  steps:
+    - name: "Paste your text or HTML"
+      text: "Enter the text containing special characters you want to encode, or paste HTML content with entities you want to decode. The tool accepts any length of input."
+    - name: "Choose encode or decode mode"
+      text: "Select the encoding direction. Encode mode converts special characters to their HTML entity equivalents. Decode mode converts entities back to their literal characters."
+    - name: "Copy the result"
+      text: "The output updates in real time as you type or change modes. Click the copy button to place the result on your clipboard, ready to paste into your code or document."
+publishedAt: 2026-03-28
+estimatedTime: "< 1 min"
+---
+
+## Encode and Decode HTML Entities with Confidence
+
+HTML uses certain characters as part of its syntax. The less-than sign opens a tag, the ampersand begins an entity reference, and quotation marks delimit attribute values. When you need these characters to appear as visible text on a web page rather than being interpreted as markup, you must replace them with HTML entities. Getting this wrong leads to broken layouts at best and security vulnerabilities at worst.
+
+This tool makes the conversion effortless. Paste text containing special characters and get the properly encoded HTML output instantly. Or paste encoded HTML and decode it back to plain text for editing. Everything runs locally in your browser with no server communication.
+
+## Why HTML Encoding Matters for Security
+
+Cross-site scripting, commonly known as XSS, remains one of the most prevalent web security vulnerabilities. It occurs when an attacker injects malicious HTML or JavaScript into a page that other users view. The root cause is almost always a failure to encode user-supplied content before inserting it into the page. When an application properly encodes angle brackets, ampersands, and quotation marks, injected scripts become harmless visible text instead of executable code.
+
+While modern frameworks handle encoding automatically in most cases, developers still encounter situations where manual encoding is necessary. Generating HTML in server-side scripts, building email templates, writing content for static site generators, and working with legacy codebases all present opportunities for encoding to be missed. Having a quick reference tool for encoding and decoding helps catch issues before they reach production.
+
+## Supported Entity Formats
+
+The encoder outputs named entities where available, falling back to numeric decimal entities for characters without standard names. The decoder handles all three formats: named entities, decimal numeric entities, and hexadecimal numeric entities. This covers the full range of Unicode characters from basic ASCII punctuation to emoji and special symbols.
+
+## A Tool for Every Developer's Bookmark Bar
+
+Whether you are debugging a rendering issue, preparing content for a CMS, sanitizing data for an email template, or simply checking what a particular entity code represents, this tool gives you the answer in under a second. No dependencies, no installation, no sign-up.

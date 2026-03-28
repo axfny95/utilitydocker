@@ -1,0 +1,50 @@
+---
+title: "Code Minifier"
+description: "Minify HTML, CSS, and JavaScript code instantly. Remove whitespace, comments, and unnecessary characters to reduce file size."
+category: "Developer Tools"
+icon: "minimize-2"
+component: "CodeMinifier"
+keywords: ["html minifier", "css minifier", "js minifier", "code compressor", "minify code online"]
+featured: false
+premium: false
+relatedTools: ["json-formatter", "sql-formatter", "html-entity-encoder"]
+faq:
+  - question: "Does minification change how the code works?"
+    answer: "No. Minification only removes characters that have no effect on execution: whitespace, comments, and redundant syntax like trailing semicolons in CSS. The minified output is functionally identical to the original. However, variable shortening in JavaScript can cause issues if you rely on function name introspection, so test accordingly."
+  - question: "Which languages does this tool support?"
+    answer: "The tool supports HTML, CSS, and JavaScript. Each language has its own minification rules. For HTML, it removes whitespace between tags and strips comments. For CSS, it removes whitespace, comments, and redundant values. For JavaScript, it removes whitespace and comments and optionally shortens variable names."
+  - question: "How much file size reduction can I expect?"
+    answer: "The reduction depends on your coding style. Heavily commented and well-formatted code can shrink by 40 to 70 percent. Code that is already compact may only shrink by 10 to 20 percent. The tool shows original and minified byte counts so you can see the exact savings."
+howTo:
+  steps:
+    - name: "Paste your code"
+      text: "Copy your HTML, CSS, or JavaScript source code and paste it into the input editor. The tool auto-detects the language, or you can select it manually from the dropdown."
+    - name: "Configure minification options"
+      text: "Choose which optimizations to apply. Options include removing comments, collapsing whitespace, shortening variable names for JavaScript, and removing optional HTML tags. Enable or disable each as needed."
+    - name: "Copy the minified output"
+      text: "The minified code appears instantly in the output panel with a size comparison showing bytes saved. Click copy to grab the minified code for use in your project."
+publishedAt: 2026-03-28
+estimatedTime: "< 1 min"
+---
+
+## Shrink Your Code for Faster Load Times
+
+Every byte matters when it comes to web performance. The HTML, CSS, and JavaScript files that make up a website contain formatting that is essential for human readers but meaningless to browsers. Indentation, line breaks, comments, and extra whitespace make code readable during development but add unnecessary weight to production files. Minification strips all of that out, delivering the same functionality in a smaller package.
+
+This tool handles HTML, CSS, and JavaScript minification in your browser. Paste your source code, see the minified result instantly, and copy it for production use. No build tools to configure, no command line to open, and no files uploaded to any server.
+
+## What Minification Actually Does
+
+For CSS, the minifier removes all comments, strips whitespace around selectors and property values, removes the last semicolon in each declaration block, and collapses shorthand properties where possible. A well-formatted stylesheet with generous spacing can easily lose half its byte count.
+
+For JavaScript, the minifier removes comments and whitespace, and optionally renames local variables and function parameters to shorter identifiers. A variable named `customerAddress` becomes `a`, saving bytes on every reference. The tool is careful to preserve global names and string literals so the behavior remains identical.
+
+For HTML, the minifier removes comments, collapses whitespace between tags, removes optional closing tags where the HTML specification allows it, and strips unnecessary quotes around attribute values. These changes reduce document size without affecting how the browser constructs the DOM.
+
+## When to Use a Browser-Based Minifier
+
+Production build pipelines typically handle minification automatically with tools like Terser, cssnano, and html-minifier. But there are many situations where running a build pipeline is impractical. You might be working on a quick prototype, editing a WordPress template directly, preparing an HTML email, or optimizing a snippet for embedding. In these cases, a browser-based minifier is the fastest path from development code to production-ready output.
+
+## Size Comparison at a Glance
+
+The tool displays the original byte count, the minified byte count, and the percentage reduction so you can immediately quantify the improvement. This data is useful for performance reports and for deciding which files benefit most from minification.

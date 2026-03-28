@@ -1,0 +1,64 @@
+---
+title: "Image Resizer"
+description: "Resize images to exact dimensions in your browser. Scale by pixels or percentage, maintain aspect ratio, and download instantly."
+category: "Image Tools"
+icon: "scaling"
+component: "ImageResizer"
+keywords: ["image resizer", "resize image online", "change image dimensions", "scale image", "resize photo", "image size changer", "pixel resizer"]
+featured: false
+premium: false
+relatedTools: ["image-compressor", "qr-code-generator"]
+faq:
+  - question: "Are my images uploaded to a server?"
+    answer: "No. All resizing is performed locally in your browser using the Canvas API. Your images never leave your device, so your photos and graphics remain completely private."
+  - question: "Can I maintain the aspect ratio while resizing?"
+    answer: "Yes. The aspect ratio lock is enabled by default. When you change the width, the height adjusts automatically to preserve the original proportions, and vice versa. You can unlock the ratio to set custom dimensions independently."
+  - question: "What image formats are supported?"
+    answer: "The tool accepts JPEG, PNG, WebP, and BMP image files. You can download the resized result in any of these formats, allowing you to convert formats during the resize process."
+  - question: "Is there a maximum image size I can resize?"
+    answer: "Since processing happens in your browser, the limit depends on your device's memory. Most modern computers and phones handle images up to 30 MB or around 50 megapixels without issues."
+  - question: "Will resizing reduce image quality?"
+    answer: "Upscaling an image beyond its original dimensions can introduce softness because the browser must interpolate new pixels. Downscaling generally preserves visual quality well. For best results, use bicubic resampling and avoid enlarging images beyond 200% of the original size."
+howTo:
+  steps:
+    - name: "Upload your image"
+      text: "Drag and drop an image onto the tool or click to browse your files. The original dimensions and file size are displayed immediately after upload."
+    - name: "Set target dimensions"
+      text: "Enter the desired width and height in pixels, or use percentage mode to scale proportionally. Toggle the aspect ratio lock to control whether proportions are preserved."
+    - name: "Download the resized image"
+      text: "Click the Resize button to process the image, then download the result. The tool shows both original and new dimensions along with the output file size."
+publishedAt: 2026-03-27
+estimatedTime: "< 1 min"
+---
+
+## Why You Need an Image Resizer
+
+Images straight from a camera or screenshot tool are rarely the right size for their intended use. A phone photo at 4032x3024 pixels is far too large for a blog thumbnail. A social media profile picture needs exact square dimensions. An email attachment should be small enough to send without hitting size limits. Resizing images to fit their purpose is one of the most common tasks in any digital workflow.
+
+Our browser-based image resizer handles this instantly. Upload an image, enter your target dimensions or scaling percentage, and download the result. No software installation, no account creation, and no server uploads. Everything runs locally through the HTML5 Canvas API, which means your images never leave your device.
+
+## Common Image Dimensions You Should Know
+
+Different platforms and contexts demand specific image sizes. Social media platforms each have their own requirements: Instagram posts work best at 1080x1080 pixels, Facebook cover photos need 820x312, Twitter header images call for 1500x500, and LinkedIn banners should be 1584x396. Getting these dimensions right prevents awkward cropping and ensures your images display as intended.
+
+For web development, common breakpoints matter. Hero images typically range from 1200 to 1920 pixels wide. Thumbnail images for product grids usually sit between 300x300 and 600x600 pixels. Blog post featured images commonly target 1200x630 pixels, which also happens to be the ideal size for Open Graph social sharing previews.
+
+Email signature images should stay under 600 pixels wide and ideally under 100 KB in file size. Presentation slides in a 16:9 format need images at 1920x1080 for full-screen backgrounds. Understanding these target sizes lets you resize once and get it right.
+
+## How Browser-Based Image Resizing Works
+
+When you upload an image, the browser decodes it into raw pixel data using the built-in image decoding engine. This pixel data is then drawn onto an invisible HTML5 Canvas element at your specified dimensions. The canvas uses a resampling algorithm to map the original pixels to the new grid, creating a smooth result whether you are scaling up or down.
+
+Downscaling produces excellent results because the algorithm averages groups of source pixels into single output pixels, naturally smoothing the image. Upscaling is more challenging because the algorithm must invent pixels that did not exist in the original. Modern browsers use bicubic interpolation by default, which analyzes surrounding pixels to produce smooth gradients rather than blocky artifacts. The result is acceptable for moderate enlargements up to about 200%, but beyond that, softness becomes noticeable.
+
+The resized pixel data is then re-encoded into your chosen output format. JPEG is best for photographs, PNG preserves transparency and sharp edges, and WebP offers the best compression for web delivery. The entire pipeline runs in JavaScript on your device with zero network activity.
+
+## Best Practices for Resizing Images
+
+Always start with the highest quality source you have. Resizing a small, compressed JPEG up to a larger size compounds quality loss. If you need a large version, go back to the original full-resolution file rather than enlarging an already-reduced copy.
+
+Resize before compressing. Reducing dimensions first eliminates unnecessary pixel data, which makes subsequent compression far more effective. A 4000-pixel-wide photo resized to 800 pixels and then compressed to quality 80 might produce a 60 KB file, whereas compressing the full-size image first and then resizing yields a larger file with more artifacts.
+
+Use the aspect ratio lock for photographs and natural images. Stretching or squishing an image by setting independent width and height values creates obvious distortion. If you need a different aspect ratio, crop the image first, then resize. For graphics and icons where exact pixel dimensions matter and slight stretching is acceptable, you can unlock the ratio and specify both values freely.
+
+Batch your resizing work when preparing images for a website. Decide on your standard sizes upfront, such as a full-width hero at 1440 pixels, a content image at 800 pixels, and a thumbnail at 400 pixels. Resize each source image to all three sizes at once. This systematic approach saves time and ensures visual consistency across your site.

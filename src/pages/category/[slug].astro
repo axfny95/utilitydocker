@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ToolCard from '../../components/shared/ToolCard.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const categories = await getCollection('categories');
+  return categories.map((cat) => ({
+    params: { slug: cat.id },
+    props: { category: cat },
+  }));
+}
+
+const { category } = Astro.props;
+const allTools = await getCollection('tools');
+const tools = allTools.filter((t) => t.data.category === category.data.name);
+---
+
+<BaseLayout title={`${category.data.name} - Free Online Tools`} description={category.data.description}>
+  <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6">
+    <h1 class="text-3xl font-bold tracking-tight text-surface-900 sm:text-4xl">{category.data.name}</h1>
+    <p class="mt-2 text-lg text-surface-600">{category.data.description}</p>
+
+    <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {tools.map((tool) => (
+        <ToolCard
+          title={tool.data.title}
+          description={tool.data.description}
+          slug={tool.id}
+          category={tool.data.category}
+        />
+      ))}
+    </div>
+
+    {tools.length === 0 && (
+      <p class="mt-8 text-surface-500">No tools in this category yet. Check back soon!</p>
+    )}
+  </div>
+</BaseLayout>

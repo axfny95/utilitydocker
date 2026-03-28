@@ -1,0 +1,70 @@
+---
+title: "URL Encoder & Decoder"
+description: "Encode and decode URLs and query strings instantly. Convert special characters to percent-encoded format for safe use in web addresses."
+category: "Developer Tools"
+icon: "link"
+component: "UrlEncoder"
+keywords: ["url encoder", "url decoder", "encode url online", "percent encoding", "url escape tool"]
+featured: false
+premium: false
+relatedTools: ["base64-encoder", "json-formatter", "meta-tag-generator"]
+faq:
+  - question: "What is URL encoding?"
+    answer: "URL encoding (percent encoding) replaces unsafe characters in a URL with a percent sign followed by two hexadecimal digits. For example, a space becomes %20 and an ampersand becomes %26."
+  - question: "When do I need to encode a URL?"
+    answer: "You need URL encoding whenever a value contains special characters like spaces, ampersands, question marks, or non-ASCII characters and must be included in a URL query string or path segment."
+  - question: "What is the difference between encodeURI and encodeURIComponent?"
+    answer: "encodeURI encodes a full URI but preserves structural characters like :, /, and ?. encodeURIComponent encodes everything except letters, digits, and a few safe punctuation marks, making it correct for individual query parameter values."
+  - question: "Is my data safe when using this tool?"
+    answer: "Yes. All encoding and decoding runs in your browser using built-in JavaScript functions. No data is transmitted to any server."
+  - question: "Can I encode non-English characters?"
+    answer: "Yes. The tool handles the full Unicode range. Non-ASCII characters are first encoded to UTF-8 bytes, and each byte is then percent-encoded. This is the standard behavior defined in RFC 3986."
+howTo:
+  steps:
+    - name: "Paste your text or URL"
+      text: "Enter the string you want to encode or a percent-encoded string you want to decode into the input field."
+    - name: "Choose encode or decode"
+      text: "Click Encode to convert special characters to percent-encoded form, or Decode to convert percent-encoded sequences back to readable text."
+    - name: "Copy the result"
+      text: "Click Copy to grab the output and paste it into your code, API call, or browser address bar."
+publishedAt: 2026-03-27
+estimatedTime: "Instant"
+---
+
+## Why URL Encoding Exists
+
+URLs can only contain a limited set of characters from the ASCII set. Letters, digits, hyphens, underscores, periods, and tildes are considered "unreserved" and can appear as-is. Every other character — including spaces, accented letters, emoji, and punctuation like `&`, `=`, `?`, and `#` — must be percent-encoded before it can safely appear in a URL.
+
+This requirement exists because many of these characters have structural meaning in URLs. A `?` separates the path from the query string, an `&` separates query parameters, and a `#` marks the fragment. If your data contains any of these characters, they must be encoded so the browser and server interpret the URL correctly.
+
+Our URL encoder converts any string into its percent-encoded equivalent using the standard algorithm defined in RFC 3986. Paste a raw string and get the encoded version, or paste an encoded string and recover the original. Everything runs in your browser — no server involved.
+
+## Understanding Percent Encoding in Practice
+
+When you pass data through URL query strings, every value must be individually encoded. Consider this example URL:
+
+`https://example.com/search?query=hello world&lang=en`
+
+The space in "hello world" will break parsing. The correct form is:
+
+`https://example.com/search?query=hello%20world&lang=en`
+
+Some characters have multiple valid encoded forms. A space can be represented as `%20` (standard percent encoding) or `+` (the older application/x-www-form-urlencoded format used in HTML forms). Our tool uses `%20` by default because it is the universally correct form per RFC 3986.
+
+Non-ASCII characters undergo a two-step process. First, the character is converted to its UTF-8 byte sequence. Then each byte is percent-encoded individually. A single emoji in a URL can expand into a long sequence of percent-encoded bytes because of this multi-byte encoding process.
+
+## Common Scenarios That Require URL Encoding
+
+**API query parameters** are the most frequent use case. When building API calls programmatically, any user-supplied value — search terms, names, addresses, filter values — must be encoded before being placed in the URL. Failure to encode can cause truncated or malformed requests that return unexpected results.
+
+**Redirect URLs** often contain a full URL as a parameter value. Since that inner URL contains its own `://`, `?`, `&`, and `=` characters, it must be percent-encoded so the outer URL's parser does not confuse the inner URL's structure with its own. Double encoding (encoding an already-encoded string) is a common bug in redirect chains.
+
+**Deep links and tracking parameters** in email campaigns, social media posts, and advertising platforms frequently carry encoded URLs. Marketing teams paste destination URLs into campaign builders that encode them automatically, but debugging these links often requires manual decoding to understand where the user will actually land.
+
+**Internationalized domain names and paths** require encoding when non-Latin characters appear in the URL. While modern browsers display decoded Unicode in the address bar for readability, the actual HTTP request sent over the wire uses percent-encoded UTF-8 bytes. This tool helps you inspect what the browser is truly sending.
+
+## Avoiding Common URL Encoding Pitfalls
+
+Double encoding is the most frequent mistake. If a value has already been encoded (spaces are `%20`), encoding it again turns `%20` into `%2520` because the percent sign itself gets encoded. Always encode raw values exactly once, and decode encoded strings exactly once. If you see `%25` sequences in a URL, double encoding has occurred somewhere in the chain.
+
+Another common issue is encoding the entire URL instead of just the parameter values. Structural characters like `://`, `/`, `?`, and `=` must remain unencoded for the URL to function. Use `encodeURIComponent` on individual query parameter values and leave the URL structure intact. The `encodeURI` function exists for cases where you have a complete URL with non-ASCII characters in the path, but it should not be your default choice.

@@ -1,0 +1,60 @@
+---
+title: "EXIF Viewer"
+description: "View and inspect EXIF metadata from photos directly in your browser. See camera settings, GPS data, timestamps, and more."
+category: "Image Tools"
+icon: "scan-eye"
+component: "ExifViewer"
+keywords: ["exif viewer", "image metadata", "photo metadata reader", "exif data", "camera settings", "gps location photo", "image properties"]
+featured: false
+premium: false
+relatedTools: ["image-resizer", "image-compressor"]
+faq:
+  - question: "Are my photos uploaded to a server?"
+    answer: "No. All EXIF parsing happens locally in your browser. Your photos never leave your device, ensuring full privacy. The tool reads the binary metadata embedded in the file using JavaScript without any network requests."
+  - question: "What image formats contain EXIF data?"
+    answer: "JPEG and TIFF files commonly contain EXIF metadata. Some PNG and WebP files also include metadata, though it is less standardized. RAW camera files like CR2 and NEF contain extensive EXIF data, but browser support for reading these varies."
+  - question: "Can I remove EXIF data from my photos?"
+    answer: "This tool is a viewer only and does not modify your files. To strip EXIF data for privacy before sharing photos online, you would need a dedicated metadata removal tool. Many image editors also strip EXIF during export."
+  - question: "Can EXIF data reveal my location?"
+    answer: "Yes, if your camera or phone had GPS tagging enabled when the photo was taken. EXIF GPS data can include precise latitude and longitude coordinates. This is one reason it is important to review and strip metadata before sharing photos publicly."
+  - question: "Why does my image show no EXIF data?"
+    answer: "Some images have had their metadata stripped. Social media platforms like Facebook, Instagram, and Twitter remove EXIF data during upload. Screenshots, AI-generated images, and graphics created in design software typically lack EXIF data. PNG files generally do not store standard EXIF information."
+howTo:
+  steps:
+    - name: "Upload a photo"
+      text: "Drag and drop an image file onto the tool or click to browse your files. The tool accepts JPEG, TIFF, PNG, and WebP formats."
+    - name: "Browse the metadata"
+      text: "The tool displays all embedded EXIF fields organized into categories such as camera settings, date and time, GPS coordinates, and software information."
+    - name: "Copy or use the data"
+      text: "Click on any field to copy its value. Use the GPS coordinates to locate where a photo was taken, or check camera settings to replicate a particular shot."
+publishedAt: 2026-03-27
+estimatedTime: "Instant"
+---
+
+## What Is EXIF Data and Why Does It Matter
+
+Every time you take a photo with a digital camera or smartphone, the device embeds a hidden block of metadata into the image file. This metadata, known as EXIF (Exchangeable Image File Format), records dozens of technical details about the moment the photo was captured. Camera model, lens focal length, aperture, shutter speed, ISO sensitivity, white balance, flash status, and the exact date and time are all stored automatically.
+
+Many cameras and phones also embed GPS coordinates, which means your photos carry a precise record of where they were taken. This is useful for organizing travel photos or geotagging a collection, but it also raises privacy concerns if you share images online without realizing the location data is included.
+
+Our browser-based EXIF viewer lets you inspect all of this metadata instantly. Upload a photo and see every embedded field laid out clearly. No software to install, no accounts to create, and no data sent to any server.
+
+## Understanding Camera Settings in EXIF
+
+EXIF data is a goldmine for photographers who want to learn from their own work or study the techniques behind images they admire. The aperture value (f-stop) tells you how wide the lens was open, which directly affects depth of field. A low f-number like f/1.8 produces a blurred background, while f/11 keeps most of the scene in focus.
+
+Shutter speed records how long the sensor was exposed. Fast speeds like 1/1000s freeze motion, while slow speeds like 1/30s can introduce motion blur. ISO indicates the sensor's light sensitivity, with higher values producing brighter images but more digital noise.
+
+The focal length tells you how zoomed in the lens was. A 24mm focal length captures a wide scene, while 200mm brings distant subjects close. Combining all these settings paints a complete picture of the photographic conditions and creative choices behind every image.
+
+## Privacy Implications of Photo Metadata
+
+GPS coordinates embedded in photos are one of the most overlooked privacy risks in digital photography. When you share a photo taken at your home, the EXIF data may contain your exact address down to a few meters of accuracy. Social media platforms like Facebook, Instagram, and Twitter strip EXIF data during upload, but sharing images through email, messaging apps, forums, or personal websites often preserves the original metadata intact.
+
+Before sharing photos publicly, it is wise to check what metadata they contain. Our EXIF viewer makes this quick and easy. Upload the image, scan for GPS data and any personally identifying information like your device serial number, and decide whether you need to strip the metadata before publishing.
+
+## Common Uses for EXIF Inspection
+
+Forensic analysts and journalists use EXIF data to verify the authenticity of photographs. Timestamps and GPS coordinates can confirm or contradict claims about when and where an image was captured. Camera serial numbers can link multiple photos to the same device.
+
+Photographers use EXIF data to audit their shooting habits, identify which lenses they use most, and review settings from their best shots. Print shops check resolution and color space metadata to ensure images will reproduce well on paper. Web developers inspect metadata to understand why certain images are unexpectedly large, since EXIF data itself can add several kilobytes to a file.

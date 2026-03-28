@@ -1,0 +1,75 @@
+---
+title: "Random Number Generator"
+description: "Generate random numbers, roll dice, flip coins, and pick random items from a list. Cryptographically secure randomness."
+category: "Productivity Tools"
+icon: "dice"
+component: "RandomNumberGenerator"
+keywords: ["random number generator", "dice roller", "coin flip", "rng", "random picker", "lottery number generator"]
+featured: false
+premium: false
+relatedTools: ["uuid-generator"]
+faq:
+  - question: "Are the numbers truly random?"
+    answer: "Yes. This tool uses the Web Crypto API (crypto.getRandomValues) which provides cryptographically secure random numbers. These are generated from system entropy sources and are unpredictable, making them suitable for games, raffles, and any scenario requiring genuine randomness."
+  - question: "Can I generate numbers within a specific range?"
+    answer: "Yes. Set a minimum and maximum value and the generator will produce random numbers within that range, inclusive of both endpoints. You can generate single numbers or multiple numbers at once."
+  - question: "Is there a dice roller feature?"
+    answer: "Yes. The tool includes virtual dice rolling with standard dice types: D4, D6, D8, D10, D12, and D20. You can roll multiple dice simultaneously and see individual results plus the total."
+  - question: "Can I use this for raffles and giveaways?"
+    answer: "Absolutely. The cryptographic randomness ensures fair, unbiased selection. Generate a random number within the range of participants, or use the list picker to randomly select a name from a list of entries."
+howTo:
+  steps:
+    - name: "Set your parameters"
+      text: "Choose the type of random generation: a number within a range, dice rolls, coin flips, or random selection from a custom list."
+    - name: "Generate"
+      text: "Click the generate button to produce your random result. For numbers, set the min and max values. For dice, choose the type and quantity."
+    - name: "Use or regenerate"
+      text: "Use the result for your game, decision, or selection. Click generate again for a new random result as many times as you need."
+publishedAt: 2026-03-27
+estimatedTime: "Instant"
+---
+
+## Random Numbers, Dice Rolls, and Coin Flips On Demand
+
+Sometimes you need randomness. Picking a winner for a contest, rolling dice for a tabletop game, making a decision with a coin flip, or generating test data for software development. Our free random number generator handles all of these scenarios with cryptographically secure randomness, right in your browser.
+
+## Features at a Glance
+
+### Number Range Generator
+Set a minimum and maximum value and generate one or more random integers within that range. Perfect for lottery-style draws, assigning random order, or selecting random samples from a dataset.
+
+### Dice Roller
+Virtual dice for tabletop gaming and role-playing games. Supported dice types include:
+
+| Die | Range | Common Use |
+|-----|-------|------------|
+| D4 | 1-4 | Damage rolls, small modifiers |
+| D6 | 1-6 | Standard dice, board games, many RPG mechanics |
+| D8 | 1-8 | Weapon damage in D&D |
+| D10 | 1-10 | Percentile rolls (paired), World of Darkness |
+| D12 | 1-12 | Great weapon damage in D&D |
+| D20 | 1-20 | Attack rolls, saving throws, skill checks |
+
+Roll multiple dice at once and see each individual result plus the total sum.
+
+### Coin Flip
+A simple heads or tails result for binary decisions. The virtual coin is perfectly fair with an exact 50/50 probability, unlike physical coins which can have very slight biases.
+
+### List Picker
+Enter a list of items (names, options, restaurants, movies) and the tool randomly selects one or more entries. Ideal for deciding where to eat, who goes first, or picking a random movie for movie night.
+
+## Cryptographic Randomness Explained
+
+Not all randomness is equal. Many random number generators use `Math.random()`, which is a pseudorandom number generator (PRNG). PRNGs are fast but predictable if you know the seed value. Our tool uses the Web Crypto API, which draws from the operating system's entropy pool (hardware events, timing jitter, and other unpredictable sources). This makes the output cryptographically secure and truly unpredictable.
+
+## Practical Applications
+
+**Gaming**: Roll dice for tabletop RPGs, board games, or party games without needing physical dice. The digital roller is faster and eliminates disputes about whether a die landed fairly.
+
+**Education**: Teachers can use the number generator to randomly call on students, create random groups for projects, or generate sample data for statistics lessons.
+
+**Software development**: Generate random test data, seed values, or sample inputs for QA testing and development purposes.
+
+**Decision making**: When you genuinely cannot decide between options, let randomness break the tie. Enter your choices into the list picker and let the tool decide for you.
+
+**Contests and giveaways**: Use the number generator or list picker for fair, verifiable random selection in contests, raffles, or promotional giveaways.

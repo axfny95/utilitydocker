@@ -1,0 +1,37 @@
+---
+import BaseHead from '../components/layout/BaseHead.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import ToastContainer from '../components/shared/Toast';
+import CookieConsent from '../components/shared/CookieConsent';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalUrl?: string;
+  ogImage?: string;
+  type?: 'website' | 'article';
+  noFooter?: boolean;
+}
+
+const { title, description, canonicalUrl, ogImage, type, noFooter } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} canonicalUrl={canonicalUrl} ogImage={ogImage} type={type}>
+      <slot name="head" />
+    </BaseHead>
+  </head>
+  <body class="flex min-h-screen flex-col">
+    <Header />
+    <main class="flex-1">
+      <slot />
+    </main>
+    {!noFooter && <Footer />}
+    <ToastContainer client:only="react" />
+    <CookieConsent client:only="react" />
+  </body>
+</html>

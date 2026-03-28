@@ -1,0 +1,62 @@
+---
+title: "Image Compressor"
+description: "Compress JPEG, PNG, and WebP images in your browser. Reduce file size up to 80% while preserving visual quality. No uploads needed."
+category: "Image Tools"
+icon: "image"
+component: "ImageCompressor"
+keywords: ["image compressor", "compress images online", "reduce image size", "jpeg compressor", "png compressor", "webp converter"]
+featured: true
+premium: false
+relatedTools: ["qr-code-generator"]
+faq:
+  - question: "Are my images uploaded to a server for compression?"
+    answer: "No. All compression happens locally in your browser using the Canvas API. Your images never leave your device, making this tool completely private."
+  - question: "How much can I reduce file sizes?"
+    answer: "Results vary by image, but JPEG compression typically achieves 50-80% reduction. PNG optimization and WebP conversion can yield similar or better savings depending on the source."
+  - question: "Will compression ruin my image quality?"
+    answer: "The quality slider lets you control the trade-off. At 70-80% quality, most images look virtually identical to the original. Preview both versions side by side before downloading."
+  - question: "What file formats are supported?"
+    answer: "The tool accepts JPEG, PNG, and WebP inputs. You can also convert between these formats during compression to achieve the optimal balance of quality and size."
+  - question: "Is there a file size limit?"
+    answer: "Since processing happens in your browser, the limit depends on your device's available memory. Most modern devices handle images up to 20-30 MB without any issues."
+howTo:
+  steps:
+    - name: "Upload your image"
+      text: "Drag and drop an image onto the tool or click to browse your files. JPEG, PNG, and WebP formats are supported."
+    - name: "Adjust quality settings"
+      text: "Use the quality slider to balance file size and visual quality. Preview the result and compare it with the original in real time."
+    - name: "Download the compressed image"
+      text: "Click Download to save the optimized image. The tool displays the original and compressed file sizes so you can see exactly how much space you saved."
+publishedAt: 2026-03-27
+estimatedTime: "< 1 min"
+---
+
+## Why Image Compression Matters for the Web
+
+Images are the heaviest assets on most web pages, accounting for roughly 50% of total page weight according to the HTTP Archive. Unoptimized images slow down load times, increase bandwidth costs, and hurt Core Web Vitals scores — all of which directly impact search rankings and user experience.
+
+Google's PageSpeed Insights and Lighthouse audits routinely flag oversized images as a top performance issue. Compressing images before uploading them to your website is one of the simplest and most effective optimizations you can make. A 2 MB hero image compressed to 400 KB loads five times faster with no perceptible quality difference.
+
+Our image compressor handles the entire process in your browser. Drop an image, adjust the quality slider, and download the optimized version. Nothing is uploaded to any server, so your photos stay completely private.
+
+## Understanding Image Formats and Compression
+
+**JPEG** uses lossy compression, meaning it permanently discards some image data to reduce file size. It excels at photographs and images with complex color gradients. At quality levels between 70-85%, JPEG compression removes data that the human eye cannot easily distinguish, yielding dramatic size reductions. Below 60% quality, compression artifacts — blocky areas and color banding — become noticeable.
+
+**PNG** uses lossless compression, preserving every pixel perfectly. This makes it ideal for screenshots, logos, icons, and graphics with sharp edges, text, or transparency. PNG files are typically larger than JPEGs for photographic content, but for graphics with flat colors and limited palettes, PNG can be surprisingly compact.
+
+**WebP** is a modern format developed by Google that supports both lossy and lossless compression. WebP typically produces files 25-35% smaller than equivalent JPEG or PNG files at the same visual quality. All modern browsers support WebP, making it an excellent choice for web delivery. Converting your JPEG or PNG images to WebP is one of the quickest performance wins available.
+
+## Compression Best Practices
+
+Resize before compressing. A 4000x3000 pixel photo displayed at 800x600 on your website wastes bandwidth transmitting pixels that will never be shown. Resize the image to its display dimensions first, then compress it. The combination of resizing and compression can reduce a 5 MB camera photo to under 100 KB.
+
+Use the right format for the job. Photographs and hero images belong in JPEG or WebP. Logos, icons, and illustrations with flat colors belong in PNG or SVG. Screenshots with text render best as PNG. Choosing the correct format often matters more than the quality setting.
+
+Serve responsive images with the `srcset` attribute so browsers download only the size appropriate for the user's screen. A mobile phone does not need a 1920px-wide banner image. Compress each size variant separately to ensure every user gets the smallest possible file for their viewport.
+
+## How Browser-Based Compression Works
+
+This tool uses the HTML5 Canvas API to re-encode your images entirely within the browser. When you drop an image, the browser decodes it into raw pixel data and draws it onto an invisible canvas element. The canvas then re-encodes those pixels at your chosen quality level and format, producing a new, smaller file.
+
+Because the entire pipeline runs in JavaScript on your device, no image data ever leaves your computer. There are no uploads, no server-side processing, and no privacy concerns. You can safely compress confidential screenshots, personal photos, and proprietary graphics without worrying about data exposure.

@@ -1,0 +1,60 @@
+---
+title: "Cron Expression Generator"
+description: "Build and validate cron expressions with an interactive visual editor. See the next scheduled run times for any cron pattern."
+category: "Developer Tools"
+icon: "timer"
+component: "CronExpressionGenerator"
+keywords: ["cron generator", "cron expression builder", "crontab", "cron schedule", "cron syntax"]
+featured: false
+premium: false
+relatedTools: ["unix-timestamp-converter", "regex-tester"]
+faq:
+  - question: "What is a cron expression?"
+    answer: "A cron expression is a string of five (or six) fields that defines a recurring schedule. The standard five fields represent minute, hour, day of month, month, and day of week. Systems like cron, Kubernetes CronJobs, and CI/CD pipelines use this syntax to automate tasks."
+  - question: "What does the asterisk (*) mean in a cron expression?"
+    answer: "The asterisk is a wildcard that matches every possible value for that field. For example, * in the minute field means 'every minute,' and * in the month field means 'every month.'"
+  - question: "How do I schedule a job for every weekday at 9 AM?"
+    answer: "The expression is '0 9 * * 1-5'. This means: at minute 0, hour 9, any day of the month, any month, but only Monday through Friday (1-5)."
+  - question: "What is the difference between 5-field and 6-field cron expressions?"
+    answer: "Standard Unix cron uses five fields (minute through day of week). Some systems like Quartz and Spring add a sixth field for seconds at the beginning. Our generator supports both formats and lets you toggle between them."
+  - question: "Can I validate an existing cron expression with this tool?"
+    answer: "Yes. Paste any cron expression into the input field and the tool will parse it, display a human-readable description of the schedule, and show the next several execution times so you can verify it behaves as expected."
+howTo:
+  steps:
+    - name: "Choose your schedule"
+      text: "Use the visual editor to select the frequency — every minute, hourly, daily, weekly, monthly, or a custom interval. Pick the specific times and days you need."
+    - name: "Review the expression"
+      text: "The cron expression updates in real time as you adjust the controls. Read the human-language description to confirm the schedule matches your intent."
+    - name: "Copy and deploy"
+      text: "Copy the generated expression and paste it into your crontab, CI/CD pipeline, Kubernetes manifest, or task scheduler configuration."
+publishedAt: 2026-03-27
+estimatedTime: "Instant"
+---
+
+## Understanding Cron Syntax
+
+Cron is the time-based job scheduler found in Unix-like operating systems, and its expression syntax has become the universal language for defining recurring schedules across the entire software ecosystem. From Linux crontabs and Kubernetes CronJobs to GitHub Actions, AWS EventBridge, and CI/CD pipelines, the same five-field pattern appears everywhere.
+
+A standard cron expression consists of five fields separated by spaces: minute (0-59), hour (0-23), day of month (1-31), month (1-12), and day of week (0-6, where 0 is Sunday). Each field accepts a single value, a range (`1-5`), a list (`1,3,5`), a step value (`*/15`), or the wildcard (`*`). Combining these operators lets you express remarkably complex schedules in a single concise line.
+
+Despite its power, cron syntax trips up even experienced developers. Does `0 */2 * * *` run every two hours starting at midnight, or every two hours from the current time? The answer is every even hour from midnight, which catches many people off guard. Our visual cron expression generator eliminates this confusion by showing you exactly when your schedule fires, listing the next several execution times so you can verify the pattern before deploying it.
+
+## Building Cron Schedules Visually
+
+The traditional approach to writing cron expressions involves consulting a reference table, mentally computing the schedule, and then testing it by waiting for the next trigger time. This workflow is slow and error-prone. A visual builder inverts the process: you describe what you want, and the tool produces the correct expression.
+
+Start by selecting a base frequency. If you need a job to run daily, the generator sets the minute and hour fields and wildcards everything else. If you need a weekly schedule, it activates the day-of-week selector. From there, you refine the details. Want the job to run at 2:30 AM every Tuesday and Thursday? Click Tuesday and Thursday in the day picker, set the hour to 2 and the minute to 30, and the expression `30 2 * * 2,4` appears instantly with a plain-English explanation: "At 02:30 on Tuesday and Thursday."
+
+The next-run preview is arguably the most valuable feature. It computes the next five or ten execution timestamps based on the current date and time, giving you concrete proof that your schedule behaves as intended. If you expect a job to run at the top of every hour but the preview shows it firing every two hours, you know immediately that something needs adjusting.
+
+## Common Cron Patterns and Pitfalls
+
+Certain schedules appear in nearly every infrastructure setup, and knowing the correct expressions by heart saves significant time.
+
+**Every five minutes** is `*/5 * * * *`. This is the go-to interval for health checks, metrics collection, and cache warming. The step operator `*/5` means "every value divisible by 5," so the job runs at 0, 5, 10, 15, and so on.
+
+**Daily at midnight** is `0 0 * * *`. Be aware that "midnight" depends on the server's time zone. If your server is in UTC but your users are in US Eastern time, midnight UTC is 7 PM or 8 PM for them depending on daylight saving time. Always confirm which time zone your cron daemon uses.
+
+**First day of every month at 6 AM** is `0 6 1 * *`. This pattern is common for monthly reports, billing runs, and certificate renewals. Keep in mind that not every month has the same number of days, so scheduling on the 31st will skip months with fewer days.
+
+**The day-of-month and day-of-week interaction** is the most notorious source of cron bugs. In standard cron, if both fields are set to non-wildcard values, the job runs when either condition is true, not when both are true. This means `0 9 15 * 1` fires at 9 AM on the 15th of every month AND every Monday, not just on Mondays that fall on the 15th. Misunderstanding this behavior has triggered countless unintended job executions. Our generator displays the exact upcoming run times, making this kind of logic error immediately visible before it reaches production.

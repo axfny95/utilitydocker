@@ -1,0 +1,62 @@
+---
+title: "Robots.txt Generator"
+description: "Create a robots.txt file for your website in seconds. Control search engine crawling with an intuitive visual editor and presets."
+category: "SEO Tools"
+icon: "file-text"
+component: "RobotsTxtGenerator"
+keywords: ["robots.txt generator", "robots txt maker", "create robots txt", "seo robots file", "crawler directives"]
+featured: false
+premium: false
+relatedTools: ["meta-tag-generator"]
+faq:
+  - question: "What is a robots.txt file?"
+    answer: "It is a plain text file at the root of your website that instructs search engine crawlers which URLs they are allowed or disallowed to access, following the Robots Exclusion Protocol."
+  - question: "Where should I place the robots.txt file?"
+    answer: "It must be at the root of your domain — for example, https://yourdomain.com/robots.txt. Search engines will only look for it at this exact location."
+  - question: "Does robots.txt prevent pages from being indexed?"
+    answer: "Not necessarily. It blocks crawling, but search engines can still index a URL if external links point to it. To prevent indexing entirely, use a noindex meta tag or X-Robots-Tag header."
+  - question: "What does User-agent: * mean?"
+    answer: "The asterisk is a wildcard matching all crawlers. You can also target specific bots like Googlebot, Bingbot, or GPTBot with their own rule sets."
+  - question: "Is robots.txt a security mechanism?"
+    answer: "No. The file is publicly readable and compliance is voluntary. Well-behaved crawlers follow it, but malicious bots ignore it. Never rely on robots.txt to protect sensitive content — use authentication instead."
+howTo:
+  steps:
+    - name: "Start with a preset or blank file"
+      text: "Choose a quick-start preset (Allow All, Block All, Standard, or WordPress) to populate common rules, or start with a blank configuration."
+    - name: "Add custom rules"
+      text: "Define Allow and Disallow directives for each user-agent. Add your sitemap URL and set crawl-delay values if needed."
+    - name: "Download or copy"
+      text: "Click Download to save the generated robots.txt file, or Copy to paste the contents manually. Upload the file to your website's root directory."
+publishedAt: 2026-03-27
+estimatedTime: "< 1 min"
+---
+
+## What Robots.txt Does and Why It Matters
+
+Every search engine crawler that visits your website looks for a robots.txt file at the domain root before it begins crawling pages. This file is your primary tool for communicating crawl preferences to Googlebot, Bingbot, and dozens of other crawlers that index the web.
+
+A robots.txt file consists of one or more rule groups. Each group starts with a `User-agent` line specifying which crawler the rules apply to, followed by `Disallow` lines (paths the crawler should skip) and `Allow` lines (exceptions within disallowed paths). A `Sitemap` directive at the bottom points crawlers to your XML sitemap for efficient discovery of all your pages.
+
+Our generator builds valid robots.txt files through a visual interface. Choose a preset for common configurations, customize individual rules, and download the result — no manual syntax required.
+
+## Configuring Rules for Different Crawlers
+
+The wildcard user-agent `*` applies rules to every crawler, but you can add separate rule blocks for specific bots when you need different behavior. For instance, you might allow Googlebot full access to your site while restricting GPTBot (OpenAI's crawler) from training data, or throttle Bingbot with a `Crawl-delay` directive to reduce server load.
+
+Common paths to disallow include `/admin/`, `/api/`, `/cart/`, `/checkout/`, `/search/`, `/tmp/`, and `/cgi-bin/`. These areas either contain private functionality, duplicate content, or pages with no SEO value. Blocking them preserves your crawl budget — the number of pages a search engine will crawl on your site during a given period — and directs crawler attention toward your valuable content.
+
+WordPress sites have specific needs. Blocking `/wp-admin/` while allowing `/wp-admin/admin-ajax.php` (needed for some front-end features) is a standard pattern. Blocking `/wp-includes/` and tag or author archive pages can also reduce thin content in your index.
+
+## The Relationship Between Robots.txt and Indexing
+
+A common misconception is that disallowing a URL in robots.txt removes it from search results. It does not. Disallow prevents crawling — the crawler will not fetch the page's content. But if other pages on the web link to that URL, search engines may still list it in results with a note like "A description for this page is not available because of this site's robots.txt."
+
+To truly prevent a page from appearing in search results, use a `noindex` meta tag or an `X-Robots-Tag: noindex` HTTP header. These directives tell search engines not to index the page even if they discover it through links. Importantly, the page must be crawlable for the search engine to see the noindex directive — so do not block a page in robots.txt and also set noindex, because the crawler will never reach the tag.
+
+The `Sitemap` directive serves the opposite purpose. By pointing crawlers to your XML sitemap, you ensure that all important pages are discovered even if your internal linking does not reach them. Place the sitemap directive at the very end of your robots.txt file using the full URL: `Sitemap: https://yourdomain.com/sitemap.xml`.
+
+## Testing and Deploying Your Robots.txt
+
+After generating and uploading your file, validate it using Google Search Console's robots.txt testing tool. Enter specific URLs from your site to verify whether they are allowed or blocked under your rules. This catches typos and logic errors before they affect your search visibility.
+
+Remember that changes to robots.txt take effect only after search engines re-fetch the file, which typically happens every 24-48 hours. If you need an urgent change, you can request a re-crawl through Search Console, though this is not guaranteed to be immediate.

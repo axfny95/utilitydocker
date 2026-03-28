@@ -1,0 +1,60 @@
+---
+title: "CSS Gradient Generator"
+description: "Create beautiful CSS gradients visually. Generate linear, radial, and conic gradient code with a live preview and one-click copy."
+category: "Developer Tools"
+icon: "paintbrush"
+component: "CssGradientGenerator"
+keywords: ["css gradient generator", "gradient maker", "css background gradient", "linear gradient tool", "radial gradient css"]
+featured: false
+premium: false
+relatedTools: ["color-palette-generator"]
+faq:
+  - question: "What gradient types can I create?"
+    answer: "The tool supports linear gradients (directional), radial gradients (circular or elliptical), and conic gradients (angle-based sweeps). Each type has its own set of customization options."
+  - question: "Is the generated CSS compatible with all browsers?"
+    answer: "Yes. Linear and radial gradients are supported in all modern browsers without vendor prefixes. Conic gradients are supported in Chrome, Edge, Safari, and Firefox 83+."
+  - question: "Can I add more than two colors?"
+    answer: "Yes. You can add as many color stops as you like and position each one precisely along the gradient axis. Multi-stop gradients create rich, complex effects."
+  - question: "How do I use the generated code?"
+    answer: "Copy the CSS output and paste it as a background or background-image property in your stylesheet. The generated code is ready to use — no modification needed."
+  - question: "Can I create gradient text with this tool?"
+    answer: "The tool generates the gradient CSS itself. To apply it to text, use the generated gradient as a background-image, then add background-clip: text and a transparent text color in your stylesheet."
+howTo:
+  steps:
+    - name: "Choose gradient type and colors"
+      text: "Select linear, radial, or conic gradient mode. Pick your start and end colors using the color pickers, and add extra color stops if desired."
+    - name: "Adjust direction and positions"
+      text: "Set the gradient angle (for linear), shape (for radial), or starting angle (for conic). Drag color stops to fine-tune their positions."
+    - name: "Copy the CSS"
+      text: "Click the Copy CSS button to copy the generated code to your clipboard, ready to paste into your stylesheet or component."
+publishedAt: 2026-03-27
+estimatedTime: "Instant"
+---
+
+## Build CSS Gradients Without Memorizing the Syntax
+
+CSS gradients are one of the most versatile tools in a web developer's arsenal. They create smooth color transitions without image files, loading instantly and scaling to any resolution. But the syntax — especially for multi-stop, angled, or radial gradients — is notoriously difficult to write from memory.
+
+Our visual gradient generator solves that problem. Pick your colors, choose the gradient type, adjust the angle or shape, and the tool produces the exact CSS property value you need. The live preview updates in real time so you can experiment freely and copy the code only when you are satisfied with the result.
+
+Every gradient is defined entirely in CSS, meaning it adds zero bytes to your page weight compared to image-based backgrounds. Gradients also adapt seamlessly to responsive layouts — they stretch, compress, and resize with their container without pixelation.
+
+## Understanding the Three Gradient Types
+
+**Linear gradients** transition colors along a straight line. You define the direction (an angle or keyword like `to right`) and two or more color stops. The browser fills the element by blending between the stops along that line. Linear gradients are the most common type, used for everything from button backgrounds and header overlays to decorative section dividers.
+
+A basic two-color linear gradient looks like this: `background: linear-gradient(135deg, #667eea, #764ba2)`. Adding more stops creates richer effects — a sunset might blend through orange, pink, purple, and dark blue in a single declaration.
+
+**Radial gradients** emanate outward from a center point in a circular or elliptical shape. They are ideal for spotlight effects, glowing buttons, and simulating light sources. The syntax specifies a shape (circle or ellipse), a size keyword (closest-side, farthest-corner, etc.), and a position. Because radial gradients naturally draw the eye toward their center, they are powerful tools for directing attention in a layout.
+
+**Conic gradients** sweep colors around a center point like the hands of a clock. They are useful for creating pie charts, color wheels, and decorative patterns. Combined with border-radius, a conic gradient on a square element produces a polished, starburst-style design. Conic gradients are the newest of the three types, but browser support is now universal across modern browsers.
+
+## Tips for Effective Gradient Design
+
+Keep it subtle. Gradients that shift between dramatically different hues can look amateurish. The most effective web gradients use closely related colors — a dark blue to a slightly lighter blue, or a warm beige to a soft cream. Subtlety signals sophistication.
+
+Use gradients to create depth. A very slight gradient on a card background (from white to a barely perceptible gray) creates a sense of dimensionality that a flat color cannot. This technique is central to modern design systems and gives interfaces a polished, layered appearance.
+
+Layer gradients with transparency. CSS supports multiple background layers, so you can stack a semi-transparent gradient over an image to darken it, add a color wash, or create a text-safe overlay. The pattern `background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url(photo.jpg)` is a reliable way to ensure readable text over any photograph.
+
+Test gradients across screen types. Colors that look smooth on a high-DPI display can show visible banding on lower-quality monitors. Adding a small amount of noise or extending the transition distance helps minimize banding artifacts on 8-bit displays.

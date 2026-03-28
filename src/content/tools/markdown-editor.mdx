@@ -1,0 +1,70 @@
+---
+title: "Markdown Editor & Preview"
+description: "Write and preview Markdown in real time. Supports GitHub Flavored Markdown with tables, task lists, syntax highlighting, and export."
+category: "Developer Tools"
+icon: "edit"
+component: "MarkdownEditor"
+keywords: ["markdown editor", "markdown preview", "online markdown editor", "markdown to html", "github markdown"]
+featured: false
+premium: false
+relatedTools: ["json-formatter", "lorem-ipsum-generator"]
+faq:
+  - question: "What Markdown flavor does this editor support?"
+    answer: "It supports GitHub Flavored Markdown (GFM), including tables, task lists, strikethrough, fenced code blocks with syntax highlighting, and auto-linked URLs."
+  - question: "Can I export my Markdown as HTML?"
+    answer: "Yes. The preview panel renders your Markdown as HTML, and you can copy the rendered HTML output for use in emails, CMS platforms, or static site generators."
+  - question: "Is my content saved automatically?"
+    answer: "The editor stores your content in your browser's local storage so it persists between sessions. However, clearing your browser data will erase it, so export important documents."
+  - question: "Does it support code syntax highlighting?"
+    answer: "Yes. Fenced code blocks with a language identifier (e.g., ```javascript) are rendered with proper syntax highlighting for dozens of programming languages."
+  - question: "Can I use this for writing README files?"
+    answer: "Absolutely. The GFM support makes it perfect for drafting GitHub README files, pull request descriptions, wiki pages, and documentation before committing them to your repository."
+howTo:
+  steps:
+    - name: "Write your Markdown"
+      text: "Type or paste Markdown into the editor pane on the left. The syntax is simple — use # for headings, ** for bold, - for lists, and so on."
+    - name: "Preview in real time"
+      text: "The right pane renders your Markdown as formatted HTML instantly as you type, so you can see exactly how it will appear."
+    - name: "Copy or export"
+      text: "Copy the rendered HTML for use in other platforms, or copy the raw Markdown to paste into GitHub, GitLab, or your documentation system."
+publishedAt: 2026-03-27
+estimatedTime: "Instant"
+---
+
+## Write Markdown with Instant Visual Feedback
+
+Markdown is the de facto standard for technical writing on the web. GitHub README files, developer documentation, blog posts, release notes, and knowledge bases all rely on it. The syntax is intentionally minimal — you focus on content while Markdown handles the formatting.
+
+Our online editor gives you a side-by-side writing and preview experience. The left pane is your editor, and the right pane renders the formatted output in real time. Every heading, list, link, image, table, and code block appears exactly as it will look when published. There is no need to toggle between editing and previewing or to install any software.
+
+The editor supports GitHub Flavored Markdown, which extends standard Markdown with practical features like tables, task lists (`- [x] Done`), strikethrough (`~~text~~`), and fenced code blocks with language-specific syntax highlighting. If you write for GitHub, this editor matches the rendering you will see on the platform.
+
+## Markdown Syntax Quick Reference
+
+**Headings** use hash symbols: `# H1`, `## H2`, `### H3`, and so on through H6. Use headings to structure your document and create a scannable hierarchy.
+
+**Emphasis** is straightforward: `*italic*` for italic, `**bold**` for bold, and `***bold italic***` for both. Strikethrough uses double tildes: `~~deleted~~`.
+
+**Lists** begin with `-` or `*` for unordered items and `1.` for ordered items. Indent with two spaces for nested lists. Task lists use `- [ ]` for unchecked items and `- [x]` for checked ones.
+
+**Links** follow the pattern `[text](url)` and images use `![alt text](url)`. Reference-style links keep your source readable for long documents.
+
+**Code** is marked with single backticks for inline code and triple backticks for code blocks. Add a language name after the opening triple backtick for syntax highlighting.
+
+**Tables** use pipes and hyphens to define columns and alignment. GFM makes creating structured data tables straightforward without needing HTML.
+
+## Common Use Cases for an Online Markdown Editor
+
+**Drafting GitHub documentation** is the primary use case. README files, CONTRIBUTING guides, changelogs, and wiki pages all use Markdown. Previewing them in an environment that matches GitHub's rendering ensures your formatting is correct before you commit.
+
+**Writing blog posts** for static site generators like Astro, Next.js, Hugo, and Jekyll is seamless. These frameworks consume Markdown files directly, so you can draft, preview, and fine-tune your post here, then drop the file into your project.
+
+**Composing emails and messages** that need formatting benefits from Markdown as well. Write your content in Markdown, copy the rendered HTML, and paste it into email clients or platforms that accept rich text. This produces cleaner markup than most visual editors.
+
+**Taking developer notes** in Markdown keeps your notes portable and future-proof. Unlike proprietary note app formats, Markdown is plain text that any editor can open, and its formatting survives decades of technology changes.
+
+## Why Markdown Beats Rich Text Editors
+
+Rich text editors like Google Docs and Microsoft Word store formatting in proprietary binary or XML structures. Copying content from these editors into a CMS, email, or web page often introduces invisible markup that breaks layouts or creates inconsistent styling.
+
+Markdown solves this by making formatting explicit and human-readable. A `##` heading is always a second-level heading. A `**bold**` word is always bold. There is no hidden formatting to debug, no clipboard mangling, and no version compatibility issues. The source file is plain text that Git can diff, merge, and track with full fidelity — making Markdown the natural choice for any content that lives alongside code.

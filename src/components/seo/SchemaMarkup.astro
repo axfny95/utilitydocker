@@ -1,0 +1,19 @@
+---
+import { buildWebApplicationSchema, buildFAQSchema, buildHowToSchema } from '../../lib/schemas';
+import type { ToolMeta } from '../../types/tool';
+
+interface Props {
+  tool: ToolMeta;
+  slug: string;
+}
+
+const { tool, slug } = Astro.props;
+
+const webAppSchema = buildWebApplicationSchema(tool, slug);
+const faqSchema = buildFAQSchema(tool.faq);
+const howToSchema = buildHowToSchema(tool.title, tool.howTo);
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(webAppSchema)} />
+{faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
+{howToSchema && <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />}

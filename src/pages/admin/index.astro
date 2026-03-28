@@ -1,0 +1,58 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import { getCollection } from 'astro:content';
+
+const tools = await getCollection('tools');
+const categories = await getCollection('categories');
+---
+
+<AdminLayout title="Dashboard">
+  <div class="grid gap-4 sm:grid-cols-3">
+    <div class="rounded-xl border border-surface-200 bg-white p-5">
+      <p class="text-sm text-surface-500">Total Tools</p>
+      <p class="text-3xl font-bold text-surface-900">{tools.length}</p>
+    </div>
+    <div class="rounded-xl border border-surface-200 bg-white p-5">
+      <p class="text-sm text-surface-500">Categories</p>
+      <p class="text-3xl font-bold text-surface-900">{categories.length}</p>
+    </div>
+    <div class="rounded-xl border border-surface-200 bg-white p-5">
+      <p class="text-sm text-surface-500">Featured</p>
+      <p class="text-3xl font-bold text-surface-900">{tools.filter((t) => t.data.featured).length}</p>
+    </div>
+  </div>
+
+  <div class="mt-8">
+    <h2 class="mb-4 text-lg font-semibold text-surface-900">All Tools</h2>
+    <div class="overflow-hidden rounded-xl border border-surface-200 bg-white">
+      <table class="w-full text-sm">
+        <thead class="border-b border-surface-200 bg-surface-50">
+          <tr>
+            <th class="px-4 py-3 text-left font-medium text-surface-600">Tool</th>
+            <th class="px-4 py-3 text-left font-medium text-surface-600">Category</th>
+            <th class="px-4 py-3 text-left font-medium text-surface-600">Featured</th>
+            <th class="px-4 py-3 text-left font-medium text-surface-600">Premium</th>
+            <th class="px-4 py-3 text-left font-medium text-surface-600">Published</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-surface-100">
+          {tools.map((tool) => (
+            <tr class="hover:bg-surface-50">
+              <td class="px-4 py-3">
+                <a href={`/tools/${tool.id}`} class="font-medium text-primary-600 hover:underline">
+                  {tool.data.title}
+                </a>
+              </td>
+              <td class="px-4 py-3 text-surface-600">{tool.data.category}</td>
+              <td class="px-4 py-3">{tool.data.featured ? 'Yes' : '-'}</td>
+              <td class="px-4 py-3">{tool.data.premium ? 'Yes' : '-'}</td>
+              <td class="px-4 py-3 text-surface-500">
+                {tool.data.publishedAt.toLocaleDateString()}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</AdminLayout>

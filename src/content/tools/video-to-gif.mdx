@@ -1,0 +1,50 @@
+---
+title: "Video to GIF Converter"
+description: "Convert video clips to animated GIFs in your browser. Trim, resize, and adjust frame rate. No uploads or server processing required."
+category: "Media Tools"
+icon: "film"
+component: "VideoToGif"
+keywords: ["video to gif", "gif maker", "convert video to gif", "animated gif creator", "gif converter"]
+featured: true
+premium: false
+relatedTools: ["video-to-mp3", "video-compressor"]
+faq:
+  - question: "Is there a length limit for the video I can convert?"
+    answer: "There is no hard limit, but GIF files grow large quickly. A 10-second clip at reasonable quality can reach 5-10 MB. We recommend keeping GIFs under 15 seconds and using the trim controls to select only the portion you need."
+  - question: "Does this tool upload my video to a server?"
+    answer: "No. All processing happens locally in your browser using Canvas and WebAssembly. Your video data never leaves your device."
+  - question: "Can I control the output GIF quality and size?"
+    answer: "Yes. You can adjust the resolution, frame rate, and trim the start and end points. Lowering the resolution and frame rate significantly reduces file size while keeping the animation smooth enough for most uses."
+howTo:
+  steps:
+    - name: "Upload a video clip"
+      text: "Drag and drop a video file or click to browse. MP4 and WebM are the most widely supported formats."
+    - name: "Trim and configure"
+      text: "Set the start and end time to select the exact segment you want. Adjust the output width and frame rate to control the file size."
+    - name: "Generate and download"
+      text: "Click Convert to create your GIF. Preview the result in the browser, then download it when you are satisfied."
+publishedAt: 2026-03-28
+estimatedTime: "< 1 min"
+---
+
+## Create Animated GIFs from Video Clips
+
+Animated GIFs remain one of the most shareable content formats on the internet. They play automatically in virtually every context — email clients, messaging apps, social media feeds, forums, and documentation sites. Unlike video embeds, GIFs require no player controls, no codec support, and no user interaction to start playing. That universal compatibility is why GIFs continue to thrive decades after their introduction.
+
+This tool converts any video clip into an animated GIF directly in your browser. Select a segment, choose your quality settings, and download the result. No server uploads, no accounts, no watermarks.
+
+## Why GIF File Size Matters
+
+The GIF format was designed in 1987 and uses a relatively primitive compression scheme limited to 256 colors per frame. This means GIF files are inherently large compared to modern video formats. A five-second video clip that occupies 500 KB as an MP4 can balloon to 5 MB or more as a GIF. Understanding this trade-off is important for producing GIFs that are practical to share.
+
+The three biggest factors affecting GIF file size are resolution, frame rate, and duration. Reducing the output width from 1920 pixels to 480 pixels can cut file size by 75% or more. Dropping the frame rate from 30 fps to 12 fps removes over half the frames while still producing smooth-looking animation. And trimming the clip to just the essential moments avoids wasting bytes on unnecessary frames.
+
+## Best Practices for Shareable GIFs
+
+Keep your GIFs under 5 MB whenever possible. Most platforms either reject or aggressively compress larger files, degrading quality. Slack, Discord, and many email clients display GIFs inline only below certain size thresholds. Targeting 2-3 MB is ideal for maximum compatibility.
+
+Use GIFs for short, looping moments — a reaction, a UI demonstration, a product feature highlight. For longer content, video formats like MP4 or WebP animations offer dramatically better compression. Many platforms now accept short videos in place of GIFs and will display them with the same auto-play looping behavior.
+
+## Privacy and Local Processing
+
+Because this converter runs entirely in JavaScript and WebAssembly within your browser, your video files are never transmitted anywhere. This makes the tool safe for converting screen recordings that contain sensitive information, proprietary product footage, or personal moments you would rather keep private.

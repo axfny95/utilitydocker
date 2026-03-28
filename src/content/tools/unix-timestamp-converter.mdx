@@ -1,0 +1,58 @@
+---
+title: "Unix Timestamp Converter"
+description: "Convert Unix timestamps to human-readable dates and vice versa. Support for seconds, milliseconds, and multiple time zones."
+category: "Developer Tools"
+icon: "clock"
+component: "UnixTimestampConverter"
+keywords: ["unix timestamp converter", "epoch converter", "timestamp to date", "date to timestamp", "epoch time"]
+featured: false
+premium: false
+relatedTools: ["json-formatter", "cron-expression-generator"]
+faq:
+  - question: "What is a Unix timestamp?"
+    answer: "A Unix timestamp (also called epoch time) is the number of seconds that have elapsed since January 1, 1970 at 00:00:00 UTC. It provides a universal, timezone-independent way to represent a specific moment in time."
+  - question: "What is the difference between seconds and milliseconds timestamps?"
+    answer: "A seconds-based timestamp has 10 digits (e.g., 1711540800), while a milliseconds-based timestamp has 13 digits (e.g., 1711540800000). JavaScript's Date.now() returns milliseconds, while most Unix systems and APIs use seconds."
+  - question: "Does this converter handle time zones correctly?"
+    answer: "Yes. You can select any time zone from the dropdown to see the converted date in that locale. The underlying timestamp always represents the same absolute moment in time — only the display changes."
+  - question: "Is there a maximum date this converter supports?"
+    answer: "The tool handles dates from January 1, 1970 through the year 9999. It also supports negative timestamps for dates before the Unix epoch, reaching back to historical dates for specialized use cases."
+  - question: "Why do some APIs use seconds and others use milliseconds?"
+    answer: "It depends on the platform. Unix systems traditionally use seconds, so C, Python, and PHP follow that convention. JavaScript and Java use milliseconds natively. Our converter auto-detects the format based on the number of digits."
+howTo:
+  steps:
+    - name: "Enter a timestamp or date"
+      text: "Paste a Unix timestamp into the input field, or use the date picker to select a human-readable date and time."
+    - name: "Select your time zone"
+      text: "Choose the target time zone from the dropdown. The tool defaults to your local time zone but supports all IANA time zones."
+    - name: "Read the converted result"
+      text: "View the conversion instantly. Copy the result in your preferred format — ISO 8601, RFC 2822, or a custom human-readable string."
+publishedAt: 2026-03-27
+estimatedTime: "Instant"
+---
+
+## What Is Unix Time and Why It Matters
+
+Unix time, also known as epoch time or POSIX time, counts the number of seconds elapsed since midnight UTC on January 1, 1970. That specific moment is called the Unix epoch, and it serves as the universal reference point for timekeeping in computing. When a server logs an event at timestamp `1774828800`, it records an unambiguous moment that means the same thing regardless of where the server is located or what time zone its users occupy.
+
+This simplicity is precisely why Unix timestamps became the standard for storing and transmitting time data. Unlike human-readable date strings, which vary by locale, format, and time zone conventions, a numeric timestamp is a single integer that every system on the planet interprets identically. APIs exchange timestamps because there is zero ambiguity — no confusion between `03/04/2026` meaning March 4th or April 3rd depending on the country.
+
+Our free Unix timestamp converter lets you quickly translate between these numeric timestamps and readable dates. Paste a timestamp from a log file, an API response, or a database record, and see the exact date and time in any time zone. Going the other direction, pick a date and time to get the corresponding timestamp for use in your code or queries.
+
+## Converting Between Timestamps and Human Dates
+
+The core workflow developers encounter daily is reading a timestamp from a system and needing to know what date it represents. Log files, database columns, JWT tokens, and webhook payloads all embed Unix timestamps. Manually calculating that `1711540800` corresponds to a specific date and hour is impractical, especially when you need to factor in time zone offsets and daylight saving transitions.
+
+This converter handles both directions seamlessly. For timestamp-to-date conversion, paste any numeric timestamp and the tool auto-detects whether it is in seconds (10 digits) or milliseconds (13 digits). The result appears instantly in multiple formats: a localized date string, an ISO 8601 representation for API use, and an RFC 2822 format for email headers. You can switch time zones with a single click to see the same moment as it appeared in Tokyo, London, or New York.
+
+For date-to-timestamp conversion, the date picker lets you select a precise date and time, then outputs the corresponding Unix timestamp in both seconds and milliseconds. This is particularly useful when constructing API queries that filter by time ranges, writing database migrations with specific dates, or setting expiration times for tokens and caches.
+
+## Common Scenarios and Pitfalls
+
+**Debugging API responses** is the most frequent reason developers reach for a timestamp converter. When an endpoint returns `"created_at": 1774828800`, you need to verify it represents the date you expect. Copy, paste, convert, and you have your answer in under a second.
+
+**Database queries** often require timestamp math. If you need all records from the last 24 hours, you subtract 86400 from the current timestamp. For more complex ranges, converting specific start and end dates to timestamps ensures your WHERE clauses are precise.
+
+**The Year 2038 problem** is worth understanding. Systems that store timestamps as 32-bit signed integers will overflow on January 19, 2038, wrapping around to a date in December 1901. Most modern systems have migrated to 64-bit timestamps, but legacy embedded systems and older databases may still be vulnerable. Our converter uses full-precision numbers, so it handles dates well beyond 2038 without issue.
+
+**Millisecond versus second confusion** is a common source of bugs. If your application expects seconds but receives milliseconds, every date will appear thousands of years in the future. If the tool detects a 13-digit number, it treats it as milliseconds automatically, but when writing code, always verify which unit your upstream system provides. A mismatch here has caused production outages at companies of every size, and it remains one of the most frequent time-related bugs in software development.

@@ -1,0 +1,79 @@
+---
+title: "Aspect Ratio Calculator"
+description: "Calculate and convert image aspect ratios. Find dimensions for 16:9, 4:3, 1:1, and custom ratios for any resolution."
+category: "Calculator Tools"
+icon: "proportions"
+component: "AspectRatioCalculator"
+keywords: ["aspect ratio calculator", "image dimensions", "16:9 calculator", "4:3 calculator", "video resolution", "screen ratio"]
+featured: false
+premium: false
+relatedTools: ["image-resizer", "image-compressor"]
+faq:
+  - question: "What is an aspect ratio?"
+    answer: "An aspect ratio is the proportional relationship between width and height. It is expressed as two numbers separated by a colon, like 16:9 or 4:3. A 16:9 ratio means the width is 16 units for every 9 units of height, regardless of the actual pixel dimensions."
+  - question: "How do I calculate the missing dimension?"
+    answer: "Enter the known dimension (width or height) and the desired aspect ratio. The calculator computes the missing dimension using the formula: missing = known x (ratio side / opposite ratio side). For example, for a 16:9 ratio with a width of 1920, the height is 1920 x (9/16) = 1080."
+  - question: "What is the most common aspect ratio for video?"
+    answer: "16:9 is the standard widescreen aspect ratio used by YouTube, most monitors, TVs, and streaming platforms. Common 16:9 resolutions include 1920x1080 (Full HD), 2560x1440 (QHD), and 3840x2160 (4K UHD)."
+  - question: "What aspect ratio should I use for social media?"
+    answer: "It varies by platform. Instagram posts use 1:1 (square) or 4:5 (portrait). Instagram Stories and TikTok use 9:16 (vertical). YouTube thumbnails use 16:9. Twitter/X images work best at 16:9 or 2:1. Facebook posts perform well at 1.91:1."
+howTo:
+  steps:
+    - name: "Enter known dimensions"
+      text: "Type your known width and height, or enter one dimension and a target aspect ratio."
+    - name: "Calculate the ratio or missing dimension"
+      text: "The tool determines the aspect ratio from your dimensions, or calculates the missing width/height to match your target ratio."
+    - name: "Use the results"
+      text: "Copy the calculated dimensions for use in your image editor, video project, CSS, or responsive design layout."
+publishedAt: 2026-03-27
+estimatedTime: "Instant"
+---
+
+## Get Your Image and Video Dimensions Right Every Time
+
+Aspect ratio determines how content looks on screens, in print, and across platforms. Getting it wrong leads to stretched images, black bars on videos, and cropped content that misses important details. Our free aspect ratio calculator helps you find the correct dimensions for any ratio, ensuring your visuals always look their best.
+
+## Common Aspect Ratios and Where They Are Used
+
+| Ratio | Decimal | Common Use |
+|-------|---------|------------|
+| 16:9 | 1.778 | YouTube, monitors, HD/4K TV |
+| 4:3 | 1.333 | Classic TV, iPad, presentations |
+| 1:1 | 1.000 | Instagram posts, profile pictures |
+| 9:16 | 0.563 | Instagram Stories, TikTok, Reels |
+| 4:5 | 0.800 | Instagram portrait, Pinterest |
+| 21:9 | 2.333 | Ultrawide monitors, cinema |
+| 3:2 | 1.500 | DSLR photos, MacBook displays |
+| 2:1 | 2.000 | Twitter header, 18:9 phones |
+
+## Standard Resolutions by Aspect Ratio
+
+### 16:9 Widescreen
+- 1280 x 720 (HD / 720p)
+- 1920 x 1080 (Full HD / 1080p)
+- 2560 x 1440 (QHD / 1440p)
+- 3840 x 2160 (4K UHD)
+
+### 4:3 Standard
+- 640 x 480 (VGA)
+- 800 x 600 (SVGA)
+- 1024 x 768 (XGA)
+- 2048 x 1536 (iPad Retina)
+
+### 1:1 Square
+- 1080 x 1080 (Instagram standard)
+- 2048 x 2048 (high-res square)
+
+## Why Aspect Ratio Matters
+
+**Social media optimization**: Each platform has preferred dimensions. Uploading an image with the wrong aspect ratio means it will be cropped automatically, potentially cutting off important content or text.
+
+**Responsive web design**: When building layouts that adapt to different screen sizes, maintaining correct aspect ratios prevents images and videos from appearing distorted. CSS properties like `aspect-ratio` rely on understanding these proportions.
+
+**Video production**: Shooting or editing video at the wrong aspect ratio leads to letterboxing (black bars) or unwanted cropping when the content is displayed on standard screens.
+
+**Print and physical media**: Posters, business cards, and photo prints all have fixed dimensions. Calculating the correct pixel dimensions at your target aspect ratio ensures nothing gets cut off at the printer.
+
+## The Math Behind Aspect Ratios
+
+An aspect ratio is reduced to its simplest form by dividing both width and height by their greatest common divisor (GCD). For example, 1920 x 1080 reduces to 16:9 because GCD(1920, 1080) = 120, and 1920/120 = 16 while 1080/120 = 9. This tool performs that calculation automatically for any dimensions you enter.

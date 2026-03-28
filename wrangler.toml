@@ -1,0 +1,25 @@
+# Cloudflare Workers / Pages configuration
+# Used when deploying with the Cloudflare adapter for server-side routes
+
+name = "freetoolstack"
+compatibility_date = "2026-03-01"
+compatibility_flags = ["nodejs_compat"]
+
+# KV Namespace for rate limiting and premium subscriptions
+# Uncomment and add IDs after creating via `wrangler kv:namespace create`
+# [[kv_namespaces]]
+# binding = "RATE_LIMIT"
+# id = ""
+
+# [[kv_namespaces]]
+# binding = "SUBSCRIPTIONS"
+# id = ""
+
+# R2 Bucket for temporary file storage (if needed for server-side tools)
+# [[r2_buckets]]
+# binding = "FILES"
+# bucket_name = "freetoolstack-files"
+
+# Environment variables (set via Cloudflare Pages dashboard, not here)
+# [vars]
+# PUBLIC_AD_NETWORK = "none"

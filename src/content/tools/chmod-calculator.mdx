@@ -1,0 +1,36 @@
+---
+title: "Chmod Calculator"
+description: "Calculate Unix file permissions with a visual editor. Convert between numeric (755) and symbolic (rwxr-xr-x) formats instantly."
+category: "Developer Tools"
+icon: "lock"
+component: "ChmodCalculator"
+keywords: ["chmod calculator", "file permissions", "unix permissions", "linux permissions", "permission calculator"]
+featured: false
+premium: false
+relatedTools: ["cron-expression-generator"]
+faq:
+  - question: "What does chmod do?"
+    answer: "chmod (change mode) sets file access permissions on Unix/Linux systems, controlling who can read, write, or execute a file."
+  - question: "What does 755 mean?"
+    answer: "755 means the owner can read, write, and execute (7), while group members and others can only read and execute (5). This is the standard permission for web directories."
+  - question: "What is the most secure permission for private files?"
+    answer: "600 restricts access to the file owner only (read and write). Use 700 for private directories that need execute permission for traversal."
+howTo:
+  steps:
+    - name: "Set permissions visually"
+      text: "Check or uncheck read, write, and execute boxes for owner, group, and others."
+    - name: "See the result"
+      text: "The octal number and symbolic string update in real time as you toggle permissions."
+    - name: "Copy the command"
+      text: "Copy the generated chmod command to paste into your terminal."
+publishedAt: 2026-03-28
+estimatedTime: "Instant"
+---
+
+## Unix File Permissions Made Simple
+
+Unix file permissions control who can read, write, and execute files and directories. The three-digit octal system (like 755 or 644) encodes permissions for the owner, group, and others. Each digit is the sum of read (4), write (2), and execute (1) permissions.
+
+## Common Permission Patterns
+
+**755** is the standard for web-accessible directories and executable scripts. **644** is the default for regular files — owner can edit, everyone else can read. **600** is for private files like SSH keys and configuration files containing secrets. Never use **777** in production — it gives everyone full access.

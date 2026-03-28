@@ -1,0 +1,71 @@
+---
+title: "Number Base Converter"
+description: "Convert numbers between binary, octal, decimal, and hexadecimal. Essential tool for developers and computer science students."
+category: "Developer Tools"
+icon: "binary"
+component: "NumberBaseConverter"
+keywords: ["binary converter", "hex to decimal", "number base converter", "octal", "decimal to binary", "hexadecimal converter"]
+featured: false
+premium: false
+relatedTools: ["hash-generator", "base64-encoder"]
+faq:
+  - question: "What number bases are supported?"
+    answer: "The tool supports binary (base 2), octal (base 8), decimal (base 10), and hexadecimal (base 16). These are the four most commonly used number systems in computing and digital electronics."
+  - question: "How do I convert binary to decimal?"
+    answer: "Each binary digit represents a power of 2 from right to left. For example, binary 1101 = (1x8) + (1x4) + (0x2) + (1x1) = 13 in decimal. The tool performs this calculation automatically when you enter a binary number."
+  - question: "What characters are valid in hexadecimal?"
+    answer: "Hexadecimal uses digits 0-9 and letters A-F (case insensitive). Each hex digit represents a value from 0 to 15. For example, hex FF equals decimal 255, and hex 1A equals decimal 26."
+  - question: "Can I convert large numbers?"
+    answer: "Yes. The tool handles large numbers accurately. For extremely large values, JavaScript's precision limits apply (integers up to 2^53 - 1 are exact). The tool will indicate if a value exceeds safe integer range."
+howTo:
+  steps:
+    - name: "Enter a number"
+      text: "Type a number into any of the four input fields: binary, octal, decimal, or hexadecimal."
+    - name: "See all conversions"
+      text: "The equivalent value in every other base is calculated and displayed instantly as you type."
+    - name: "Copy the result"
+      text: "Click the copy button next to any converted value to copy it to your clipboard for use in your code or documentation."
+publishedAt: 2026-03-27
+estimatedTime: "Instant"
+---
+
+## Convert Between Number Systems Instantly
+
+Computers think in binary. Humans think in decimal. Developers and engineers often need to bridge this gap, working with binary, octal, decimal, and hexadecimal representations of the same value. Our free number base converter makes these translations effortless, showing you the equivalent value in all four bases simultaneously.
+
+## Understanding Number Bases
+
+### Binary (Base 2)
+Binary uses only two digits: 0 and 1. It is the fundamental language of all digital computers, where each bit represents an on or off state. Binary is essential for understanding low-level operations, bitwise logic, subnet masks, and hardware registers.
+
+### Octal (Base 8)
+Octal uses digits 0-7. Each octal digit maps to exactly three binary digits, making it a compact way to represent binary values. Octal is commonly used in Unix file permissions (e.g., chmod 755) and some legacy computing contexts.
+
+### Decimal (Base 10)
+Decimal is the standard human numbering system using digits 0-9. It is what we use in everyday life for counting, arithmetic, and most non-technical contexts. All other bases are typically converted to decimal for human readability.
+
+### Hexadecimal (Base 16)
+Hexadecimal uses digits 0-9 and letters A-F. Each hex digit maps to exactly four binary digits, making it extremely efficient for representing binary data. Hex is ubiquitous in programming for memory addresses, color codes, MAC addresses, and byte values.
+
+## Common Conversion Reference
+
+| Decimal | Binary | Octal | Hex |
+|---------|--------|-------|-----|
+| 0 | 0000 | 0 | 0 |
+| 8 | 1000 | 10 | 8 |
+| 10 | 1010 | 12 | A |
+| 15 | 1111 | 17 | F |
+| 16 | 10000 | 20 | 10 |
+| 255 | 11111111 | 377 | FF |
+
+## Where You Encounter These Bases
+
+**Web development**: CSS colors use hexadecimal (e.g., #FF5733). Understanding hex lets you read and modify color values directly.
+
+**Networking**: IP addresses, subnet masks, and MAC addresses are often displayed or manipulated in binary and hexadecimal notation.
+
+**Unix/Linux**: File permissions use octal notation. Knowing that 755 means rwxr-xr-x requires understanding octal-to-binary conversion.
+
+**Debugging**: Memory dumps, register values, and byte-level data are typically shown in hexadecimal. Converting to decimal or binary can help identify patterns and diagnose issues.
+
+**Computer science education**: Understanding number bases is a fundamental concept in CS curricula, from digital logic courses to data structures and algorithms.

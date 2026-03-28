@@ -1,0 +1,45 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import AdSlot from '../components/ads/AdSlot.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  author: string;
+  publishedAt: Date;
+  image?: string;
+  tags: string[];
+}
+
+const { title, description, author, publishedAt, image, tags } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} type="article">
+  <article class="mx-auto max-w-3xl px-4 py-12 sm:px-6">
+    <header class="mb-8">
+      <h1 class="text-3xl font-bold tracking-tight text-surface-900 sm:text-4xl">{title}</h1>
+      <div class="mt-3 flex items-center gap-3 text-sm text-surface-500">
+        <span>{author}</span>
+        <span>&middot;</span>
+        <time datetime={publishedAt.toISOString()}>
+          {publishedAt.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+        </time>
+      </div>
+      {tags.length > 0 && (
+        <div class="mt-3 flex flex-wrap gap-2">
+          {tags.map((tag) => (
+            <span class="rounded-full bg-primary-50 px-3 py-1 text-xs font-medium text-primary-700">{tag}</span>
+          ))}
+        </div>
+      )}
+    </header>
+
+    <AdSlot position="leaderboard" class="mb-8" />
+
+    <div class="prose prose-surface lg:prose-lg">
+      <slot />
+    </div>
+
+    <AdSlot position="in-content" class="mt-8" />
+  </article>
+</BaseLayout>

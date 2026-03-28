@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ToolCard from '../../components/shared/ToolCard.astro';
+import SearchBar from '../../components/shared/SearchBar';
+import { getCollection } from 'astro:content';
+
+const tools = await getCollection('tools');
+const categories = await getCollection('categories');
+
+const sortedTools = tools.sort((a, b) => a.data.title.localeCompare(b.data.title));
+const toolsByCategory = new Map<string, typeof tools>();
+
+for (const tool of sortedTools) {
+  const cat = tool.data.category;
+  if (!toolsByCategory.has(cat)) toolsByCategory.set(cat, []);
+  toolsByCategory.get(cat)!.push(tool);
+}
+
+const searchData = sortedTools.map((t) => ({
+  id: t.id,
+  title: t.data.title,
+  description: t.data.description,
+  category: t.data.category,
+  keywords: t.data.keywords,
+}));
+---
+
+<BaseLayout
+  title="All Free Online Tools"
+  description={`Browse ${tools.length} free online tools. JSON formatter, image compressor, PDF merger, unit converter, QR code generator, calculators, and more.`}
+>
+  <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6">
+    <h1 class="text-3xl font-bold tracking-tight text-surface-900 sm:text-4xl">All Tools</h1>
+    <p class="mt-2 text-lg text-surface-600">
+      {tools.length} free tools, all running in your browser.
+    </p>
+
+    <div class="mt-6 max-w-xl">
+      <SearchBar client:load tools={searchData} />
+    </div>
+
+    {categories.sort((a, b) => a.data.order - b.data.order).map((cat) => {
+      const catTools = toolsByCategory.get(cat.data.name) || [];
+      if (catTools.length === 0) return null;
+      return (
+        <section class="mt-10">
+          <h2 class="mb-4 text-xl font-bold text-surface-900">{cat.data.name}</h2>
+          <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {catTools.map((tool) => (
+              <ToolCard
+                title={tool.data.title}
+                description={tool.data.description}
+                slug={tool.id}
+                category={tool.data.category}
+              />
+            ))}
+          </div>
+        </section>
+      );
+    })}
+  </div>
+</BaseLayout>

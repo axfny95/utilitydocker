@@ -1,0 +1,48 @@
+---
+title: "Video to MP3 Converter"
+description: "Extract audio from video files and convert to MP3 directly in your browser. No uploads, no server processing. Fast and private."
+category: "Media Tools"
+icon: "music"
+component: "VideoToMp3"
+keywords: ["video to mp3", "extract audio", "convert video to audio", "video audio extractor", "mp3 converter"]
+featured: true
+premium: false
+relatedTools: ["video-to-gif", "video-compressor"]
+faq:
+  - question: "Is the audio extraction done on a server?"
+    answer: "No. The entire conversion process happens locally in your browser using WebAssembly-based processing. Your video file never leaves your device, ensuring complete privacy."
+  - question: "What video formats are supported?"
+    answer: "The tool supports most common video formats including MP4, WebM, MOV, and AVI. As long as your browser can decode the video, the audio track can be extracted and converted to MP3."
+  - question: "Can I choose the audio quality of the output MP3?"
+    answer: "Yes. You can select a bitrate ranging from 128 kbps for smaller files up to 320 kbps for near-lossless audio quality. Higher bitrates produce larger files but preserve more detail."
+howTo:
+  steps:
+    - name: "Load your video file"
+      text: "Drag and drop a video file onto the tool or click the upload area to browse. MP4, WebM, MOV, and AVI formats are accepted."
+    - name: "Choose audio quality"
+      text: "Select your preferred MP3 bitrate. 192 kbps is a good default for most use cases, balancing quality and file size."
+    - name: "Download the MP3"
+      text: "Click Convert, then download the extracted MP3 file. The tool displays the duration and output file size for your reference."
+publishedAt: 2026-03-28
+estimatedTime: "< 1 min"
+---
+
+## Extract Audio from Any Video in Seconds
+
+There are plenty of reasons you might need just the audio from a video file. Maybe you recorded a lecture on your phone and want to listen to it as a podcast during your commute. Perhaps you found a music performance on a platform that only offers video downloads. Or you simply need a voiceover track pulled out of a project file for separate editing. Whatever the case, converting video to MP3 should not require installing desktop software or uploading sensitive files to a random website.
+
+This tool runs entirely in your browser. You load a video, the audio track is decoded and re-encoded as an MP3 file, and you download the result. No data leaves your device at any point in the process.
+
+## How the Conversion Works
+
+Modern browsers ship with built-in media decoders that handle a wide range of video and audio codecs. When you drop a video file into this tool, the browser decodes the video container and separates the audio stream from the visual frames. That raw audio data is then encoded into the MP3 format at your chosen bitrate using a WebAssembly-based encoder running locally.
+
+The MP3 format remains the most universally compatible audio format available. Every phone, music player, car stereo, and operating system supports MP3 playback without additional software. While newer formats like AAC and Opus offer marginally better compression efficiency, MP3 compatibility is unmatched.
+
+## Choosing the Right Bitrate
+
+Bitrate determines both the quality and the size of your output file. At 128 kbps, a one-minute audio clip occupies roughly 960 KB. At 320 kbps, that same minute takes about 2.4 MB. For spoken content like lectures, meetings, and podcasts, 128 kbps is more than sufficient because the human voice occupies a narrow frequency range. For music, 192 kbps is the sweet spot where most listeners cannot distinguish the MP3 from the original. Audiophiles and archivists may prefer 320 kbps for maximum fidelity.
+
+## Common Use Cases
+
+Content creators frequently extract audio to repurpose video interviews as podcast episodes. Students pull lecture audio for on-the-go studying. Musicians isolate audio from performance videos for review. Editors separate dialogue tracks from rough cuts for audio-only editing passes. Because this tool processes everything locally, it handles confidential meeting recordings and private content without any privacy risk.

@@ -1,0 +1,68 @@
+---
+title: "PDF Merger"
+description: "Merge multiple PDF files into one document in your browser. Drag to reorder pages, preview before combining. No uploads needed."
+category: "PDF Tools"
+icon: "file-plus"
+component: "PdfMerger"
+keywords: ["pdf merger", "merge pdf", "combine pdf", "join pdf files", "pdf combiner", "merge pdf online", "combine pdf files free"]
+featured: false
+premium: false
+relatedTools: ["pdf-splitter", "invoice-generator"]
+faq:
+  - question: "Are my PDF files uploaded to a server?"
+    answer: "No. All merging happens locally in your browser using JavaScript. Your PDF files are processed entirely on your device and are never sent to any external server. This makes the tool safe for confidential and sensitive documents."
+  - question: "Is there a limit on how many PDFs I can merge?"
+    answer: "There is no hard limit on the number of files. The practical limit depends on your device's available memory. Most modern computers can handle merging dozens of PDFs or combined file sizes up to 100 MB without issues."
+  - question: "Can I reorder the PDFs before merging?"
+    answer: "Yes. After uploading your files, drag and drop them into the desired order. The merged output will follow the exact sequence you arrange. You can also remove individual files from the list before merging."
+  - question: "Will the merged PDF preserve formatting and links?"
+    answer: "Yes. The merging process combines the raw PDF pages without re-rendering them. All text, images, fonts, vector graphics, annotations, and hyperlinks from the original files are preserved exactly as they were."
+  - question: "Can I merge password-protected PDFs?"
+    answer: "PDFs with owner passwords that restrict editing can typically be merged. However, PDFs with user passwords that prevent opening require you to enter the password before they can be processed. The tool will prompt you for the password when needed."
+howTo:
+  steps:
+    - name: "Upload your PDF files"
+      text: "Drag and drop multiple PDF files onto the tool, or click to browse and select them from your device. Each file appears in a list with its name and page count."
+    - name: "Arrange the order"
+      text: "Drag files in the list to reorder them. The final merged document will follow this exact sequence. Remove any files you do not want to include by clicking the remove button."
+    - name: "Merge and download"
+      text: "Click the Merge button to combine all PDFs into a single document. Preview the result to verify the page order, then download the merged PDF file."
+publishedAt: 2026-03-27
+estimatedTime: "< 1 min"
+---
+
+## When You Need to Merge PDF Files
+
+Combining multiple PDF files into a single document is one of the most common document tasks in both professional and personal contexts. You might need to merge several invoices into one file for an expense report, combine chapters of a report into a single document for distribution, join scanned pages into one cohesive PDF, or assemble application materials including a cover letter, resume, and references into a unified package.
+
+Many PDF editing tools require expensive subscriptions or desktop software installations. Our browser-based PDF merger eliminates both barriers. Upload your files, arrange them in order, and download the combined result. The entire process runs in your browser using JavaScript, which means your documents never leave your device and there is nothing to install.
+
+## How Browser-Based PDF Merging Works
+
+PDF files are structured documents containing pages, fonts, images, and metadata organized in a specific binary format. Merging PDFs is not as simple as concatenating files together. The internal cross-reference tables, object numbering, and resource dictionaries must be carefully reorganized to produce a valid combined document.
+
+Our tool uses a client-side PDF processing library that parses each uploaded file, extracts the individual pages with all their content intact, and assembles them into a new PDF with properly structured internal references. This approach preserves everything on each page exactly as it appeared in the original file: text, images, vector graphics, fonts, annotations, form fields, and hyperlinks.
+
+Because the tool works at the structural level rather than re-rendering pages, there is zero quality loss. A page in the merged output is byte-for-byte identical to how it appeared in the source file. This is fundamentally different from approaches that print pages to a virtual printer or rasterize them to images, both of which degrade quality.
+
+## Common PDF Merging Scenarios
+
+**Business reports and proposals**: Combine a cover page, executive summary, data tables, and appendices from separate files into a polished single document. This is especially useful when different team members author different sections and submit them as individual PDFs.
+
+**Legal document packages**: Attorneys and paralegals frequently need to assemble exhibits, declarations, contracts, and supporting documents into a single filing. Maintaining the exact formatting of each original document is critical in legal contexts, and our tool preserves every detail.
+
+**Academic submissions**: Students and researchers often need to combine a thesis or dissertation with supplementary materials, approval pages, and appendices. Journal submissions may require merging the manuscript with figures, tables, and cover letters.
+
+**Scanning and digitization**: When scanning a multi-page document on a flatbed scanner that produces individual page files, merging them into a single PDF creates a usable document. Similarly, combining photos of whiteboard notes or receipts into one PDF keeps related information together.
+
+**Administrative tasks**: Combine monthly bank statements into an annual summary, merge insurance documents into a complete policy file, or assemble tax documents into a single package for your accountant. These everyday tasks become trivial with a quick merge.
+
+## Tips for a Clean Merge
+
+Check the page orientation of each source file before merging. Mixing portrait and landscape pages works but can create an awkward reading experience. If possible, standardize orientation before combining.
+
+Review page sizes across your source files. Letter, A4, and other page sizes can coexist in a single PDF, but viewers will adjust the display for each page, which may surprise recipients. Most business contexts expect a uniform page size throughout.
+
+Consider the file size of your merged output. If you are combining many high-resolution scanned documents, the result can be quite large. Run the merged file through a PDF compressor if the total size exceeds what you need for email or upload limits.
+
+Name your output file descriptively. Instead of "merged.pdf," use something like "Q4-Expense-Report-Complete.pdf" or "Smith-Application-Package.pdf" so recipients and your future self can identify the document without opening it.

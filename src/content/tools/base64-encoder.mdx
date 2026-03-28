@@ -1,0 +1,60 @@
+---
+title: "Base64 Encoder & Decoder"
+description: "Encode and decode Base64 strings instantly in your browser. Supports text and file encoding with no data sent to any server."
+category: "Developer Tools"
+icon: "code"
+component: "Base64Encoder"
+keywords: ["base64 encoder", "base64 decoder", "base64 converter", "encode base64 online", "base64 string"]
+featured: false
+premium: false
+relatedTools: ["json-formatter", "url-encoder", "hash-generator"]
+faq:
+  - question: "What is Base64 encoding?"
+    answer: "Base64 is a binary-to-text encoding scheme that converts binary data into a set of 64 printable ASCII characters. It is commonly used to embed binary data in text-based formats like JSON, XML, HTML, and email."
+  - question: "Is my data safe when using this tool?"
+    answer: "Yes. All encoding and decoding happens locally in your browser using JavaScript. No data is ever transmitted to our servers or any third party."
+  - question: "Can I encode files as well as text?"
+    answer: "Yes. You can paste plain text for encoding or supply file contents. The tool converts both to their Base64 representation instantly."
+  - question: "Why is the Base64 output larger than the original?"
+    answer: "Base64 encoding increases data size by approximately 33% because it represents every 3 bytes of input as 4 ASCII characters. This overhead is the trade-off for safe text-based transport."
+  - question: "Is Base64 a form of encryption?"
+    answer: "No. Base64 is an encoding scheme, not encryption. It provides no security whatsoever — anyone can decode a Base64 string. Never use it to protect sensitive data."
+howTo:
+  steps:
+    - name: "Enter your data"
+      text: "Paste the text or data you want to encode into the input field. Select the Encode or Decode direction."
+    - name: "Convert instantly"
+      text: "Click the Encode or Decode button. The result appears immediately in the output panel."
+    - name: "Copy the result"
+      text: "Click the Copy button to copy the Base64 output to your clipboard, ready to paste into your code or configuration."
+publishedAt: 2026-03-27
+estimatedTime: "Instant"
+---
+
+## What Is Base64 and When Should You Use It?
+
+Base64 encoding transforms arbitrary binary data into a string composed exclusively of printable ASCII characters. The name refers to the 64-character alphabet used: A-Z, a-z, 0-9, plus (+), and slash (/), with equals (=) used for padding. This encoding is essential whenever binary data must travel through systems designed for text.
+
+The most frequent use case is embedding images or other assets directly inside HTML, CSS, or JSON. Data URIs, for instance, use Base64 to inline small images (`data:image/png;base64,...`), eliminating an extra HTTP request. Email attachments rely on Base64 through the MIME standard, and many REST APIs require Base64-encoded payloads for binary fields.
+
+Our encoder handles both directions: paste a raw string to get its Base64 form, or paste a Base64 string to recover the original. Everything runs in your browser with the native `btoa()` and `atob()` functions, meaning your data never leaves your machine.
+
+## Practical Applications for Developers
+
+**Embedding assets in code** is one of the most common reasons developers reach for Base64. Small icons, fonts, or audio clips can be inlined as data URIs, reducing the number of network requests. For assets under a few kilobytes, this approach often improves page load performance.
+
+**API payloads** frequently require Base64-encoded content. Cloud storage services like AWS S3 pre-signed requests, image processing APIs, and webhook payloads commonly accept binary data wrapped in Base64. Instead of managing multipart form uploads, you can send everything as a single JSON body.
+
+**JWT tokens** (JSON Web Tokens) use a URL-safe Base64 variant called Base64url to encode their header and payload segments. Understanding how to decode these segments is invaluable when debugging authentication flows. Paste the token segment into this tool to inspect its JSON contents.
+
+**Configuration files** in CI/CD systems like GitHub Actions or GitLab CI often store secrets and certificates as Base64-encoded environment variables. You can verify the contents of these values locally before committing them to your pipeline.
+
+## Understanding the Size Overhead
+
+Every three bytes of source data become four Base64 characters, which means encoded output is roughly 33% larger than the input. For a 1 KB image, the encoded result is about 1.33 KB. This overhead is negligible for small assets but becomes significant for large files. As a guideline, inline Base64 is most efficient for assets under 10 KB; beyond that, serving the file separately with proper caching is usually faster.
+
+The padding character `=` appears at the end of Base64 strings when the input length is not a multiple of three. One trailing `=` means one byte of padding; two means two bytes. Some implementations strip padding because the decoder can infer the original length, but our tool preserves it for maximum compatibility.
+
+## Base64 vs Base64url
+
+Standard Base64 uses `+` and `/` as its 62nd and 63rd characters, which can cause problems in URLs and filenames. The Base64url variant replaces them with `-` and `_` respectively, and typically omits padding. JWTs, OAuth tokens, and URL query parameters use Base64url. When you encounter a Base64 string with hyphens or underscores instead of plus signs and slashes, you are looking at the URL-safe variant.

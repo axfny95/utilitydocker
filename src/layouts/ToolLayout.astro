@@ -1,0 +1,117 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumbs from '../components/layout/Breadcrumbs.astro';
+import SchemaMarkup from '../components/seo/SchemaMarkup.astro';
+import AdSlot from '../components/ads/AdSlot.astro';
+import EmailCapture from '../components/shared/EmailCapture';
+import type { ToolMeta } from '../types/tool';
+
+interface Props {
+  tool: ToolMeta;
+  slug: string;
+}
+
+const { tool, slug } = Astro.props;
+
+const breadcrumbItems = [
+  { label: 'Home', href: '/' },
+  { label: 'Tools', href: '/tools' },
+  { label: tool.title },
+];
+
+const toolUrl = `/tools/${slug}`;
+---
+
+<BaseLayout title={tool.title} description={tool.description} canonicalUrl={new URL(toolUrl, Astro.site).href} ogImage={`/og/${slug}.png`}>
+  <Fragment slot="head">
+    <SchemaMarkup tool={tool} slug={slug} />
+  </Fragment>
+
+  <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6">
+    <Breadcrumbs items={breadcrumbItems} />
+
+    <AdSlot position="leaderboard" class="mb-6" />
+
+    <!-- Tool hero -->
+    <div class="mb-6">
+      <div class="flex items-center gap-3">
+        <h1 class="text-3xl font-bold tracking-tight text-surface-900 sm:text-4xl">
+          {tool.title}
+        </h1>
+        {tool.premium && (
+          <span class="rounded-full bg-amber-100 px-3 py-1 text-xs font-medium text-amber-800">Premium</span>
+        )}
+      </div>
+      <p class="mt-2 text-lg text-surface-600">{tool.description}</p>
+      <div class="mt-3 flex flex-wrap items-center gap-3 text-sm text-surface-500">
+        <span class="flex items-center gap-1">
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          {tool.estimatedTime}
+        </span>
+        <span class="flex items-center gap-1">
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+          100% Client-Side
+        </span>
+        <span class="flex items-center gap-1">
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+          </svg>
+          No Signup Required
+        </span>
+      </div>
+    </div>
+
+    <!-- Tool component (React island renders here) -->
+    <div class="tool-container mb-8 rounded-xl border border-surface-200 bg-white p-4 shadow-sm sm:p-6">
+      <slot name="tool" />
+    </div>
+
+    <AdSlot position="in-content" class="mb-8" />
+
+    <!-- SEO content (MDX body) -->
+    <div class="prose prose-surface mx-auto max-w-none lg:prose-lg">
+      <slot />
+    </div>
+
+    <!-- FAQ section -->
+    {tool.faq.length > 0 && (
+      <section class="mt-12">
+        <h2 class="mb-6 text-2xl font-bold text-surface-900">Frequently Asked Questions</h2>
+        <div class="space-y-4">
+          {tool.faq.map((item) => (
+            <details class="group rounded-lg border border-surface-200 bg-white">
+              <summary class="flex cursor-pointer items-center justify-between px-5 py-4 text-lg font-medium text-surface-900">
+                {item.question}
+                <svg class="h-5 w-5 shrink-0 text-surface-400 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </summary>
+              <p class="px-5 pb-4 text-surface-600">{item.answer}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Related tools -->
+    {tool.relatedTools.length > 0 && (
+      <section class="mt-12">
+        <h2 class="mb-6 text-2xl font-bold text-surface-900">Related Tools</h2>
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <slot name="related-tools" />
+        </div>
+      </section>
+    )}
+
+    <!-- Email capture -->
+    <div class="mt-12">
+      <EmailCapture client:visible toolSlug={slug} />
+    </div>
+
+    <AdSlot position="sticky-bottom" class="mt-8" />
+  </div>
+</BaseLayout>

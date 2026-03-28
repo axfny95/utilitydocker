@@ -1,0 +1,60 @@
+---
+title: "Hash Generator"
+description: "Generate MD5, SHA-1, SHA-256, and SHA-512 hashes from text or files. Verify file integrity with instant client-side hashing."
+category: "Developer Tools"
+icon: "shield"
+component: "HashGenerator"
+keywords: ["hash generator", "sha256 hash", "sha1 hash", "file hash checker", "md5 generator", "checksum tool"]
+featured: false
+premium: false
+relatedTools: ["base64-encoder"]
+faq:
+  - question: "What hash algorithms are supported?"
+    answer: "The tool supports MD5, SHA-1, SHA-256, and SHA-512. SHA-256 is recommended for most use cases as it provides strong collision resistance and is widely used in modern security applications."
+  - question: "Is my data sent to a server for hashing?"
+    answer: "No. All hash computation happens in your browser using the Web Crypto API. Your text and files never leave your device."
+  - question: "Can I use this to verify file downloads?"
+    answer: "Yes. Drop a downloaded file into the tool and compare the computed hash against the hash provided by the software publisher. If they match, the file has not been tampered with."
+  - question: "Can I reverse a hash to get the original text?"
+    answer: "No. Cryptographic hash functions are one-way by design. You cannot recover the original input from a hash. That property is what makes them useful for password storage and integrity verification."
+  - question: "Is MD5 still safe to use?"
+    answer: "MD5 is considered cryptographically broken for security purposes due to known collision vulnerabilities. It is acceptable for non-security checksums like cache keys, but use SHA-256 or SHA-512 for anything security-related."
+howTo:
+  steps:
+    - name: "Enter text or upload a file"
+      text: "Type or paste the text you want to hash, or drag and drop a file onto the tool to compute its checksum."
+    - name: "Select a hash algorithm"
+      text: "Choose from MD5, SHA-1, SHA-256, or SHA-512 depending on your requirements. SHA-256 is the recommended default."
+    - name: "Copy or compare the hash"
+      text: "Copy the computed hash to your clipboard, or paste an expected hash to verify that it matches the computed result."
+publishedAt: 2026-03-27
+estimatedTime: "Instant"
+---
+
+## What Are Cryptographic Hash Functions?
+
+A cryptographic hash function takes an input of any size — a single character, a paragraph, or an entire file — and produces a fixed-length string of hexadecimal characters called a digest. The same input always produces the same digest, but even the tiniest change to the input produces a completely different output. This property, known as the avalanche effect, is what makes hashes useful for verifying data integrity.
+
+Hash functions are one-way: given the output, there is no computational method to reconstruct the input. This makes them fundamentally different from encoding (like Base64) or encryption (like AES). You can encode and decode, encrypt and decrypt, but you can only hash in one direction.
+
+Our hash generator computes digests using the Web Crypto API built into your browser, meaning your text and files are processed entirely on your device. Nothing is transmitted over the network.
+
+## Choosing the Right Algorithm
+
+**MD5** produces a 128-bit (32-character) digest and is the fastest of the four. However, researchers demonstrated practical collision attacks against MD5 in 2004, meaning two different inputs can be crafted to produce the same hash. Use MD5 only for non-security purposes like cache busting or quick checksums where collision resistance is not critical.
+
+**SHA-1** produces a 160-bit (40-character) digest. It was the standard for years, but a practical collision was demonstrated in 2017 by the SHAttered project. Major browsers and certificate authorities have deprecated SHA-1 for TLS certificates. It remains acceptable for legacy compatibility but should not be used for new security applications.
+
+**SHA-256** produces a 256-bit (64-character) digest and is the current industry standard. It is used in TLS certificates, Bitcoin mining, software signing, and password hashing schemes. No practical collision or preimage attacks exist against SHA-256. This is the algorithm you should choose by default.
+
+**SHA-512** produces a 512-bit (128-character) digest and offers the highest security margin in this tool. It is slightly faster than SHA-256 on 64-bit processors due to its internal architecture. Choose SHA-512 when you need the longest possible digest or the maximum theoretical security margin.
+
+## Practical Uses for Hash Generation
+
+**Verifying file integrity** is the most common use case. Software publishers provide SHA-256 checksums alongside downloads so you can verify that the file was not corrupted or tampered with during transfer. Drop the downloaded file into this tool, compare the hash to the published value, and confirm the file is authentic.
+
+**Password storage** in web applications relies on hashing. Instead of storing passwords in plain text, servers store the hash of each password. When a user logs in, the server hashes the submitted password and compares it to the stored hash. Modern systems use specialized password hashing algorithms like bcrypt or Argon2 that build on SHA-family functions with added salting and key stretching.
+
+**Data deduplication** uses hashes to identify identical files without comparing their full contents. Cloud storage services and backup tools compute a hash for each file and store only one copy of files with matching hashes, saving significant storage space.
+
+**Git version control** uses SHA-1 hashes (migrating to SHA-256) to identify every commit, tree, and blob object. When you see a commit ID like `a1b2c3d4`, that is a truncated SHA-1 hash of the commit's contents. This system ensures the entire repository history is tamper-evident.

@@ -1,0 +1,70 @@
+---
+title: "PDF Splitter"
+description: "Split PDF files into individual pages or custom ranges in your browser. Extract specific pages and download them instantly."
+category: "PDF Tools"
+icon: "file-minus"
+component: "PdfSplitter"
+keywords: ["pdf splitter", "split pdf", "extract pdf pages", "separate pdf", "pdf page extractor", "split pdf online", "remove pdf pages"]
+featured: false
+premium: false
+relatedTools: ["pdf-merger", "invoice-generator"]
+faq:
+  - question: "Are my PDF files uploaded to a server?"
+    answer: "No. All splitting happens locally in your browser. Your documents are processed entirely on your device using JavaScript and are never transmitted to any external server. This makes it safe for confidential files."
+  - question: "Can I extract specific page ranges?"
+    answer: "Yes. You can specify exact page numbers or ranges like 1-5, 8, 12-15. The tool also lets you split into individual pages, creating a separate PDF for each page in the document."
+  - question: "Will splitting preserve the original formatting?"
+    answer: "Yes. The tool extracts pages at the structural level without re-rendering. All text, images, fonts, annotations, form fields, and hyperlinks on each extracted page remain exactly as they appeared in the original document."
+  - question: "Is there a page limit for the source PDF?"
+    answer: "There is no hard limit. The practical limit depends on your device's memory. Most modern computers handle PDFs with hundreds of pages and file sizes up to 100 MB without problems."
+  - question: "Can I split a password-protected PDF?"
+    answer: "If the PDF has a user password that prevents opening, you must enter it before the tool can process the file. PDFs with only owner restrictions on editing or printing can typically be split without entering a password."
+howTo:
+  steps:
+    - name: "Upload your PDF"
+      text: "Drag and drop a PDF file onto the tool or click to browse your files. The tool displays a page count and thumbnail preview of each page in the document."
+    - name: "Select pages to extract"
+      text: "Click on individual pages to select them, or enter a page range like 1-5, 8, 12-15 in the input field. Use the Select All button to split every page into separate files."
+    - name: "Split and download"
+      text: "Click the Split button to extract the selected pages into a new PDF. Download the result as a single file containing only your chosen pages, or as individual page files."
+publishedAt: 2026-03-27
+estimatedTime: "< 1 min"
+---
+
+## Why Split a PDF
+
+Large PDF documents often contain more information than you need for a particular purpose. A 50-page contract might have only three pages of relevant terms you need to share with a colleague. A scanned document might include blank pages or irrelevant sections. An ebook chapter needs to be extracted for classroom distribution. A multi-section report needs to be broken into individual deliverables for different stakeholders.
+
+Splitting a PDF lets you extract exactly the pages you need, reducing file size and focusing the content for its intended audience. Our browser-based PDF splitter handles this entirely on your device. Upload the file, select your pages, and download the result. No software to install, no accounts to create, and no documents uploaded to external servers.
+
+## How PDF Splitting Works in the Browser
+
+A PDF file stores its pages as distinct objects within a structured container. Each page object references its own content streams, fonts, images, and annotations. Splitting a PDF involves creating a new document that contains only the specified page objects along with all their dependencies.
+
+The tool parses the binary structure of your uploaded PDF, identifies each page and its associated resources, and constructs a new PDF containing only the pages you selected. Shared resources like fonts that appear on multiple pages are included once in the output, keeping the file size efficient. The cross-reference table and object numbering in the new file are recalculated to produce a clean, valid PDF.
+
+This structural approach means zero quality loss. The extracted pages are identical to how they appeared in the original document. No re-rendering, no rasterization, and no compression artifacts are introduced during the split.
+
+## Common PDF Splitting Scenarios
+
+**Extracting signature pages**: When a signed contract needs to be filed or shared, you often need just the signature page rather than the entire document. Extract that single page into its own file for quick reference and attachment.
+
+**Removing sensitive information**: A report might contain sections with confidential data that should not be shared with certain recipients. Rather than redacting content, splitting out only the non-sensitive sections creates a clean document for wider distribution.
+
+**Breaking up scanned documents**: Flatbed scanners often produce one long PDF from a batch scan. Splitting lets you separate individual documents that were scanned in sequence, such as separating a stack of receipts into individual files for expense tracking.
+
+**Creating handouts from presentations**: A slide deck exported as PDF might contain 60 slides, but your workshop only needs slides 15 through 30. Extract that range into a focused handout for participants.
+
+**Reducing email attachment size**: When a large PDF exceeds email attachment limits, splitting it into smaller sections lets you send it across multiple emails. This is especially useful for scanned documents that tend to be large due to embedded images.
+
+## Tips for Effective PDF Splitting
+
+Before splitting, scroll through the page previews to identify exactly which pages you need. Page numbers printed on the document's pages do not always match the PDF's internal page numbering, especially when a document has unnumbered front matter like title pages and table of contents.
+
+Use page ranges for continuous sections and individual page numbers for non-sequential extractions. The format "1-5, 8, 12-15" extracts pages 1 through 5, page 8, and pages 12 through 15 into a single output file. This is faster than extracting each page individually and merging them.
+
+When splitting a document into multiple separate files, establish a clear naming convention before you start. Name files by section, chapter number, or content description so they remain organized and identifiable after extraction.
+
+If you need to split a very large document into many individual files, the "split all" option creates a separate PDF for each page. This is useful for processing each page independently, such as when feeding individual pages into an OCR tool or organizing a scanned archive.
+
+Check the output file size after splitting. Extracted pages that contain high-resolution images will carry those images into the new file. If the split PDF is still larger than expected, consider running it through a compression tool to reduce the embedded image sizes.

@@ -1,0 +1,50 @@
+---
+title: "Box Shadow Generator"
+description: "Design CSS box shadows visually with a live preview. Adjust offset, blur, spread, and color, then copy the generated CSS code."
+category: "Developer Tools"
+icon: "square"
+component: "BoxShadowGenerator"
+keywords: ["box shadow generator", "css shadow", "shadow maker", "css box-shadow", "drop shadow css"]
+featured: false
+premium: false
+relatedTools: ["css-gradient-generator", "color-picker", "color-palette-generator"]
+faq:
+  - question: "Can I add multiple shadows to one element?"
+    answer: "Yes. The tool lets you add multiple shadow layers and configure each one independently. The CSS box-shadow property supports comma-separated values, and this tool generates the correct multi-shadow syntax. Layered shadows create more realistic depth effects."
+  - question: "What is the difference between a regular shadow and an inset shadow?"
+    answer: "A regular box shadow appears outside the element, creating the illusion that the element floats above the page. An inset shadow appears inside the element's border, creating a pressed or recessed look. You can toggle inset mode for any shadow layer in the tool."
+  - question: "Does the generated CSS work in all browsers?"
+    answer: "The box-shadow property is supported in all modern browsers including Chrome, Firefox, Safari, Edge, and Opera. No vendor prefixes are needed. The tool generates clean, standards-compliant CSS that works everywhere."
+howTo:
+  steps:
+    - name: "Adjust shadow parameters"
+      text: "Use the sliders to set the horizontal offset, vertical offset, blur radius, and spread radius. Pick a shadow color and adjust its opacity. The preview element updates in real time."
+    - name: "Add layers and fine-tune"
+      text: "Click Add Shadow to create additional shadow layers for more complex effects. Toggle inset mode on any layer. Reorder or delete layers as you experiment with the design."
+    - name: "Copy the CSS"
+      text: "When you are satisfied with the visual result, click the copy button to grab the complete CSS box-shadow declaration. Paste it directly into your stylesheet or component."
+publishedAt: 2026-03-28
+estimatedTime: "1-2 min"
+---
+
+## Create Perfect CSS Box Shadows Without Guesswork
+
+The CSS box-shadow property is deceptively simple in concept but surprisingly difficult to get right by hand. It accepts up to six values: horizontal offset, vertical offset, blur radius, spread radius, color, and an optional inset keyword. Small changes to any of these values dramatically alter the visual result. Writing shadow values in code and refreshing the browser to see the effect is an inefficient loop that eats into development time.
+
+This visual generator lets you manipulate each parameter with sliders and see the result instantly on a live preview element. When the shadow looks right, you copy the generated CSS and move on. No guessing, no refreshing, no wasted cycles.
+
+## Understanding Box Shadow Parameters
+
+The horizontal and vertical offsets control the direction the shadow falls. Positive horizontal values push the shadow to the right, and positive vertical values push it downward. Setting both to zero centers the shadow evenly around the element, which is common for ambient glow effects.
+
+The blur radius controls how soft or sharp the shadow edge appears. A value of zero produces a hard, crisp shadow edge. Higher values create a gradual fade from the shadow color to transparency. The spread radius expands or contracts the shadow relative to the element's size. Positive spread makes the shadow larger than the element, while negative spread makes it smaller, which is useful for tight, focused shadows.
+
+Color and opacity complete the picture. Subtle shadows typically use black or dark gray at low opacity. Colored shadows can add creative depth, especially on cards and buttons over colored backgrounds.
+
+## Layered Shadows for Realistic Depth
+
+Flat design is giving way to depth-rich interfaces where shadows convey hierarchy. A single shadow often looks artificial. Designers layer multiple shadows with different offsets, blur values, and opacities to simulate how light interacts with surfaces in the real world. This tool supports unlimited shadow layers, each configurable independently, making it straightforward to build sophisticated multi-layer effects.
+
+## From Design to Code in Seconds
+
+The tool outputs a standards-compliant CSS box-shadow declaration ready to paste into any stylesheet, CSS module, styled-component, or Tailwind arbitrary value. No browser prefixes are necessary since box-shadow enjoys universal modern browser support.

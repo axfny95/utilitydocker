@@ -1,0 +1,62 @@
+---
+title: "Meta Tag Generator"
+description: "Generate SEO meta tags, Open Graph tags, and Twitter Cards with a live SERP preview. Optimize your page's search and social appearance."
+category: "SEO Tools"
+icon: "search"
+component: "MetaTagGenerator"
+keywords: ["meta tag generator", "og tag generator", "seo meta tags", "twitter card generator", "open graph generator"]
+featured: false
+premium: false
+relatedTools: ["robots-txt-generator"]
+faq:
+  - question: "Which meta tags matter most for SEO?"
+    answer: "The title tag and meta description are the most impactful. They control how your page appears in search results and directly influence click-through rates from the SERP."
+  - question: "What are Open Graph tags used for?"
+    answer: "Open Graph (og:) tags define how your page appears when shared on Facebook, LinkedIn, Discord, Slack, and most social platforms. The og:image tag is especially important for driving engagement."
+  - question: "What is the ideal OG image size?"
+    answer: "Use 1200x630 pixels for maximum compatibility across all platforms. This aspect ratio displays correctly on Facebook, Twitter, LinkedIn, and messaging apps."
+  - question: "Do I need separate Twitter Card tags if I have Open Graph tags?"
+    answer: "Twitter falls back to Open Graph tags when its own tags are missing. However, adding dedicated Twitter Card tags gives you finer control over your content's appearance on the platform."
+  - question: "How long should my meta description be?"
+    answer: "Aim for 120-155 characters. Google truncates descriptions beyond approximately 155 characters in desktop results and even shorter on mobile."
+howTo:
+  steps:
+    - name: "Enter your page details"
+      text: "Fill in the page title, description, canonical URL, and OG image URL. Add your Twitter handle for complete social tag coverage."
+    - name: "Preview your SERP listing"
+      text: "Review the live Google search result preview to see how your title and description will appear. Adjust until the snippet is compelling and not truncated."
+    - name: "Copy the HTML"
+      text: "Click Copy HTML to grab the complete set of meta tags, ready to paste into the head section of your HTML document."
+publishedAt: 2026-03-27
+estimatedTime: "< 1 min"
+---
+
+## Why Meta Tags Are Critical for Search and Social Visibility
+
+Meta tags are invisible to visitors reading your page, but they are the first thing search engines and social platforms see. The title tag and meta description control your listing in Google, Bing, and DuckDuckGo search results. Open Graph tags determine how your link appears when someone shares it on Facebook, LinkedIn, Slack, or iMessage. Twitter Card tags do the same for posts on Twitter/X.
+
+A well-optimized set of meta tags can significantly improve click-through rates without changing your search ranking position. Research consistently shows that compelling SERP snippets earn more clicks than generic or truncated ones, even when they rank lower on the page. This tool generates all three tag families — standard HTML meta, Open Graph, and Twitter Card — from a single form, with a live SERP preview so you can fine-tune the result.
+
+## Anatomy of a Complete Meta Tag Set
+
+**Standard HTML meta tags** include the title tag (shown as the clickable blue headline in search results), the meta description (the two-line summary beneath the title), the charset declaration, the viewport tag for responsive design, and the robots directive that controls indexing behavior.
+
+**Open Graph tags** were introduced by Facebook and are now the universal standard for social link previews. The essential tags are `og:title`, `og:description`, `og:image`, `og:url`, and `og:type`. When a user pastes your URL into a social post or messaging app, the platform reads these tags to construct the rich preview card. Pages without Open Graph tags often display with a bare URL and no image, dramatically reducing engagement.
+
+**Twitter Card tags** give you specific control over how your page appears in tweets. The `twitter:card` tag determines the layout format — "summary" for a small thumbnail or "summary_large_image" for a wide banner image. While Twitter does fall back to Open Graph tags, defining dedicated Twitter tags lets you tailor the title, description, and image for Twitter's specific display format.
+
+## Writing Effective Titles and Descriptions
+
+Your title tag should be under 60 characters to avoid truncation in Google results. Front-load the most important keywords because search engines and users both place more weight on the first few words. Include your brand name, but place it at the end separated by a pipe or dash unless you are a household name that adds click-through value.
+
+Your meta description should be between 120 and 155 characters. Treat it as ad copy, not a summary. Use active voice, include a clear value proposition, and end with something that invites a click — a question, a benefit, or a call to action. Avoid generic phrases like "Welcome to our website" that waste precious character space.
+
+For the OG image, use a high-quality image at 1200x630 pixels. This aspect ratio displays correctly across every major platform. Include your brand logo, a headline, or a visual that communicates the page's topic at a glance. Pages with strong OG images earn significantly more shares and engagement than those with generic or missing images.
+
+## Common Meta Tag Mistakes to Avoid
+
+Duplicate meta descriptions across pages are a frequent problem. Every page should have a unique description that accurately reflects its specific content. Search engines may ignore duplicate descriptions entirely and generate their own snippets.
+
+Missing canonical URLs can lead to duplicate content issues. The canonical tag tells search engines which version of a URL is the authoritative one, preventing dilution of ranking signals across www and non-www, HTTP and HTTPS, or parameterized URL variants.
+
+Forgetting the viewport meta tag breaks mobile rendering. Without `<meta name="viewport" content="width=device-width, initial-scale=1">`, mobile browsers render pages at desktop width and shrink them to fit, resulting in tiny, unreadable text. This tag is essential for every modern web page.

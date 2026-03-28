@@ -1,0 +1,62 @@
+---
+const currentYear = new Date().getFullYear();
+
+const footerLinks = {
+  'Popular Tools': [
+    { label: 'All Tools', href: '/tools' },
+    { label: 'Developer Tools', href: '/category/developer-tools' },
+    { label: 'Calculator Tools', href: '/category/calculator-tools' },
+    { label: 'Image Tools', href: '/category/image-tools' },
+    { label: 'PDF Tools', href: '/category/pdf-tools' },
+    { label: 'Text Tools', href: '/category/text-tools' },
+  ],
+  'More Categories': [
+    { label: 'Media Tools', href: '/category/media-tools' },
+    { label: 'Converter Tools', href: '/category/converter-tools' },
+    { label: 'Productivity Tools', href: '/category/productivity-tools' },
+    { label: 'Generator Tools', href: '/category/generator-tools' },
+    { label: 'SEO Tools', href: '/category/seo-tools' },
+    { label: 'Legal Tools', href: '/category/legal-tools' },
+  ],
+  Company: [
+    { label: 'About', href: '/about' },
+    { label: 'Blog', href: '/blog' },
+    { label: 'Contact', href: '/contact' },
+    { label: 'Pricing', href: '/pricing' },
+    { label: 'Privacy Policy', href: '/privacy' },
+    { label: 'Terms of Service', href: '/terms' },
+  ],
+};
+---
+
+<footer class="border-t border-surface-200 bg-white">
+  <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6">
+    <div class="grid grid-cols-2 gap-8 md:grid-cols-4">
+      <div class="col-span-2 md:col-span-1">
+        <a href="/" class="text-lg font-bold text-primary-600">FreeToolStack</a>
+        <p class="mt-2 text-sm text-surface-500">
+          Free online tools that run in your browser. No uploads, no signups, complete privacy.
+        </p>
+      </div>
+
+      {Object.entries(footerLinks).map(([heading, links]) => (
+        <div>
+          <h3 class="text-sm font-semibold text-surface-900">{heading}</h3>
+          <ul class="mt-3 space-y-2">
+            {links.map((link) => (
+              <li>
+                <a href={link.href} class="text-sm text-surface-500 transition-colors hover:text-primary-600">
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-10 border-t border-surface-200 pt-6 text-center text-sm text-surface-400">
+      &copy; {currentYear} FreeToolStack. All rights reserved. Your files never leave your device.
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,60 @@
+---
+title: "JWT Decoder"
+description: "Decode and inspect JSON Web Tokens instantly. View headers, payloads, and claims without any server-side processing."
+category: "Developer Tools"
+icon: "shield-check"
+component: "JwtDecoder"
+keywords: ["jwt decoder", "jwt parser", "json web token", "jwt debugger", "jwt inspector"]
+featured: false
+premium: false
+relatedTools: ["base64-encoder", "json-formatter"]
+faq:
+  - question: "Is it safe to paste my JWT token here?"
+    answer: "Yes. This decoder runs entirely in your browser — your token is never sent to any server. However, you should never paste production tokens containing real user data into any online tool that does not operate client-side."
+  - question: "Can this tool verify JWT signatures?"
+    answer: "This tool decodes and displays the header, payload, and signature. For full signature verification, you would need to provide the secret or public key. The primary purpose here is inspection and debugging, not cryptographic validation."
+  - question: "What information is stored in a JWT?"
+    answer: "A JWT has three parts: the header (algorithm and token type), the payload (claims like user ID, expiration time, and custom data), and the signature (used to verify the token hasn't been tampered with)."
+  - question: "Why does my JWT show as expired?"
+    answer: "The tool checks the 'exp' (expiration) claim against the current time. If the current Unix timestamp exceeds the exp value, the token is expired. This is normal for short-lived access tokens, which typically expire after 15 minutes to an hour."
+  - question: "What is the difference between a JWT and an OAuth token?"
+    answer: "OAuth is an authorization framework that defines how tokens are issued and used. A JWT is a specific token format. OAuth tokens can be JWTs, but they can also be opaque strings. When an OAuth provider issues a JWT, this tool can decode it."
+howTo:
+  steps:
+    - name: "Paste your JWT"
+      text: "Copy the full JWT string (including all three dot-separated sections) and paste it into the input field."
+    - name: "Inspect the decoded output"
+      text: "Review the decoded header to see the signing algorithm, and examine the payload to view all claims including subject, issuer, expiration, and custom fields."
+    - name: "Check token status"
+      text: "The tool automatically flags expired tokens, shows time until expiration for active tokens, and highlights standard registered claims for quick analysis."
+publishedAt: 2026-03-27
+estimatedTime: "Instant"
+---
+
+## What Is a JSON Web Token
+
+JSON Web Tokens have become the dominant mechanism for authentication and authorization in modern web applications. A JWT is a compact, URL-safe string that encodes a set of claims as a JSON object, signed to ensure integrity. When a user logs in, the server issues a JWT containing their identity and permissions. The client stores this token and sends it with subsequent requests, allowing the server to validate the user without querying a database on every call.
+
+Every JWT consists of three parts separated by dots. The header declares the signing algorithm and token type, typically something like `{"alg": "RS256", "typ": "JWT"}`. The payload carries the claims — registered claims like `sub` (subject), `exp` (expiration), and `iat` (issued at), alongside any custom claims the application defines. The signature is computed over the encoded header and payload using a secret key or an asymmetric key pair, binding the entire token together cryptographically.
+
+Our free JWT decoder lets you paste any token and instantly see these three components in a clean, formatted view. The tool parses the Base64URL-encoded segments, pretty-prints the JSON, and highlights important claims like expiration time. Everything runs in your browser, so sensitive tokens remain on your machine.
+
+## Decoding JWTs for Debugging and Development
+
+Debugging authentication flows is one of the most common reasons developers need a JWT decoder. When a user reports they cannot access a resource, the first question is whether their token is valid. Pasting the token into this tool immediately reveals whether it has expired, whether the subject claim matches the expected user, and whether the required scopes or roles are present in the payload.
+
+During development, JWT inspection helps you verify that your authentication server is issuing tokens correctly. After implementing a login endpoint, decode the returned token to confirm the header specifies the algorithm you configured, the payload includes all the claims your frontend expects, and the expiration window matches your security policy. Catching these issues early prevents hours of debugging mysterious 401 and 403 errors later in the development cycle.
+
+The tool also surfaces the issued-at (`iat`) and not-before (`nbf`) timestamps, converting them to human-readable dates so you can immediately understand the token's time window. If your server clocks are slightly out of sync, tokens may appear valid on one machine and expired on another. Seeing the exact timestamps in a readable format makes clock skew issues obvious at a glance.
+
+## JWT Security Considerations
+
+Understanding JWT structure is essential for building secure applications, and a decoder helps reinforce good practices by making the token's contents transparent.
+
+**Tokens are encoded, not encrypted.** The Base64URL encoding used in JWTs is trivially reversible. Anyone who possesses a token can read its payload by decoding it, exactly as this tool does. Never store sensitive information like passwords, credit card numbers, or personal health data inside a JWT payload. Treat JWTs as signed, readable documents rather than sealed containers.
+
+**Expiration enforcement is critical.** Short-lived access tokens, typically expiring in 15 to 60 minutes, limit the damage if a token is stolen. Pair them with longer-lived refresh tokens stored securely. Our decoder highlights the `exp` claim and shows a countdown to expiration, making it easy to verify your token lifetimes match your security requirements.
+
+**Algorithm confusion attacks** exploit servers that accept multiple signing algorithms without strict validation. An attacker could take an RS256 token, re-sign it using HS256 with the public key as the secret, and bypass verification. Always configure your server to accept only the specific algorithm you intend, and never trust the `alg` header blindly. Inspecting the header with this tool helps you confirm that your tokens specify the correct algorithm before you deploy to production.
+
+**Token revocation** remains an inherent challenge with JWTs. Because they are self-contained and verified without a database lookup, a server cannot invalidate a specific token before it expires unless you implement a revocation list or a short token lifetime combined with refresh rotation. Understanding this tradeoff is key to designing an authentication system that balances performance with security.
