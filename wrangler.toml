@@ -5,21 +5,29 @@ name = "freetoolstack"
 compatibility_date = "2026-03-01"
 compatibility_flags = ["nodejs_compat"]
 
-# KV Namespace for rate limiting and premium subscriptions
-# Uncomment and add IDs after creating via `wrangler kv:namespace create`
-# [[kv_namespaces]]
-# binding = "RATE_LIMIT"
-# id = ""
+# KV Namespaces — create via: wrangler kv:namespace create <NAME>
+# Then paste the IDs below
 
-# [[kv_namespaces]]
-# binding = "SUBSCRIPTIONS"
-# id = ""
+[[kv_namespaces]]
+binding = "SESSIONS"
+id = "REPLACE_WITH_KV_ID"
 
-# R2 Bucket for temporary file storage (if needed for server-side tools)
-# [[r2_buckets]]
-# binding = "FILES"
-# bucket_name = "freetoolstack-files"
+[[kv_namespaces]]
+binding = "RATE_LIMIT"
+id = "REPLACE_WITH_KV_ID"
+
+# D1 Database — create via: wrangler d1 create freetoolstack
+# Then paste the database_id below
+# Run migrations via: wrangler d1 execute freetoolstack --file=db/migrations/001_initial.sql
+
+[[d1_databases]]
+binding = "DB"
+database_name = "freetoolstack"
+database_id = "REPLACE_WITH_D1_ID"
 
 # Environment variables (set via Cloudflare Pages dashboard, not here)
-# [vars]
-# PUBLIC_AD_NETWORK = "none"
+# STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, STRIPE_PRICE_ID_MONTHLY
+# RESEND_API_KEY, RESEND_AUDIENCE_ID, RESEND_FROM_EMAIL
+# CLAUDE_API_KEY
+# JWT_SECRET
+# PUBLIC_AD_NETWORK, PUBLIC_GA4_ID

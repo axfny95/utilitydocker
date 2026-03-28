@@ -4,11 +4,12 @@ import { AD_SLOTS, ACTIVE_NETWORK, type AdSlotPosition } from './ad-config';
 interface Props {
   position: AdSlotPosition;
   class?: string;
+  isPremium?: boolean;
 }
 
-const { position, class: className } = Astro.props;
+const { position, class: className, isPremium = false } = Astro.props;
 const slot = AD_SLOTS[position];
-const isActive = ACTIVE_NETWORK !== 'none';
+const isActive = ACTIVE_NETWORK !== 'none' && !isPremium;
 ---
 
 {isActive && (

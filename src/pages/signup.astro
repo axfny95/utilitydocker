@@ -1,0 +1,24 @@
+---
+export const prerender = false;
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SignupForm from '../components/auth/SignupForm';
+
+// Redirect if already logged in
+if (Astro.locals.user) {
+  return Astro.redirect('/account');
+}
+---
+
+<BaseLayout title="Create Account" description="Create a free FreeToolStack account. Save your favorite tools and unlock premium features.">
+  <div class="mx-auto max-w-sm px-4 py-16">
+    <div class="text-center">
+      <a href="/" class="text-2xl font-bold text-primary-600">FreeToolStack</a>
+      <h1 class="mt-4 text-2xl font-bold text-surface-900">Create your free account</h1>
+      <p class="mt-1 text-sm text-surface-500">Save favorites, get new tool alerts, and upgrade anytime</p>
+    </div>
+    <div class="mt-8">
+      <SignupForm client:load />
+    </div>
+  </div>
+</BaseLayout>

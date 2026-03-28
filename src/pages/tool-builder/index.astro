@@ -1,0 +1,28 @@
+---
+export const prerender = false;
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ToolBuilderChat from '../../components/tool-builder/ToolBuilderChat';
+
+// Require premium
+if (!Astro.locals.user) {
+  return Astro.redirect('/login?redirect=/tool-builder');
+}
+
+if (!Astro.locals.isPremium) {
+  return Astro.redirect('/pricing');
+}
+---
+
+<BaseLayout title="AI Tool Builder" description="Describe any utility tool and our AI builds it for you. Premium feature.">
+  <div class="mx-auto max-w-4xl px-4 py-12 sm:px-6">
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold tracking-tight text-surface-900">AI Tool Builder</h1>
+      <p class="mt-2 text-lg text-surface-600">
+        Describe any utility tool and our AI generates it instantly. Your tools run in a secure sandbox — 100% in your browser.
+      </p>
+    </div>
+
+    <ToolBuilderChat client:load />
+  </div>
+</BaseLayout>

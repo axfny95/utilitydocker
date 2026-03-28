@@ -16,6 +16,10 @@ interface Props {
 }
 
 const { title, description, canonicalUrl, ogImage, type, noFooter } = Astro.props;
+
+// Auth state (available on server-rendered pages via middleware, null on static pages)
+const user = Astro.locals?.user || null;
+const isPremium = Astro.locals?.isPremium || false;
 ---
 
 <!doctype html>
@@ -26,7 +30,7 @@ const { title, description, canonicalUrl, ogImage, type, noFooter } = Astro.prop
     </BaseHead>
   </head>
   <body class="flex min-h-screen flex-col">
-    <Header />
+    <Header user={user} isPremium={isPremium} />
     <main class="flex-1">
       <slot />
     </main>

@@ -1,0 +1,103 @@
+---
+export const prerender = false;
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getUserFavorites, getActiveSubscription } from '../../lib/db';
+import { getCollection } from 'astro:content';
+
+// Require authentication
+if (!Astro.locals.user) {
+  return Astro.redirect('/login?redirect=/account');
+}
+
+const user = Astro.locals.user;
+const env = Astro.locals.runtime.env;
+const favorites = await getUserFavorites(env.DB, user.id);
+const subscription = await getActiveSubscription(env.DB, user.id);
+const allTools = await getCollection('tools');
+
+// Match favorite slugs to tool data
+const favoritedTools = favorites
+  .map((f) => allTools.find((t) => t.id === f.tool_slug))
+  .filter(Boolean);
+
+const isPremium = Astro.locals.isPremium;
+const memberSince = new Date(user.createdAt * 1000).toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+---
+
+<BaseLayout title="My Account" description="Manage your FreeToolStack account, favorites, and subscription.">
+  <div class="mx-auto max-w-4xl px-4 py-12 sm:px-6">
+    <div class="flex items-center justify-between">
+      <div>
+        <h1 class="text-2xl font-bold text-surface-900">My Account</h1>
+        <p class="mt-1 text-surface-500">{user.email}</p>
+      </div>
+      {isPremium ? (
+        <span class="rounded-full bg-amber-100 px-4 py-1.5 text-sm font-medium text-amber-800">Premium Member</span>
+      ) : (
+        <a href="/pricing" class="rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700">Upgrade to Premium</a>
+      )}
+    </div>
+
+    <!-- Stats -->
+    <div class="mt-8 grid gap-4 sm:grid-cols-3">
+      <div class="rounded-xl border border-surface-200 bg-white p-5">
+        <p class="text-sm text-surface-500">Saved Tools</p>
+        <p class="text-3xl font-bold text-surface-900">{favorites.length}</p>
+      </div>
+      <div class="rounded-xl border border-surface-200 bg-white p-5">
+        <p class="text-sm text-surface-500">Plan</p>
+        <p class="text-3xl font-bold text-surface-900">{isPremium ? 'Premium' : 'Free'}</p>
+      </div>
+      <div class="rounded-xl border border-surface-200 bg-white p-5">
+        <p class="text-sm text-surface-500">Member Since</p>
+        <p class="text-lg font-bold text-surface-900">{memberSince}</p>
+      </div>
+    </div>
+
+    {/* Premium Tool Builder CTA */}
+    {isPremium && (
+      <div class="mt-8 rounded-xl border border-primary-200 bg-gradient-to-r from-primary-50 to-blue-50 p-6">
+        <h2 class="text-lg font-bold text-surface-900">AI Tool Builder</h2>
+        <p class="mt-1 text-sm text-surface-600">Describe any tool and our AI builds it for you. 20 generations per month included.</p>
+        <a href="/tool-builder" class="mt-3 inline-block rounded-lg bg-primary-600 px-5 py-2 text-sm font-medium text-white hover:bg-primary-700">
+          Open Tool Builder
+        </a>
+      </div>
+    )}
+
+    <!-- Favorites -->
+    <section class="mt-8">
+      <h2 class="mb-4 text-lg font-bold text-surface-900">Saved Tools</h2>
+      {favoritedTools.length > 0 ? (
+        <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {favoritedTools.map((tool) => tool && (
+            <a href={`/tools/${tool.id}`} class="group rounded-xl border border-surface-200 bg-white p-4 transition-all hover:shadow-md">
+              <h3 class="font-semibold text-surface-900 group-hover:text-primary-600">{tool.data.title}</h3>
+              <p class="mt-1 text-xs text-surface-500">{tool.data.category}</p>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <div class="rounded-xl border border-surface-200 bg-surface-50 p-8 text-center">
+          <p class="text-surface-500">No saved tools yet.</p>
+          <a href="/tools" class="mt-2 inline-block text-sm font-medium text-primary-600 hover:underline">Browse tools and click the star to save</a>
+        </div>
+      )}
+    </section>
+
+    <!-- Account actions -->
+    <div class="mt-12 flex flex-wrap gap-3 border-t border-surface-200 pt-6">
+      {isPremium && (
+        <a href="/account/billing" class="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50">
+          Manage Billing
+        </a>
+      )}
+      <form method="POST" action="/api/auth/logout">
+        <button type="submit" class="rounded-lg border border-surface-200 px-4 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50">
+          Sign Out
+        </button>
+      </form>
+    </div>
+  </div>
+</BaseLayout>
