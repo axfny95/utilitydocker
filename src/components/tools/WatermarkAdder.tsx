@@ -4,7 +4,7 @@ import FileUploader from '../shared/FileUploader';
 export default function WatermarkAdder() {
   const [image, setImage] = useState<HTMLImageElement | null>(null);
   const [fileName, setFileName] = useState('');
-  const [text, setText] = useState('FreeToolStack');
+  const [text, setText] = useState('UtilityDocker');
   const [fontSize, setFontSize] = useState(32);
   const [opacity, setOpacity] = useState(30);
   const [color, setColor] = useState('#ffffff');

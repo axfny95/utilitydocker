@@ -56,8 +56,8 @@ function generateSvg(tool: ToolFrontmatter): string {
   <text x="180" y="282" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="${color}" text-anchor="middle">${escapeXml(tool.category)}</text>
   <line x1="100" y1="340" x2="1100" y2="340" stroke="#e2e8f0" stroke-width="1"/>
   <text x="100" y="400" font-family="system-ui, sans-serif" font-size="18" fill="#94a3b8">100% Free | No Signup | Client-Side Processing</text>
-  <text x="100" y="500" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="bold" fill="${color}">FreeToolStack</text>
-  <text x="100" y="535" font-family="system-ui, sans-serif" font-size="16" fill="#94a3b8">freetoolstack.com</text>
+  <text x="100" y="500" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="bold" fill="${color}">UtilityDocker</text>
+  <text x="100" y="535" font-family="system-ui, sans-serif" font-size="16" fill="#94a3b8">utilitydocker.com</text>
 </svg>`;
 }
 

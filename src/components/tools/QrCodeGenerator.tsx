@@ -26,7 +26,7 @@ function drawQR(canvas: HTMLCanvasElement, text: string, size: number, fgColor: 
 }
 
 export default function QrCodeGenerator() {
-  const [text, setText] = useState('https://freetoolstack.com');
+  const [text, setText] = useState('https://utilitydocker.com');
   const [size, setSize] = useState(256);
   const [fgColor, setFgColor] = useState('#000000');
   const [bgColor, setBgColor] = useState('#ffffff');

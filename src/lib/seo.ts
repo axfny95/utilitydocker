@@ -13,7 +13,7 @@ export function slugify(text: string): string {
     .replace(/^-+|-+$/g, '');
 }
 
-export function generateCanonicalUrl(path: string, site: string = 'https://freetoolstack.com'): string {
+export function generateCanonicalUrl(path: string, site: string = 'https://utilitydocker.com'): string {
   const cleanPath = path.startsWith('/') ? path : `/${path}`;
   return `${site}${cleanPath}`;
 }

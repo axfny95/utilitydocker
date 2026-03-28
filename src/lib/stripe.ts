@@ -1,5 +1,5 @@
 /**
- * Stripe integration for FreeToolStack Premium.
+ * Stripe integration for UtilityDocker Premium.
  * Activated when Stripe keys are configured in environment variables.
  *
  * Flow:

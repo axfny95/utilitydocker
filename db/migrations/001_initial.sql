@@ -1,4 +1,4 @@
--- FreeToolStack Database Schema
+-- UtilityDocker Database Schema
 -- Cloudflare D1 (SQLite)
 
 CREATE TABLE IF NOT EXISTS users (

@@ -72,7 +72,7 @@ For questions about these terms, contact us at **${data.email || '[email address
 
 ---
 
-*This document was generated using FreeToolStack's Terms of Service Generator. It is provided as a template for informational purposes only and does not constitute legal advice. No attorney-client relationship is created. Consult a licensed attorney before publishing.*`;
+*This document was generated using UtilityDocker's Terms of Service Generator. It is provided as a template for informational purposes only and does not constitute legal advice. No attorney-client relationship is created. Consult a licensed attorney before publishing.*`;
 }
 
 export default function TermsOfServiceGenerator() {

@@ -42,7 +42,7 @@ const blog = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string().max(160),
-    author: z.string().default('FreeToolStack Team'),
+    author: z.string().default('UtilityDocker Team'),
     publishedAt: z.date(),
     updatedAt: z.date().optional(),
     image: z.string().optional(),

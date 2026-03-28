@@ -3,7 +3,7 @@
  * Premium feature: 20 generations per month.
  */
 
-const SYSTEM_PROMPT = `You are a utility tool generator for FreeToolStack. You generate self-contained React functional components that run in the browser.
+const SYSTEM_PROMPT = `You are a utility tool generator for UtilityDocker. You generate self-contained React functional components that run in the browser.
 
 RULES:
 1. Output ONLY a single React component as a default export

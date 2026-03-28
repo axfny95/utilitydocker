@@ -145,7 +145,7 @@ If you have any questions about this Privacy Policy, please contact us at **${da
 
 ---
 
-*This privacy policy was generated using FreeToolStack's Privacy Policy Generator. This document is provided as a template and should be reviewed by a legal professional before use. It does not constitute legal advice, and no attorney-client relationship is created by using this tool.*`;
+*This privacy policy was generated using UtilityDocker's Privacy Policy Generator. This document is provided as a template and should be reviewed by a legal professional before use. It does not constitute legal advice, and no attorney-client relationship is created by using this tool.*`;
 }
 
 export default function PrivacyPolicyGenerator() {

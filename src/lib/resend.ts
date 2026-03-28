@@ -1,5 +1,5 @@
 /**
- * Resend email client for FreeToolStack.
+ * Resend email client for UtilityDocker.
  * Handles newsletter subscriptions and transactional emails.
  * Activated when RESEND_API_KEY is configured in environment variables.
  *
@@ -21,7 +21,7 @@ function getConfig(): ResendConfig | null {
   return {
     apiKey,
     audienceId: import.meta.env.RESEND_AUDIENCE_ID || '',
-    fromEmail: import.meta.env.RESEND_FROM_EMAIL || 'hello@freetoolstack.com',
+    fromEmail: import.meta.env.RESEND_FROM_EMAIL || 'hello@utilitydocker.com',
   };
 }
 
@@ -94,14 +94,14 @@ export async function sendEmail(params: {
 export async function sendWelcomeEmail(email: string): Promise<void> {
   await sendEmail({
     to: email,
-    subject: 'Welcome to FreeToolStack!',
+    subject: 'Welcome to UtilityDocker!',
     html: `
-      <h1>Welcome to FreeToolStack!</h1>
+      <h1>Welcome to UtilityDocker!</h1>
       <p>Thanks for subscribing. We'll send you updates when we launch new free tools.</p>
-      <p>In the meantime, check out our <a href="https://freetoolstack.com/tools">full collection of tools</a>.</p>
-      <p>— The FreeToolStack Team</p>
+      <p>In the meantime, check out our <a href="https://utilitydocker.com/tools">full collection of tools</a>.</p>
+      <p>— The UtilityDocker Team</p>
       <p style="font-size: 12px; color: #666;">
-        <a href="https://freetoolstack.com/unsubscribe?email=${encodeURIComponent(email)}">Unsubscribe</a>
+        <a href="https://utilitydocker.com/unsubscribe?email=${encodeURIComponent(email)}">Unsubscribe</a>
       </p>
     `,
   });

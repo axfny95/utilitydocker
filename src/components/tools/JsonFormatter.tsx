@@ -42,7 +42,7 @@ export default function JsonFormatter() {
 
   const loadSample = () => {
     const sample = {
-      name: 'FreeToolStack',
+      name: 'UtilityDocker',
       version: '1.0.0',
       tools: ['JSON Formatter', 'Password Generator', 'Word Counter'],
       config: {

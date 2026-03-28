@@ -7,7 +7,7 @@ import cloudflare from '@astrojs/cloudflare';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  site: 'https://freetoolstack.com',
+  site: 'https://utilitydocker.com',
   output: 'static',
   adapter: cloudflare({
     platformProxy: { enabled: true },

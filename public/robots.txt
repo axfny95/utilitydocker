@@ -4,4 +4,4 @@ Allow: /
 Disallow: /admin/
 Disallow: /api/
 
-Sitemap: https://freetoolstack.com/sitemap-index.xml
+Sitemap: https://utilitydocker.com/sitemap-index.xml

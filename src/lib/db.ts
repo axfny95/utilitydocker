@@ -1,6 +1,6 @@
 /**
  * Cloudflare D1 database helpers.
- * Provides typed query wrappers for the FreeToolStack database.
+ * Provides typed query wrappers for the UtilityDocker database.
  */
 
 export interface DbUser {

@@ -1,5 +1,5 @@
 /**
- * Authentication utilities for FreeToolStack.
+ * Authentication utilities for UtilityDocker.
  * Uses PBKDF2 via Web Crypto API (available in Cloudflare Workers).
  */
 

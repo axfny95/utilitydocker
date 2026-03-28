@@ -40,9 +40,9 @@ export const POST: APIRoute = async ({ request, locals }) => {
     const verifyUrl = `${new URL(request.url).origin}/verify-email?token=${verifyToken}`;
     await sendEmail({
       to: email.toLowerCase(),
-      subject: 'Verify your FreeToolStack account',
+      subject: 'Verify your UtilityDocker account',
       html: `
-        <h1>Welcome to FreeToolStack!</h1>
+        <h1>Welcome to UtilityDocker!</h1>
         <p>Click the link below to verify your email address:</p>
         <p><a href="${verifyUrl}" style="background:#2563eb;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:bold;">Verify Email</a></p>
         <p>This link expires in 24 hours.</p>

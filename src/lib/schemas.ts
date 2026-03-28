@@ -1,6 +1,6 @@
 import type { ToolMeta } from '../types/tool';
 
-const SITE_URL = 'https://freetoolstack.com';
+const SITE_URL = 'https://utilitydocker.com';
 
 export function buildWebApplicationSchema(tool: ToolMeta, slug: string) {
   return {
