@@ -80,6 +80,15 @@ const registry: Record<string, () => Promise<{ default: ComponentType<any> }>> =
   Notepad: () => import('../components/tools/Notepad'),
   GpaCalculator: () => import('../components/tools/GpaCalculator'),
   Stopwatch: () => import('../components/tools/Stopwatch'),
+  // Tier 2-3 completions
+  PlaceholderImageGenerator: () => import('../components/tools/PlaceholderImageGenerator'),
+  ImageToText: () => import('../components/tools/ImageToText'),
+  LoanCalculator: () => import('../components/tools/LoanCalculator'),
+  HtmlToMarkdown: () => import('../components/tools/HtmlToMarkdown'),
+  XmlToJsonConverter: () => import('../components/tools/XmlToJsonConverter'),
+  TextToHandwriting: () => import('../components/tools/TextToHandwriting'),
+  BorderRadiusPreviewer: () => import('../components/tools/BorderRadiusPreviewer'),
+  BarcodeGenerator: () => import('../components/tools/BarcodeGenerator'),
 };
 
 export function getToolComponent(name: string): LazyComponent {

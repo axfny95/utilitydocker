@@ -1,0 +1,52 @@
+---
+title: "Border Radius Previewer"
+description: "Design and preview CSS border-radius values visually. Adjust each corner independently and copy the generated CSS. Free and instant."
+category: "Developer Tools"
+icon: "square"
+component: "BorderRadiusPreviewer"
+keywords: ["border radius generator", "css border radius", "rounded corners", "border radius preview", "css rounded corners"]
+featured: false
+premium: false
+relatedTools: ["box-shadow-generator", "css-gradient-generator", "color-picker"]
+faq:
+  - question: "Can I set different values for each corner?"
+    answer: "Yes. The tool lets you control each of the four corners independently — top-left, top-right, bottom-right, and bottom-left. You can also link all corners to change them uniformly with a single slider."
+  - question: "What is the difference between border-radius and individual corner properties?"
+    answer: "The CSS border-radius shorthand sets all four corners at once. When all corners differ, the shorthand uses a space-separated syntax like border-radius: 10px 20px 30px 40px. The tool generates the most concise syntax automatically."
+  - question: "Does border-radius work with percentages?"
+    answer: "Yes. Setting border-radius to 50% on a square element creates a perfect circle. The tool supports both pixel and percentage values. Percentage values are relative to the element's dimensions."
+  - question: "Is the generated CSS compatible with all browsers?"
+    answer: "The border-radius property is supported in all modern browsers without vendor prefixes. It works in Chrome, Firefox, Safari, Edge, and Opera. No compatibility concerns for current web projects."
+howTo:
+  steps:
+    - name: "Adjust the corner values"
+      text: "Use the sliders or input fields to set the border-radius for each corner. Toggle the link icon to control all corners together or independently."
+    - name: "Preview the result"
+      text: "Watch the preview element update in real time as you change values. Resize the preview or change its background color to see how the radius looks in different contexts."
+    - name: "Copy the CSS"
+      text: "Click the copy button to grab the generated border-radius CSS declaration. Paste it into your stylesheet, component, or design tool."
+publishedAt: 2026-03-29
+estimatedTime: "1 min"
+---
+
+## Design Perfect Rounded Corners Visually
+
+The CSS border-radius property transforms sharp rectangular elements into shapes with rounded corners, circles, pills, and organic blobs. It is one of the most frequently used CSS properties in modern web design, appearing on buttons, cards, avatars, input fields, and modal dialogs. Despite its apparent simplicity, getting the exact radius right by editing numbers in code is a trial-and-error process that interrupts your design flow.
+
+This visual previewer lets you drag sliders and see the result instantly on a live element. When it looks right, copy the CSS and move on.
+
+## Understanding Border Radius Values
+
+The border-radius shorthand accepts one, two, three, or four values. One value applies uniformly to all corners. Two values set top-left/bottom-right and top-right/bottom-left as pairs. Four values address each corner individually in clockwise order: top-left, top-right, bottom-right, bottom-left.
+
+Each corner can also take two values separated by a slash to create elliptical corners — one value for the horizontal radius and one for the vertical. This produces asymmetric curves useful for organic shapes and creative UI elements. The tool handles both circular and elliptical radius modes.
+
+## Common Patterns and Recipes
+
+A border-radius of 4 to 8 pixels is the industry standard for subtle rounding on cards and containers. Buttons typically use 6 to 12 pixels, or a large value like 9999px to create a pill shape that adapts to any content width. Setting border-radius to 50% on a square element produces a perfect circle, which is the standard technique for avatar images.
+
+Asymmetric radii create distinctive shapes. A large radius on only the top corners produces a tab-like appearance. Different radii on adjacent corners generate organic, blob-like forms popular in contemporary design.
+
+## From Experimentation to Production
+
+The tool generates the most concise valid CSS syntax for your configuration. If all corners are equal, it outputs a single value. If corners differ, it uses the appropriate shorthand. The output is clean, standards-compliant CSS ready to paste into any project — vanilla CSS, Tailwind arbitrary values, styled-components, or CSS modules.

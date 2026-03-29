@@ -1,0 +1,56 @@
+---
+title: "XML to JSON Converter"
+description: "Convert XML data to JSON format instantly. Handles nested elements, attributes, and arrays. Free, private, and runs in your browser."
+category: "Converter Tools"
+icon: "braces"
+component: "XmlToJsonConverter"
+keywords: ["xml to json", "convert xml to json", "xml json converter", "xml2json", "xml to json online"]
+featured: false
+premium: false
+relatedTools: ["json-formatter", "json-csv-converter", "code-minifier"]
+faq:
+  - question: "How are XML attributes handled in the conversion?"
+    answer: "XML attributes are converted to JSON properties prefixed with an @ symbol by default. For example, <item id=\"5\"> becomes {\"item\": {\"@id\": \"5\"}}. This convention keeps attributes separate from child elements in the resulting JSON."
+  - question: "What happens with repeated XML elements?"
+    answer: "Repeated sibling elements with the same tag name are automatically grouped into a JSON array. For example, multiple <item> elements inside a <list> become a JSON array of objects under the items key."
+  - question: "Is there a size limit?"
+    answer: "The conversion runs entirely in your browser, so the practical limit depends on your device's available memory. Files up to several megabytes convert without issues on most modern devices."
+  - question: "Can I convert JSON back to XML?"
+    answer: "This tool is specifically designed for XML-to-JSON conversion. Round-trip conversion between XML and JSON can lose information because the two formats have different data models, so we keep the tools separate for clarity."
+howTo:
+  steps:
+    - name: "Paste or upload XML"
+      text: "Paste your XML data into the input area or upload an XML file from your device."
+    - name: "Convert"
+      text: "The tool parses the XML structure and generates the equivalent JSON representation. Nested elements, attributes, and text content are all mapped to appropriate JSON structures."
+    - name: "Copy the JSON"
+      text: "Review the formatted JSON output and click copy to place it on your clipboard. The output is pretty-printed for readability."
+publishedAt: 2026-03-29
+estimatedTime: "Instant"
+---
+
+## Transform XML Data to JSON Instantly
+
+XML and JSON are the two dominant data interchange formats, but modern APIs, JavaScript applications, and NoSQL databases overwhelmingly prefer JSON. If you work with legacy systems, SOAP APIs, RSS feeds, or enterprise integrations, you regularly encounter XML that needs to become JSON before you can use it in a contemporary stack.
+
+This converter takes any well-formed XML input and produces structured, readable JSON. It runs entirely in your browser — no server round-trips, no file uploads, no data exposure.
+
+## How the Conversion Works
+
+The tool parses the XML document into a tree, then walks each node to build the equivalent JSON structure. Element names become object keys. Text content becomes string values. Attributes are preserved as specially prefixed properties so they remain distinguishable from child elements. Repeated sibling elements are detected and grouped into arrays automatically, producing idiomatic JSON that downstream code can consume without surprises.
+
+Namespaces, CDATA sections, and mixed content are handled gracefully. The output is always valid JSON that passes any standard JSON parser.
+
+## Why Convert XML to JSON
+
+JSON is natively understood by JavaScript, which powers the vast majority of web and mobile frontends. Parsing JSON is faster and less verbose than navigating an XML DOM. JSON also maps directly to objects and arrays in most programming languages, reducing boilerplate code.
+
+Migrating data from XML to JSON simplifies storage in document databases like MongoDB and CouchDB, reduces payload sizes for API responses, and makes data easier to manipulate in data pipelines built with Python, Node.js, or Go.
+
+## Common Use Cases
+
+Developers integrating with SOAP or legacy REST APIs that return XML. Data engineers converting XML exports from enterprise systems into JSON for ingestion into modern pipelines. Frontend developers transforming RSS or Atom feed data into JSON for rendering in React or Vue components. DevOps engineers converting XML configuration files to JSON equivalents for tools that only accept JSON input.
+
+## Readable, Well-Formatted Output
+
+The JSON output is pretty-printed with proper indentation, making it easy to review and validate before you paste it into your project.
