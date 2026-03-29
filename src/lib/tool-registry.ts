@@ -73,6 +73,13 @@ const registry: Record<string, () => Promise<{ default: ComponentType<any> }>> =
   VideoToGif: () => import('../components/tools/VideoToGif'),
   VideoCompressor: () => import('../components/tools/VideoCompressor'),
   YoutubeThumbnailDownloader: () => import('../components/tools/YoutubeThumbnailDownloader'),
+  // New additions
+  ImageCropper: () => import('../components/tools/ImageCropper'),
+  DateCalculator: () => import('../components/tools/DateCalculator'),
+  TypingSpeedTest: () => import('../components/tools/TypingSpeedTest'),
+  Notepad: () => import('../components/tools/Notepad'),
+  GpaCalculator: () => import('../components/tools/GpaCalculator'),
+  Stopwatch: () => import('../components/tools/Stopwatch'),
 };
 
 export function getToolComponent(name: string): LazyComponent {
