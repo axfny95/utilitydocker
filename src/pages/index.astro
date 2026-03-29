@@ -79,6 +79,28 @@ const featuredTools = publishedTools.filter((t) => t.data.featured);
     </section>
   )}
 
+  <!-- AI Tool Builder CTA -->
+  <section class="mx-auto max-w-7xl px-4 py-12 sm:px-6">
+    <div class="rounded-2xl border border-primary-200 bg-gradient-to-r from-primary-50 via-blue-50 to-violet-50 p-8 sm:p-12">
+      <div class="mx-auto max-w-2xl text-center">
+        <span class="rounded-full bg-primary-100 px-3 py-1 text-xs font-medium text-primary-700">Premium Feature</span>
+        <h2 class="mt-4 text-2xl font-bold text-surface-900 sm:text-3xl">Build Your Own Custom Tool</h2>
+        <p class="mt-3 text-surface-600">
+          Describe any utility tool and our AI builds it for you in seconds.
+          From calculators to converters to analyzers — if you can describe it, we can build it.
+        </p>
+        <div class="mt-6 flex flex-wrap justify-center gap-3">
+          <a href="/pricing" class="rounded-xl bg-primary-600 px-6 py-3 font-medium text-white transition-colors hover:bg-primary-700">
+            Try AI Tool Builder — $7/mo
+          </a>
+          <a href="/tools" class="rounded-xl border border-surface-300 bg-white px-6 py-3 font-medium text-surface-700 transition-colors hover:bg-surface-50">
+            Or use {tools.length} free tools
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- All Tools -->
   <section class="mx-auto max-w-7xl px-4 py-12 sm:px-6">
     <h2 class="mb-6 text-2xl font-bold text-surface-900">All Tools</h2>

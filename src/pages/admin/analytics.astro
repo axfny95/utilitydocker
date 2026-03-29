@@ -1,5 +1,14 @@
 ---
+export const prerender = false;
+
 import AdminLayout from '../../layouts/AdminLayout.astro';
+
+const adminPassword = import.meta.env.ADMIN_PASSWORD;
+const authHeader = Astro.request.headers.get('authorization');
+const isAdmin = Astro.locals.user || (adminPassword && authHeader === `Bearer ${adminPassword}`);
+if (!isAdmin) {
+  return new Response('Unauthorized', { status: 401, headers: { 'WWW-Authenticate': 'Bearer' } });
+}
 ---
 
 <AdminLayout title="Analytics">

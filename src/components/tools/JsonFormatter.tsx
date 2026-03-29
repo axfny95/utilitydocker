@@ -44,7 +44,7 @@ export default function JsonFormatter() {
     const sample = {
       name: 'UtilityDocker',
       version: '1.0.0',
-      tools: ['JSON Formatter', 'Password Generator', 'Word Counter'],
+      tools: ['JSON Formatter', 'Image Compressor', 'Word Counter'],
       config: {
         theme: 'light',
         language: 'en',

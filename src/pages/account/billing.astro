@@ -1,0 +1,75 @@
+---
+export const prerender = false;
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getActiveSubscription } from '../../lib/db';
+
+if (!Astro.locals.user) {
+  return Astro.redirect('/login?redirect=/account/billing');
+}
+
+const user = Astro.locals.user;
+const subscription = await getActiveSubscription(Astro.locals.runtime.env.DB, user.id);
+const isPremium = Astro.locals.isPremium;
+---
+
+<BaseLayout title="Billing" description="Manage your UtilityDocker subscription and billing.">
+  <div class="mx-auto max-w-xl px-4 py-12 sm:px-6">
+    <h1 class="text-2xl font-bold text-surface-900">Billing & Subscription</h1>
+
+    {isPremium && subscription ? (
+      <div class="mt-6 space-y-4">
+        <div class="rounded-xl border border-green-200 bg-green-50 p-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm text-green-700">Current Plan</p>
+              <p class="text-2xl font-bold text-green-800">Premium — $7/mo</p>
+            </div>
+            <span class="rounded-full bg-green-200 px-3 py-1 text-sm font-medium text-green-800">Active</span>
+          </div>
+          {subscription.current_period_end && (
+            <p class="mt-2 text-sm text-green-700">
+              {subscription.cancel_at_period_end
+                ? `Cancels on ${new Date(subscription.current_period_end * 1000).toLocaleDateString()}`
+                : `Renews on ${new Date(subscription.current_period_end * 1000).toLocaleDateString()}`
+              }
+            </p>
+          )}
+        </div>
+
+        <button
+          id="portal-btn"
+          class="w-full rounded-lg border border-surface-200 py-2.5 text-sm font-medium text-surface-700 hover:bg-surface-50"
+        >
+          Manage Subscription on Stripe
+        </button>
+        <p class="text-center text-xs text-surface-400">Cancel anytime. No questions asked.</p>
+      </div>
+    ) : (
+      <div class="mt-6 space-y-4">
+        <div class="rounded-xl border border-surface-200 bg-surface-50 p-6 text-center">
+          <p class="text-surface-600">You're on the <strong>Free</strong> plan.</p>
+          <a href="/pricing" class="mt-4 inline-block rounded-lg bg-primary-600 px-6 py-2.5 text-sm font-medium text-white hover:bg-primary-700">
+            Upgrade to Premium — $7/mo
+          </a>
+        </div>
+      </div>
+    )}
+
+    <a href="/account" class="mt-6 inline-block text-sm text-primary-600 hover:underline">&larr; Back to Account</a>
+  </div>
+</BaseLayout>
+
+<script>
+  document.getElementById('portal-btn')?.addEventListener('click', async () => {
+    const btn = document.getElementById('portal-btn') as HTMLButtonElement;
+    btn.textContent = 'Opening Stripe...';
+    btn.disabled = true;
+    try {
+      const res = await fetch('/api/stripe/portal', { method: 'POST' });
+      const data = await res.json();
+      if (data.url) window.location.href = data.url;
+      else { btn.textContent = 'Error — try again'; btn.disabled = false; }
+    } catch { btn.textContent = 'Error — try again'; btn.disabled = false; }
+  });
+</script>

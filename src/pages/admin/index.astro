@@ -1,6 +1,16 @@
 ---
+export const prerender = false;
+
 import AdminLayout from '../../layouts/AdminLayout.astro';
 import { getCollection } from 'astro:content';
+
+// Admin auth — requires ADMIN_PASSWORD env var or logged-in user
+const adminPassword = import.meta.env.ADMIN_PASSWORD;
+const authHeader = Astro.request.headers.get('authorization');
+const isAdmin = Astro.locals.user || (adminPassword && authHeader === `Bearer ${adminPassword}`);
+if (!isAdmin) {
+  return new Response('Unauthorized', { status: 401, headers: { 'WWW-Authenticate': 'Bearer' } });
+}
 
 const tools = await getCollection('tools');
 const categories = await getCollection('categories');

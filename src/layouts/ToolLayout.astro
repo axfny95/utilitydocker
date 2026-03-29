@@ -4,7 +4,10 @@ import Breadcrumbs from '../components/layout/Breadcrumbs.astro';
 import SchemaMarkup from '../components/seo/SchemaMarkup.astro';
 import AdSlot from '../components/ads/AdSlot.astro';
 import EmailCapture from '../components/shared/EmailCapture';
+import StarButton from '../components/shared/StarButton';
+import ToolCard from '../components/shared/ToolCard.astro';
 import type { ToolMeta } from '../types/tool';
+import { getCollection } from 'astro:content';
 
 interface Props {
   tool: ToolMeta;
@@ -12,6 +15,13 @@ interface Props {
 }
 
 const { tool, slug } = Astro.props;
+
+// Resolve related tools
+const allTools = await getCollection('tools');
+const relatedToolEntries = tool.relatedTools
+  .map((rs) => allTools.find((t) => t.id === rs))
+  .filter(Boolean)
+  .slice(0, 3);
 
 const breadcrumbItems = [
   { label: 'Home', href: '/' },
@@ -41,6 +51,7 @@ const toolUrl = `/tools/${slug}`;
         {tool.premium && (
           <span class="rounded-full bg-amber-100 px-3 py-1 text-xs font-medium text-amber-800">Premium</span>
         )}
+        <StarButton client:idle toolSlug={slug} />
       </div>
       <p class="mt-2 text-lg text-surface-600">{tool.description}</p>
       <div class="mt-3 flex flex-wrap items-center gap-3 text-sm text-surface-500">
@@ -98,11 +109,13 @@ const toolUrl = `/tools/${slug}`;
     )}
 
     <!-- Related tools -->
-    {tool.relatedTools.length > 0 && (
+    {relatedToolEntries.length > 0 && (
       <section class="mt-12">
         <h2 class="mb-6 text-2xl font-bold text-surface-900">Related Tools</h2>
         <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          <slot name="related-tools" />
+          {relatedToolEntries.map((rt) => rt && (
+            <ToolCard title={rt.data.title} description={rt.data.description} slug={rt.id} category={rt.data.category} />
+          ))}
         </div>
       </section>
     )}
