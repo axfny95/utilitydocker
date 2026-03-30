@@ -1,23 +1,25 @@
 import type { APIRoute } from 'astro';
 import { getUserByEmail, createUser } from '../../../../lib/db';
 import { createSession } from '../../../../lib/session';
-import { generateToken } from '../../../../lib/auth';
+import { generateToken, hashPassword } from '../../../../lib/auth';
 
 export const prerender = false;
 
-// Step 2: Handle Google's callback with auth code
 export const GET: APIRoute = async ({ url, locals, redirect }) => {
   const code = url.searchParams.get('code');
-  if (!code) {
-    return redirect('/login?error=google_failed');
+  if (!code) return redirect('/login?error=google_failed');
+
+  const env = (locals.runtime?.env || {}) as Record<string, string>;
+  const clientId = env.GOOGLE_CLIENT_ID;
+  const clientSecret = env.GOOGLE_CLIENT_SECRET;
+
+  if (!clientId || !clientSecret) {
+    return redirect('/login?error=google_not_configured');
   }
 
-  const clientId = import.meta.env.GOOGLE_CLIENT_ID;
-  const clientSecret = import.meta.env.GOOGLE_CLIENT_SECRET;
   const redirectUri = 'https://utilitydocker.com/api/auth/google/callback';
 
   try {
-    // Exchange code for tokens
     const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -31,61 +33,39 @@ export const GET: APIRoute = async ({ url, locals, redirect }) => {
     });
 
     if (!tokenRes.ok) {
+      console.error('[google] Token error:', await tokenRes.text());
       return redirect('/login?error=google_token_failed');
     }
 
     const tokens = await tokenRes.json();
 
-    // Get user info from Google
     const userRes = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
       headers: { Authorization: `Bearer ${tokens.access_token}` },
     });
 
-    if (!userRes.ok) {
-      return redirect('/login?error=google_userinfo_failed');
-    }
+    if (!userRes.ok) return redirect('/login?error=google_userinfo_failed');
 
     const googleUser = await userRes.json();
     const email = googleUser.email?.toLowerCase();
+    if (!email) return redirect('/login?error=no_email');
 
-    if (!email) {
-      return redirect('/login?error=no_email');
-    }
-
-    const env = locals.runtime.env;
-
-    // Check if user already exists
-    let user = await getUserByEmail(env.DB, email);
+    const db = locals.runtime.env.DB;
+    let user = await getUserByEmail(db, email);
 
     if (!user) {
-      // Create new user — Google users are auto-verified
-      const randomPassword = generateToken(); // They won't use password login
-      const { hashPassword } = await import('../../../../lib/auth');
-      const passwordHash = await hashPassword(randomPassword);
-
-      const userId = await createUser(env.DB, email, passwordHash, '');
-
-      // Mark email as verified (Google already verified it)
-      await env.DB.prepare('UPDATE users SET email_verified = 1, email_verify_token = NULL WHERE id = ?')
-        .bind(userId)
-        .run();
-
-      user = await getUserByEmail(env.DB, email);
+      const pw = await hashPassword(generateToken());
+      const userId = await createUser(db, email, pw, '');
+      await db.prepare('UPDATE users SET email_verified = 1, email_verify_token = NULL WHERE id = ?').bind(userId).run();
+      user = await getUserByEmail(db, email);
     }
 
-    if (!user) {
-      return redirect('/login?error=create_failed');
-    }
+    if (!user) return redirect('/login?error=create_failed');
 
-    // Create session
-    const { cookie } = await createSession(env.SESSIONS, user.id);
+    const { cookie } = await createSession(locals.runtime.env.SESSIONS, user.id);
 
     return new Response(null, {
       status: 302,
-      headers: {
-        Location: '/account',
-        'Set-Cookie': cookie,
-      },
+      headers: { Location: '/account', 'Set-Cookie': cookie },
     });
   } catch (error) {
     console.error('[google/callback]', error);
