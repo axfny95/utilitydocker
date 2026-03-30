@@ -11,7 +11,11 @@ export default function Notepad() {
   // Load saved content
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) setText(saved);
+    if (saved) {
+      setText(saved);
+      setWordCount(saved.trim() ? saved.trim().split(/\s+/).length : 0);
+      setCharCount(saved.length);
+    }
   }, []);
 
   // Auto-save every 2 seconds

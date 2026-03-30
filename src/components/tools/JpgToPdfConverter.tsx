@@ -55,6 +55,29 @@ export default function JpgToPdfConverter() {
         let embedded;
         if (img.name.toLowerCase().endsWith('.png')) {
           embedded = await pdf.embedPng(bytes);
+        } else if (img.name.toLowerCase().match(/\.webp$/)) {
+          // Convert WebP to PNG via Canvas before embedding
+          const blob = new Blob([bytes], { type: 'image/webp' });
+          const bmpUrl = URL.createObjectURL(blob);
+          const tmpImg = new Image();
+          const pngBytes = await new Promise<Uint8Array>((res, rej) => {
+            tmpImg.onload = () => {
+              const c = document.createElement('canvas');
+              c.width = tmpImg.naturalWidth;
+              c.height = tmpImg.naturalHeight;
+              const cx = c.getContext('2d');
+              if (!cx) { rej(new Error('Canvas not supported')); return; }
+              cx.drawImage(tmpImg, 0, 0);
+              c.toBlob((b) => {
+                if (!b) { rej(new Error('WebP conversion failed')); return; }
+                b.arrayBuffer().then((ab) => res(new Uint8Array(ab)));
+              }, 'image/png');
+            };
+            tmpImg.onerror = () => rej(new Error('Failed to load WebP image'));
+            tmpImg.src = bmpUrl;
+          });
+          URL.revokeObjectURL(bmpUrl);
+          embedded = await pdf.embedPng(pngBytes);
         } else {
           embedded = await pdf.embedJpg(bytes);
         }

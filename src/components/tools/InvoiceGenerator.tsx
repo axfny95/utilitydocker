@@ -73,7 +73,8 @@ export default function InvoiceGenerator() {
     // Items
     for (const item of items) {
       if (item.description) {
-        page.drawText(item.description, { x: 55, y, font, size: 9 });
+        const desc = item.description.length > 40 ? item.description.slice(0, 37) + '...' : item.description;
+        page.drawText(desc, { x: 55, y, font, size: 9 });
         page.drawText(String(item.quantity), { x: 345, y, font, size: 9 });
         page.drawText(fmt(item.unitPrice), { x: 395, y, font, size: 9 });
         page.drawText(fmt(item.quantity * item.unitPrice), { x: 470, y, font, size: 9 });
@@ -98,7 +99,21 @@ export default function InvoiceGenerator() {
       y -= 40;
       page.drawText('Notes:', { x: 50, y, font: bold, size: 10 });
       y -= 14;
-      page.drawText(notes, { x: 50, y, font, size: 9, color: rgb(0.4, 0.4, 0.4) });
+      // Word-wrap notes into lines of ~80 chars
+      const words = notes.split(' ');
+      let line = '';
+      for (const word of words) {
+        if ((line + ' ' + word).trim().length > 80) {
+          page.drawText(line.trim(), { x: 50, y, font, size: 9, color: rgb(0.4, 0.4, 0.4) });
+          y -= 14;
+          line = word;
+        } else {
+          line = line ? line + ' ' + word : word;
+        }
+      }
+      if (line.trim()) {
+        page.drawText(line.trim(), { x: 50, y, font, size: 9, color: rgb(0.4, 0.4, 0.4) });
+      }
     }
 
     const bytes = await doc.save();

@@ -27,7 +27,7 @@ export default function BoxShadowGenerator() {
 
   const css = shadows.map((s) => `${s.inset ? 'inset ' : ''}${s.x}px ${s.y}px ${s.blur}px ${s.spread}px ${toRgba(s.color, s.opacity)}`).join(',\n    ');
   const fullCss = `box-shadow: ${css};`;
-  const tailwind = `shadow-[${shadows.map((s) => `${s.inset ? 'inset_' : ''}${s.x}px_${s.y}px_${s.blur}px_${s.spread}px_${toRgba(s.color, s.opacity)}`).join(',')}]`;
+  const tailwind = `shadow-[${shadows.map((s) => `${s.inset ? 'inset_' : ''}${s.x}px_${s.y}px_${s.blur}px_${s.spread}px_${toRgba(s.color, s.opacity).replace(/ /g, '_')}`).join(',')}]`;
 
   return (
     <div className="space-y-6">

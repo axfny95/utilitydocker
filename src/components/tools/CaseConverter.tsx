@@ -9,7 +9,7 @@ function convert(text: string, caseType: CaseType): string {
     case 'upper': return text.toUpperCase();
     case 'lower': return text.toLowerCase();
     case 'title': return words.map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
-    case 'sentence': return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+    case 'sentence': return text.toLowerCase().replace(/(^|\.\s+|!\s+|\?\s+)([a-z])/g, (m, p, c) => p + c.toUpperCase());
     case 'camel': return words.map((w, i) => i === 0 ? w.toLowerCase() : w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join('');
     case 'pascal': return words.map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join('');
     case 'snake': return words.map((w) => w.toLowerCase()).join('_');

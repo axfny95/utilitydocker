@@ -5,12 +5,13 @@ export default function JsonFormatter() {
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [error, setError] = useState<string | null>(null);
-  const [indentSize, setIndentSize] = useState(2);
+  const [indentSize, setIndentSize] = useState<number | string>(2);
 
   const format = () => {
     try {
       const parsed = JSON.parse(input);
-      setOutput(JSON.stringify(parsed, null, indentSize));
+      const indent = indentSize === 'tab' ? '\t' : indentSize;
+      setOutput(JSON.stringify(parsed, null, indent));
       setError(null);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Invalid JSON');
@@ -75,12 +76,12 @@ export default function JsonFormatter() {
           <label className="text-sm text-surface-600">Indent:</label>
           <select
             value={indentSize}
-            onChange={(e) => setIndentSize(Number(e.target.value))}
+            onChange={(e) => { const v = e.target.value; setIndentSize(v === 'tab' ? 'tab' : Number(v)); }}
             className="rounded-lg border border-surface-200 px-2 py-1 text-sm"
           >
             <option value={2}>2 spaces</option>
             <option value={4}>4 spaces</option>
-            <option value={1}>1 tab</option>
+            <option value="tab">1 tab</option>
           </select>
         </div>
       </div>

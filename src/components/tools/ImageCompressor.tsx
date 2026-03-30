@@ -36,7 +36,8 @@ function compressImage(file: File, quality: number, maxWidth: number): Promise<C
 
       ctx.drawImage(img, 0, 0, width, height);
 
-      const mimeType = file.type === 'image/png' ? 'image/png' : 'image/jpeg';
+      const isPng = file.type === 'image/png';
+      const mimeType = isPng && quality < 100 ? 'image/jpeg' : (isPng ? 'image/png' : 'image/jpeg');
       canvas.toBlob(
         (blob) => {
           URL.revokeObjectURL(url);
@@ -121,6 +122,7 @@ export default function ImageCompressor() {
           <label className="mb-1 block text-sm font-medium text-surface-700">
             Quality: {quality}%
           </label>
+          <p className="mb-1 text-xs text-surface-400">Note: For PNG files, adjusting quality below 100% will convert output to JPEG.</p>
           <input
             type="range"
             min={10}

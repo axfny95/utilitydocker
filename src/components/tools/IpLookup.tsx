@@ -28,13 +28,18 @@ export default function IpLookup() {
       const data = await res.json();
       setInfo(data);
     } catch {
-      // Fallback to simpler API
-      try {
-        const res = await fetch('https://api.ipify.org?format=json');
-        const data = await res.json();
-        setInfo({ ip: data.ip });
-      } catch {
-        setError('Unable to determine your IP address. This may be blocked by your browser or ad blocker.');
+      if (ip) {
+        // Custom IP lookup failed - do not fall back to ipify (which returns our own IP)
+        setError(`Unable to look up IP address "${ip}". The request failed or was blocked.`);
+      } else {
+        // Only use ipify fallback for the user's own IP
+        try {
+          const res = await fetch('https://api.ipify.org?format=json');
+          const data = await res.json();
+          setInfo({ ip: data.ip });
+        } catch {
+          setError('Unable to determine your IP address. This may be blocked by your browser or ad blocker.');
+        }
       }
     } finally {
       setLoading(false);

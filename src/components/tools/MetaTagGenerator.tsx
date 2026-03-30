@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import CopyButton from '../shared/CopyButton';
 
+function escapeHtml(str: string): string {
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
 export default function MetaTagGenerator() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -13,27 +17,34 @@ export default function MetaTagGenerator() {
   const [charset, setCharset] = useState('UTF-8');
   const [viewport, setViewport] = useState('width=device-width, initial-scale=1');
 
+  const eTitle = escapeHtml(title);
+  const eDesc = escapeHtml(description);
+  const eUrl = escapeHtml(url);
+  const eImage = escapeHtml(image);
+  const eSiteName = escapeHtml(siteName);
+  const eTwitter = escapeHtml(twitterHandle);
+
   const tags = [
     `<meta charset="${charset}" />`,
     `<meta name="viewport" content="${viewport}" />`,
-    title && `<title>${title}</title>`,
-    description && `<meta name="description" content="${description}" />`,
+    title && `<title>${eTitle}</title>`,
+    description && `<meta name="description" content="${eDesc}" />`,
     robots && `<meta name="robots" content="${robots}" />`,
     '',
     '<!-- Open Graph -->',
-    title && `<meta property="og:title" content="${title}" />`,
-    description && `<meta property="og:description" content="${description}" />`,
+    title && `<meta property="og:title" content="${eTitle}" />`,
+    description && `<meta property="og:description" content="${eDesc}" />`,
     type && `<meta property="og:type" content="${type}" />`,
-    url && `<meta property="og:url" content="${url}" />`,
-    image && `<meta property="og:image" content="${image}" />`,
-    siteName && `<meta property="og:site_name" content="${siteName}" />`,
+    url && `<meta property="og:url" content="${eUrl}" />`,
+    image && `<meta property="og:image" content="${eImage}" />`,
+    siteName && `<meta property="og:site_name" content="${eSiteName}" />`,
     '',
     '<!-- Twitter Card -->',
     `<meta name="twitter:card" content="summary_large_image" />`,
-    title && `<meta name="twitter:title" content="${title}" />`,
-    description && `<meta name="twitter:description" content="${description}" />`,
-    image && `<meta name="twitter:image" content="${image}" />`,
-    twitterHandle && `<meta name="twitter:site" content="${twitterHandle}" />`,
+    title && `<meta name="twitter:title" content="${eTitle}" />`,
+    description && `<meta name="twitter:description" content="${eDesc}" />`,
+    image && `<meta name="twitter:image" content="${eImage}" />`,
+    twitterHandle && `<meta name="twitter:site" content="${eTwitter}" />`,
   ].filter(Boolean).join('\n');
 
   return (

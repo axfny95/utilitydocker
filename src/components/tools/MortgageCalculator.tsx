@@ -22,8 +22,8 @@ export default function MortgageCalculator() {
     if (denominator === 0 || !isFinite(denominator)) return null;
     const monthlyPrincipalInterest = principal * (rate * Math.pow(1 + rate, payments)) / denominator;
     const monthlyTotal = monthlyPrincipalInterest + taxMonthly + insMonthly;
-    const totalPaid = monthlyPrincipalInterest * payments;
-    const totalInterest = totalPaid - principal;
+    const totalPaid = (monthlyPrincipalInterest + taxMonthly + insMonthly) * payments;
+    const totalInterest = (monthlyPrincipalInterest * payments) - principal;
 
     return {
       monthlyPayment: monthlyTotal,
