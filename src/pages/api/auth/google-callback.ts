@@ -54,7 +54,6 @@ export const GET: APIRoute = async ({ url, locals, redirect, request }) => {
     // Step 4: DB operations
     const { getUserByEmail, createUser } = await import('../../../lib/db');
     const { createSession } = await import('../../../lib/session');
-    const { generateToken, hashPassword } = await import('../../../lib/auth');
 
     const db = cfEnv.DB;
     const sessions = cfEnv.SESSIONS;
@@ -65,9 +64,9 @@ export const GET: APIRoute = async ({ url, locals, redirect, request }) => {
     let user = await getUserByEmail(db, email);
 
     if (!user) {
-      // Step 5: Create user
-      const pw = await hashPassword(generateToken());
-      const userId = await createUser(db, email, pw, '');
+      // Step 5: Create user (Google users get a simple hash — they use Google to login, never password)
+      const simplePw = 'google-oauth-' + crypto.randomUUID();
+      const userId = await createUser(db, email, simplePw, '');
       await db.prepare('UPDATE users SET email_verified = 1, email_verify_token = NULL WHERE id = ?')
         .bind(userId).run();
       user = await getUserByEmail(db, email);
