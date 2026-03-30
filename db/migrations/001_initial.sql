@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS custom_tools (
   description TEXT,
   prompt TEXT NOT NULL,
   generated_code TEXT NOT NULL,
-  is_public INTEGER DEFAULT 0,
+  is_public INTEGER DEFAULT 1,
   share_slug TEXT UNIQUE,
   generation_count INTEGER DEFAULT 1,
   created_at INTEGER DEFAULT (unixepoch()),

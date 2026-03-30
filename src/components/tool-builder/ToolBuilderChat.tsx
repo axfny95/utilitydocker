@@ -64,13 +64,15 @@ export default function ToolBuilderChat() {
     }
   };
 
+  const [saveAsPublic, setSaveAsPublic] = useState(true);
+
   const save = async () => {
     if (!generatedCode) return;
     try {
       const res = await fetch('/api/tool-builder/save', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title: generatedTitle, description: generatedDescription, prompt, code: generatedCode }),
+        body: JSON.stringify({ title: generatedTitle, description: generatedDescription, prompt, code: generatedCode, isPublic: saveAsPublic }),
       });
       const data = await res.json();
       if (res.ok) {
@@ -125,12 +127,16 @@ export default function ToolBuilderChat() {
               <h3 className="text-lg font-bold text-surface-900">{generatedTitle}</h3>
               <p className="text-sm text-surface-500">{generatedDescription}</p>
             </div>
-            <div className="flex gap-2">
+            <div className="flex items-center gap-2">
               <button onClick={() => setShowCode(!showCode)} className="rounded-lg border border-surface-200 px-3 py-1.5 text-sm text-surface-600 hover:bg-surface-50">
                 {showCode ? 'Preview' : 'View Code'}
               </button>
+              <label className="flex items-center gap-1.5 rounded-lg border border-surface-200 px-3 py-1.5 text-sm">
+                <input type="checkbox" checked={!saveAsPublic} onChange={(e) => setSaveAsPublic(!e.target.checked)} className="rounded border-surface-300" />
+                Private
+              </label>
               <button onClick={save} className="rounded-lg bg-primary-600 px-4 py-1.5 text-sm font-medium text-white hover:bg-primary-700">
-                Save Tool
+                {saveAsPublic ? 'Save & Publish' : 'Save Private'}
               </button>
             </div>
           </div>

@@ -5,15 +5,22 @@ export const prerender = false;
 
 export const POST: APIRoute = async ({ request, locals }) => {
   if (!locals.user) {
-    return new Response(JSON.stringify({ error: 'Not authenticated' }), { status: 401, headers: { 'Content-Type': 'application/json' } });
+    return json({ error: 'Not authenticated' }, 401);
   }
 
   try {
+    const body = await request.json().catch(() => ({}));
+    const plan = body.plan || 'premium_plus';
+
     const origin = new URL(request.url).origin;
-    const priceId = import.meta.env.STRIPE_PRICE_ID_MONTHLY;
+
+    // Select price ID based on plan
+    const priceId = plan === 'premium'
+      ? import.meta.env.STRIPE_PRICE_ID_PREMIUM      // $5/mo
+      : import.meta.env.STRIPE_PRICE_ID_PREMIUM_PLUS; // $7/mo
 
     if (!priceId) {
-      return new Response(JSON.stringify({ error: 'Stripe not configured' }), { status: 500, headers: { 'Content-Type': 'application/json' } });
+      return json({ error: 'Stripe not configured for this plan' }, 500);
     }
 
     const { url } = await createCheckoutSession({
@@ -23,9 +30,13 @@ export const POST: APIRoute = async ({ request, locals }) => {
       customerEmail: locals.user.email,
     });
 
-    return new Response(JSON.stringify({ url }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+    return json({ url });
   } catch (error) {
     console.error('[stripe/create-checkout]', error);
-    return new Response(JSON.stringify({ error: 'Failed to create checkout session' }), { status: 500, headers: { 'Content-Type': 'application/json' } });
+    return json({ error: 'Failed to create checkout session' }, 500);
   }
 };
+
+function json(data: Record<string, unknown>, status: number = 200) {
+  return new Response(JSON.stringify(data), { status, headers: { 'Content-Type': 'application/json' } });
+}
