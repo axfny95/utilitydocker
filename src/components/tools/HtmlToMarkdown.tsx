@@ -21,7 +21,15 @@ function htmlToMarkdown(html: string): string {
   md = md.replace(/<a[^>]*href="([^"]*)"[^>]*>(.*?)<\/a>/gi, '[$2]($1)');
   md = md.replace(/<img[^>]*src="([^"]*)"[^>]*alt="([^"]*)"[^>]*\/?>/gi, '![$2]($1)');
   md = md.replace(/<img[^>]*src="([^"]*)"[^>]*\/?>/gi, '![]($1)');
-  // Lists
+  // Lists - handle ordered lists with numbered markers before unordered
+  md = md.replace(/<ol[^>]*>([\s\S]*?)<\/ol>/gi, (_match, inner: string) => {
+    let counter = 0;
+    const result = inner.replace(/<li[^>]*>(.*?)<\/li>/gi, (_m: string, content: string) => {
+      counter++;
+      return `${counter}. ${content}\n`;
+    });
+    return '\n' + result + '\n';
+  });
   md = md.replace(/<li[^>]*>(.*?)<\/li>/gi, '- $1\n');
   md = md.replace(/<\/?[ou]l[^>]*>/gi, '\n');
   // Paragraphs and breaks

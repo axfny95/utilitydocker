@@ -14,15 +14,19 @@ function drawQR(canvas: HTMLCanvasElement, text: string, size: number, fgColor: 
   ctx.fillStyle = bgColor;
   ctx.fillRect(0, 0, size, size);
 
-  // For a proper QR code, we need a library.
-  // This placeholder draws a centered text message.
-  // The actual QR library will be loaded lazily.
-  ctx.fillStyle = fgColor;
-  ctx.font = '14px monospace';
+  // QR code library failed to load - show clear error
+  ctx.fillStyle = '#fee2e2';
+  ctx.fillRect(0, 0, size, size);
+  ctx.fillStyle = '#991b1b';
+  ctx.font = 'bold 16px sans-serif';
   ctx.textAlign = 'center';
-  ctx.fillText('QR Preview', size / 2, size / 2);
-  ctx.font = '10px monospace';
-  ctx.fillText('(install qrcode package)', size / 2, size / 2 + 20);
+  ctx.fillText('QR code library', size / 2, size / 2 - 20);
+  ctx.fillText('failed to load', size / 2, size / 2 + 4);
+  ctx.font = '12px sans-serif';
+  ctx.fillStyle = '#dc2626';
+  ctx.fillText('Install "qrcode" package:', size / 2, size / 2 + 30);
+  ctx.fillText('npm install qrcode', size / 2, size / 2 + 48);
+  ctx.fillText('@types/qrcode', size / 2, size / 2 + 64);
 }
 
 export default function QrCodeGenerator() {
