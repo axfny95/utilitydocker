@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
-import { getUserByEmail, createUser } from '../../../../lib/db';
-import { createSession } from '../../../../lib/session';
-import { generateToken, hashPassword } from '../../../../lib/auth';
+import { getUserByEmail, createUser } from '../../../lib/db';
+import { createSession } from '../../../lib/session';
+import { generateToken, hashPassword } from '../../../lib/auth';
 
 export const prerender = false;
 
