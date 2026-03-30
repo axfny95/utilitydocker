@@ -124,6 +124,16 @@ const toolUrl = `/tools/${slug}`;
       </section>
     )}
 
+    <!-- Browse more tools CTA — keeps users on site -->
+    <section class="mt-12 rounded-xl border border-surface-200 bg-surface-50 p-6 text-center">
+      <h2 class="text-lg font-bold text-surface-900">Explore More Free Tools</h2>
+      <p class="mt-1 text-sm text-surface-600">UtilityDocker has 73+ free tools. New tools added every week.</p>
+      <div class="mt-4 flex flex-wrap justify-center gap-3">
+        <a href="/tools" class="rounded-lg bg-primary-600 px-5 py-2 text-sm font-medium text-white hover:bg-primary-700">Browse All Tools</a>
+        <a href="/blog" class="rounded-lg border border-surface-200 px-5 py-2 text-sm font-medium text-surface-700 hover:bg-white">Read Our Blog</a>
+      </div>
+    </section>
+
     <!-- Email capture -->
     <div class="mt-12">
       <EmailCapture client:visible toolSlug={slug} />

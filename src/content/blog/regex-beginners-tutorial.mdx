@@ -1,0 +1,237 @@
+---
+title: "Regular Expressions for Beginners: A Practical Tutorial"
+description: "Learn regex from scratch with real examples. Covers syntax, character classes, quantifiers, groups, and common patterns for everyday tasks."
+author: "UtilityDocker Team"
+publishedAt: 2026-03-29
+tags: ["regex", "programming", "tutorial", "development"]
+relatedTools: ["regex-tester"]
+---
+
+## What Are Regular Expressions?
+
+Regular expressions (regex) are patterns that describe sets of strings. They let you search, match, validate, and extract text with surgical precision. Instead of writing dozens of lines of string manipulation code, a single regex pattern can do the job.
+
+Regex is available in virtually every programming language, text editor, command-line tool, and database. Once you learn the syntax, you can apply it everywhere.
+
+This tutorial starts from zero and builds up to patterns you will actually use in your daily work.
+
+## Your First Regex
+
+The simplest regex is just a literal string. The pattern `cat` matches the text "cat" anywhere it appears: in "cat", "catalog", "scatter", and "concatenate".
+
+But regex becomes powerful when you use special characters called **metacharacters** to define flexible patterns.
+
+## Metacharacters: The Building Blocks
+
+These characters have special meaning in regex:
+
+| Character | Meaning | Example | Matches |
+|-----------|---------|---------|---------|
+| `.` | Any single character | `c.t` | cat, cot, cut, c7t |
+| `^` | Start of string/line | `^Hello` | "Hello world" (at start) |
+| `$` | End of string/line | `world$` | "Hello world" (at end) |
+| `\` | Escape special character | `\.` | A literal period |
+| `|` | OR operator | `cat|dog` | cat or dog |
+
+To match a literal metacharacter, escape it with a backslash. For example, `\.` matches an actual period, and `\$` matches a dollar sign.
+
+Open the [Regex Tester](/tools/regex-tester) in another tab and try each example as you read. Seeing the matches highlighted in real time makes the syntax click much faster.
+
+## Character Classes
+
+Character classes match one character from a defined set. They are enclosed in square brackets.
+
+| Pattern | Meaning | Example Matches |
+|---------|---------|-----------------|
+| `[abc]` | a, b, or c | a, b, c |
+| `[a-z]` | Any lowercase letter | a, b, c, ... z |
+| `[A-Z]` | Any uppercase letter | A, B, C, ... Z |
+| `[0-9]` | Any digit | 0, 1, 2, ... 9 |
+| `[a-zA-Z]` | Any letter | a-z, A-Z |
+| `[^abc]` | NOT a, b, or c | d, e, 1, @, ... |
+
+The caret `^` has a different meaning inside brackets. Here, it negates the class.
+
+### Shorthand Character Classes
+
+Regex provides shortcuts for common character classes:
+
+| Shorthand | Equivalent | Meaning |
+|-----------|-----------|---------|
+| `\d` | `[0-9]` | Any digit |
+| `\D` | `[^0-9]` | Any non-digit |
+| `\w` | `[a-zA-Z0-9_]` | Any word character |
+| `\W` | `[^a-zA-Z0-9_]` | Any non-word character |
+| `\s` | `[ \t\n\r\f]` | Any whitespace |
+| `\S` | `[^ \t\n\r\f]` | Any non-whitespace |
+
+## Quantifiers
+
+Quantifiers specify how many times a preceding element should appear.
+
+| Quantifier | Meaning | Example | Matches |
+|-----------|---------|---------|---------|
+| `*` | 0 or more | `ab*c` | ac, abc, abbc, abbbc |
+| `+` | 1 or more | `ab+c` | abc, abbc, abbbc (not ac) |
+| `?` | 0 or 1 | `colou?r` | color, colour |
+| `{3}` | Exactly 3 | `\d{3}` | 123, 456, 789 |
+| `{2,4}` | Between 2 and 4 | `\d{2,4}` | 12, 123, 1234 |
+| `{2,}` | 2 or more | `\d{2,}` | 12, 123, 1234, ... |
+
+### Greedy vs. Lazy
+
+By default, quantifiers are **greedy**: they match as much text as possible. Adding `?` after a quantifier makes it **lazy**: it matches as little as possible.
+
+```
+Text:    <b>bold</b> and <b>more bold</b>
+Greedy:  <b>.*</b>     matches "<b>bold</b> and <b>more bold</b>"
+Lazy:    <b>.*?</b>    matches "<b>bold</b>" and "<b>more bold</b>"
+```
+
+This distinction matters when parsing structured text like HTML or log files.
+
+## Groups and Capturing
+
+Parentheses create **groups** that serve two purposes: they group elements for quantifiers, and they capture matched text for extraction.
+
+```
+Pattern: (\d{3})-(\d{3})-(\d{4})
+Text:    555-867-5309
+Group 1: 555
+Group 2: 867
+Group 3: 5309
+```
+
+### Non-Capturing Groups
+
+If you need grouping for logic but do not need to capture, use `(?:...)`:
+
+```
+(?:cat|dog) food
+```
+
+This matches "cat food" or "dog food" without creating a capture group.
+
+### Backreferences
+
+You can refer back to captured groups within the same pattern using `\1`, `\2`, etc.:
+
+```
+Pattern: (\w+)\s+\1
+Matches: "the the" (repeated word detection)
+```
+
+## Lookahead and Lookbehind
+
+These are **zero-width assertions** that check what comes before or after a position without consuming characters.
+
+| Syntax | Name | Meaning |
+|--------|------|---------|
+| `(?=...)` | Positive lookahead | Followed by ... |
+| `(?!...)` | Negative lookahead | NOT followed by ... |
+| `(?<=...)` | Positive lookbehind | Preceded by ... |
+| `(?<!...)` | Negative lookbehind | NOT preceded by ... |
+
+**Example:** Match a number only if followed by "px":
+```
+\d+(?=px)
+```
+In "16px 2em 24px", this matches "16" and "24" but not "2".
+
+## 10 Practical Regex Patterns
+
+Here are patterns you can use right away:
+
+### 1. Email Address (Basic)
+
+```
+^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$
+```
+
+### 2. URL
+
+```
+https?://[^\s/$.?#].[^\s]*
+```
+
+### 3. Phone Number (US)
+
+```
+^(\+1)?[-.\s]?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$
+```
+
+### 4. IP Address (IPv4)
+
+```
+\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b
+```
+
+### 5. Date (YYYY-MM-DD)
+
+```
+\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])
+```
+
+### 6. HTML Tag
+
+```
+<([a-z]+)([^>]*)>(.*?)</\1>
+```
+
+### 7. Hex Color Code
+
+```
+#([0-9a-fA-F]{3}){1,2}\b
+```
+
+### 8. Password Strength (min 8 chars, uppercase, lowercase, digit)
+
+```
+^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$
+```
+
+### 9. Whitespace Trimming
+
+```
+^\s+|\s+$
+```
+
+### 10. Duplicate Words
+
+```
+\b(\w+)\s+\1\b
+```
+
+Paste any of these into the [Regex Tester](/tools/regex-tester) along with sample text to see exactly which parts match and which groups are captured.
+
+## Common Mistakes and How to Avoid Them
+
+**Forgetting to escape special characters.** Want to match a period? Use `\.` not `.`. Want to match parentheses? Use `\(` and `\)`.
+
+**Over-matching with `.*`**. The dot-star pattern is greedy and will eat through text you wanted to preserve. Use `.*?` (lazy) or a negated character class like `[^"]*` instead.
+
+**Anchoring.** If you are validating input, always use `^` and `$` anchors. Without them, `\d{5}` matches the first five digits in any longer string rather than requiring exactly five digits.
+
+**Catastrophic backtracking.** Nested quantifiers like `(a+)+` can cause exponential processing time on certain inputs. Avoid nested repetitions that can match the same characters.
+
+## Regex in Different Languages
+
+The core syntax is mostly universal, but there are dialect differences:
+
+| Feature | JavaScript | Python | Java |
+|---------|-----------|--------|------|
+| Named groups | `(?<name>...)` | `(?P<name>...)` | `(?<name>...)` |
+| Lookbehind | Fixed-width only | Fixed-width only | Variable-width |
+| Unicode | `\u{1F600}` | Built-in | `\p{L}` |
+
+## Tips for Writing Better Regex
+
+1. **Start simple and iterate.** Get a basic pattern working, then refine it.
+2. **Test with edge cases.** Include empty strings, special characters, and boundary values.
+3. **Comment complex patterns.** Many languages support verbose mode (`x` flag) that allows comments.
+4. **Use a visual tester.** The [Regex Tester](/tools/regex-tester) highlights matches in real time and explains each part of your pattern.
+5. **Validate structured data with proper tools.** For JSON validation, use a dedicated [JSON Formatter](/tools/json-formatter) rather than trying to parse JSON with regex.
+
+## Keep Practicing
+
+Regex is a skill that improves with practice. Start by using it for simple search-and-replace tasks, then gradually tackle more complex patterns. Bookmark the [Regex Tester](/tools/regex-tester), and use it whenever you need to build or debug a pattern. The visual feedback loop will accelerate your learning faster than any textbook.

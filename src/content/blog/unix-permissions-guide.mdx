@@ -1,0 +1,273 @@
+---
+title: "Complete Guide to Unix File Permissions and chmod"
+description: "Master Unix file permissions with this comprehensive guide to chmod, octal notation, symbolic mode, and common permission patterns."
+author: "UtilityDocker Team"
+publishedAt: 2026-03-29
+tags: ["linux", "unix", "permissions", "chmod", "sysadmin"]
+relatedTools: ["chmod-calculator"]
+---
+
+## Why File Permissions Matter
+
+Every file and directory on a Unix-based system (Linux, macOS, BSD) has a set of permissions that control who can read, write, and execute it. Misconfigured permissions are one of the most common causes of "permission denied" errors, security vulnerabilities, and application failures.
+
+Whether you are deploying a web application, writing shell scripts, or managing a server, understanding file permissions is not optional. This guide covers everything from the fundamentals to advanced patterns you will encounter in real-world system administration.
+
+## The Permission Model
+
+Unix permissions operate on three dimensions: **who** and **what**.
+
+### Who: The Three Permission Groups
+
+| Group | Abbreviation | Description |
+|-------|-------------|-------------|
+| Owner | `u` (user) | The user who owns the file |
+| Group | `g` | Users who belong to the file's group |
+| Others | `o` | Everyone else on the system |
+
+Every file has exactly one owner and one group. Anyone who is neither the owner nor a member of the group falls into "others."
+
+### What: The Three Permission Types
+
+| Permission | Symbol | On Files | On Directories |
+|-----------|--------|----------|----------------|
+| Read | `r` | View file contents | List directory contents |
+| Write | `w` | Modify file contents | Create/delete files in directory |
+| Execute | `x` | Run as a program | Enter the directory (cd into it) |
+
+The combination of these two dimensions creates a 9-bit permission string.
+
+## Reading Permission Strings
+
+When you run `ls -l`, the output includes a 10-character permission string:
+
+```
+-rwxr-xr-- 1 alice developers 4096 Mar 15 10:30 deploy.sh
+```
+
+Breaking down `-rwxr-xr--`:
+
+| Position | Character(s) | Meaning |
+|----------|-------------|---------|
+| 1 | `-` | File type (`-` = regular file, `d` = directory, `l` = symlink) |
+| 2-4 | `rwx` | Owner can read, write, and execute |
+| 5-7 | `r-x` | Group can read and execute, but not write |
+| 8-10 | `r--` | Others can only read |
+
+A dash (`-`) in any position means that permission is not granted.
+
+## Octal (Numeric) Notation
+
+Each permission has a numeric value:
+
+| Permission | Value |
+|-----------|-------|
+| Read (r) | 4 |
+| Write (w) | 2 |
+| Execute (x) | 1 |
+| None (-) | 0 |
+
+Add the values together for each group to get a three-digit octal number:
+
+- `rwx` = 4 + 2 + 1 = **7**
+- `r-x` = 4 + 0 + 1 = **5**
+- `r--` = 4 + 0 + 0 = **4**
+
+So the permission string `rwxr-xr--` translates to **754**.
+
+Computing these values manually gets tedious, especially for less common combinations. A [chmod Calculator](/tools/chmod-calculator) lets you toggle checkboxes and see both the octal and symbolic representations instantly.
+
+## Using chmod: Symbolic Mode
+
+The `chmod` command changes file permissions. Symbolic mode uses letters and operators:
+
+```bash
+chmod [who][operator][permission] filename
+```
+
+**Operators:**
+- `+` adds a permission
+- `-` removes a permission
+- `=` sets exact permissions (removes everything else)
+
+### Examples
+
+```bash
+# Add execute permission for the owner
+chmod u+x script.sh
+
+# Remove write permission for group and others
+chmod go-w config.yaml
+
+# Set exact permissions: owner rwx, group rx, others r
+chmod u=rwx,g=rx,o=r deploy.sh
+
+# Add read permission for everyone
+chmod a+r README.md
+```
+
+The `a` stands for "all" (owner, group, and others combined).
+
+## Using chmod: Octal Mode
+
+Octal mode sets all nine permission bits at once with a three-digit number:
+
+```bash
+chmod 755 script.sh    # rwxr-xr-x
+chmod 644 document.txt # rw-r--r--
+chmod 700 private.key  # rwx------
+chmod 600 secrets.env  # rw-------
+```
+
+Octal mode is more concise and is the most common form you will see in documentation, Dockerfiles, and deployment scripts.
+
+## Common Permission Patterns
+
+Here are the permission sets you will use most often:
+
+| Octal | Symbolic | Use Case |
+|-------|----------|----------|
+| `755` | `rwxr-xr-x` | Executable scripts, public directories |
+| `644` | `rw-r--r--` | Regular files (HTML, CSS, images) |
+| `700` | `rwx------` | Private directories, SSH keys directory |
+| `600` | `rw-------` | Private files (SSH keys, credentials) |
+| `775` | `rwxrwxr-x` | Shared project directories |
+| `664` | `rw-rw-r--` | Shared project files |
+| `750` | `rwxr-x---` | Binaries accessible to group only |
+| `440` | `r--r-----` | Read-only config files |
+
+## Changing Ownership: chown and chgrp
+
+Permissions only make sense in the context of ownership. Use `chown` to change the owner and group:
+
+```bash
+# Change owner
+chown alice file.txt
+
+# Change owner and group
+chown alice:developers file.txt
+
+# Change group only
+chgrp developers file.txt
+
+# Recursive (apply to all contents)
+chown -R alice:developers /var/www/project/
+```
+
+Only the root user (or sudo) can change file ownership. Regular users can only change the group to a group they belong to.
+
+## Special Permissions
+
+Beyond the basic nine bits, Unix has three special permission bits:
+
+### Setuid (4000)
+
+When set on an executable, the program runs with the file owner's permissions rather than the executing user's. The classic example is `/usr/bin/passwd`, which needs root access to modify `/etc/shadow`.
+
+```bash
+chmod 4755 program    # -rwsr-xr-x
+```
+
+The `s` in the owner's execute position indicates setuid.
+
+### Setgid (2000)
+
+On executables, the program runs with the file's group permissions. On directories, new files inherit the directory's group instead of the creator's primary group.
+
+```bash
+chmod 2755 shared-dir/    # drwxr-sr-x
+```
+
+### Sticky Bit (1000)
+
+On directories, only the file owner (or root) can delete files, even if others have write permission. The `/tmp` directory uses this.
+
+```bash
+chmod 1777 /tmp    # drwxrwxrwt
+```
+
+The `t` in the others' execute position indicates the sticky bit.
+
+## Practical Scenarios
+
+### Web Server Files
+
+A typical web server setup requires specific permissions:
+
+```bash
+# Web root directory
+chmod 755 /var/www/html
+
+# Static files (HTML, CSS, JS, images)
+chmod 644 /var/www/html/*.html
+
+# CGI scripts or server-side executables
+chmod 755 /var/www/cgi-bin/*.cgi
+
+# Configuration with sensitive data
+chmod 600 /var/www/.env
+```
+
+### SSH Key Permissions
+
+SSH is strict about permissions. If your keys have overly permissive access, SSH will refuse to use them:
+
+```bash
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/id_rsa          # Private key
+chmod 644 ~/.ssh/id_rsa.pub      # Public key
+chmod 644 ~/.ssh/authorized_keys
+chmod 644 ~/.ssh/known_hosts
+chmod 600 ~/.ssh/config
+```
+
+### Cron Jobs
+
+Scripts executed by cron need proper permissions too. Speaking of cron, if you need help building cron schedule expressions, try the [Cron Expression Generator](/tools/cron-expression-generator).
+
+```bash
+# Cron scripts must be executable
+chmod 755 /etc/cron.daily/backup.sh
+
+# Crontab files
+chmod 600 /var/spool/cron/crontabs/alice
+```
+
+## The umask Command
+
+The `umask` determines default permissions for newly created files. It works by subtracting from maximum permissions:
+
+- Files: maximum is `666` (no execute by default)
+- Directories: maximum is `777`
+
+A common umask of `022` means:
+- New files get `644` (666 - 022)
+- New directories get `755` (777 - 022)
+
+```bash
+# Check current umask
+umask
+
+# Set umask for the session
+umask 027    # Files: 640, Directories: 750
+```
+
+## Recursive Permission Changes
+
+Use the `-R` flag to apply permissions recursively. A common pattern is to set different permissions for files and directories:
+
+```bash
+# Set directories to 755
+find /var/www/html -type d -exec chmod 755 {} \;
+
+# Set files to 644
+find /var/www/html -type f -exec chmod 644 {} \;
+```
+
+This two-step approach ensures directories have the execute bit (needed to enter them) while files do not.
+
+## Quick Reference
+
+When in doubt, use the [chmod Calculator](/tools/chmod-calculator) to visually construct the permission set you need. Toggle the read, write, and execute checkboxes for each group, and copy the resulting octal or symbolic command.
+
+Permissions are one of those fundamentals that pay dividends throughout your career. Learn them well, and you will spend far less time debugging access issues and far more time building.

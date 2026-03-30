@@ -1,6 +1,8 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import AdSlot from '../components/ads/AdSlot.astro';
+import ToolCard from '../components/shared/ToolCard.astro';
+import { getCollection } from 'astro:content';
 
 interface Props {
   title: string;
@@ -9,12 +11,36 @@ interface Props {
   publishedAt: Date;
   image?: string;
   tags: string[];
+  relatedTools?: string[];
 }
 
-const { title, description, author, publishedAt, image, tags } = Astro.props;
+const { title, description, author, publishedAt, image, tags, relatedTools = [] } = Astro.props;
+
+// Resolve related tools for "Try These Tools" section
+const allTools = relatedTools.length > 0 ? await getCollection('tools') : [];
+const relatedToolEntries = relatedTools
+  .map((slug) => allTools.find((t) => t.id === slug))
+  .filter(Boolean)
+  .slice(0, 3);
+
+// Article schema for blog posts
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": title,
+  "description": description,
+  "author": { "@type": "Organization", "name": "UtilityDocker" },
+  "publisher": { "@type": "Organization", "name": "UtilityDocker", "logo": { "@type": "ImageObject", "url": "https://utilitydocker.com/icon-512.svg" } },
+  "datePublished": publishedAt.toISOString(),
+  "mainEntityOfPage": { "@type": "WebPage" },
+};
 ---
 
 <BaseLayout title={title} description={description} type="article">
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  </Fragment>
+
   <article class="mx-auto max-w-3xl px-4 py-12 sm:px-6">
     <header class="mb-8">
       <h1 class="text-3xl font-bold tracking-tight text-surface-900 sm:text-4xl">{title}</h1>
@@ -38,7 +64,25 @@ const { title, description, author, publishedAt, image, tags } = Astro.props;
       <slot />
     </div>
 
-    {/* Blog ad: after content, before footer — reader finished the article */}
+    {/* Ad after article content */}
     <AdSlot position="blog-mid" class="mt-8" />
+
+    {/* Related tools — drives traffic from blog to tools */}
+    {relatedToolEntries.length > 0 && (
+      <section class="mt-10 rounded-xl border border-primary-100 bg-primary-50/50 p-6">
+        <h2 class="mb-4 text-lg font-bold text-surface-900">Try These Tools</h2>
+        <div class="grid gap-3 sm:grid-cols-3">
+          {relatedToolEntries.map((tool) => tool && (
+            <ToolCard title={tool.data.title} description={tool.data.description} slug={tool.id} category={tool.data.category} />
+          ))}
+        </div>
+      </section>
+    )}
+
+    {/* More content CTA */}
+    <div class="mt-8 flex flex-wrap justify-center gap-3">
+      <a href="/tools" class="rounded-lg bg-primary-600 px-5 py-2 text-sm font-medium text-white hover:bg-primary-700">Browse All Tools</a>
+      <a href="/blog" class="rounded-lg border border-surface-200 px-5 py-2 text-sm font-medium text-surface-700 hover:bg-surface-50">More Articles</a>
+    </div>
   </article>
 </BaseLayout>
