@@ -18,7 +18,7 @@ export default function ToolBuilderChat() {
   const [error, setError] = useState('');
   const [savedTools, setSavedTools] = useState<SavedTool[]>([]);
   const [iframeHeight, setIframeHeight] = useState(400);
-  const [showCode, setShowCode] = useState(false);
+  
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
@@ -119,18 +119,33 @@ export default function ToolBuilderChat() {
         <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>
       )}
 
+      {/* Generating state */}
+      {status === 'generating' && (
+        <div className="rounded-xl border border-primary-200 bg-primary-50 p-8 text-center">
+          <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-4 border-primary-200 border-t-primary-600" />
+          <h3 className="text-lg font-bold text-surface-900">Building your tool...</h3>
+          <p className="mt-2 text-sm text-surface-600">Our AI is writing the code. This usually takes 15-30 seconds.</p>
+          <div className="mt-4 flex justify-center gap-1">
+            <span className="inline-block h-2 w-2 animate-bounce rounded-full bg-primary-400" style={{ animationDelay: '0ms' }} />
+            <span className="inline-block h-2 w-2 animate-bounce rounded-full bg-primary-400" style={{ animationDelay: '150ms' }} />
+            <span className="inline-block h-2 w-2 animate-bounce rounded-full bg-primary-400" style={{ animationDelay: '300ms' }} />
+          </div>
+        </div>
+      )}
+
       {/* Generated tool preview */}
       {status === 'done' && generatedCode && (
         <div className="space-y-4">
+          <div className="rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
+            Tool generated successfully! Preview it below, then save to your collection.
+          </div>
+
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-lg font-bold text-surface-900">{generatedTitle}</h3>
               <p className="text-sm text-surface-500">{generatedDescription}</p>
             </div>
             <div className="flex items-center gap-2">
-              <button onClick={() => setShowCode(!showCode)} className="rounded-lg border border-surface-200 px-3 py-1.5 text-sm text-surface-600 hover:bg-surface-50">
-                {showCode ? 'Preview' : 'View Code'}
-              </button>
               <label className="flex items-center gap-1.5 rounded-lg border border-surface-200 px-3 py-1.5 text-sm">
                 <input type="checkbox" checked={!saveAsPublic} onChange={(e) => setSaveAsPublic(!e.target.checked)} className="rounded border-surface-300" />
                 Private
@@ -141,22 +156,20 @@ export default function ToolBuilderChat() {
             </div>
           </div>
 
-          {showCode ? (
-            <pre className="max-h-96 overflow-auto rounded-lg border border-surface-200 bg-surface-50 p-4 font-mono text-xs">
-              {generatedCode}
-            </pre>
-          ) : (
-            <div className="overflow-hidden rounded-lg border border-surface-200">
-              <iframe
-                ref={iframeRef}
-                sandbox="allow-scripts"
-                srcDoc={sandboxHtml}
-                className="w-full border-0"
-                style={{ height: `${iframeHeight}px` }}
-                title="Tool Preview"
-              />
+          {/* Live preview in sandboxed iframe */}
+          <div className="overflow-hidden rounded-xl border border-surface-200 shadow-sm">
+            <div className="border-b border-surface-200 bg-surface-50 px-4 py-2 text-xs text-surface-500">
+              Live Preview
             </div>
-          )}
+            <iframe
+              ref={iframeRef}
+              sandbox="allow-scripts"
+              srcDoc={sandboxHtml}
+              className="w-full border-0"
+              style={{ minHeight: '300px', height: `${iframeHeight}px` }}
+              title="Tool Preview"
+            />
+          </div>
         </div>
       )}
 
