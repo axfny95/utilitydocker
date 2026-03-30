@@ -87,6 +87,11 @@ export const GET: APIRoute = async ({ url, locals, redirect }) => {
     });
   } catch (error) {
     console.error('[google/callback]', error);
-    return redirect('/login?error=google_failed');
+    // Temporary: show error details to debug
+    const msg = error instanceof Error ? error.message : String(error);
+    return new Response(JSON.stringify({ error: 'google_failed', details: msg }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 };
