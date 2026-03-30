@@ -26,6 +26,7 @@ export default function BmiCalculator() {
       heightM = totalInches * 0.0254;
     }
 
+    if (heightM <= 0) return null;
     const weightKg = system === 'imperial' ? w * 0.453592 : w;
     return weightKg / (heightM * heightM);
   }, [weight, height, heightFt, heightIn, system]);

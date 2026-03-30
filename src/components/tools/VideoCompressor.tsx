@@ -33,6 +33,10 @@ export default function VideoCompressor() {
 
   const compress = async () => {
     if (!file) return;
+    const allowedQualities = ['23', '28', '33'];
+    const safeQuality = allowedQualities.includes(quality) ? quality : '28';
+    const allowedResolutions = ['1080', '720', '480', '360'];
+    const safeResolution = allowedResolutions.includes(resolution) ? resolution : '720';
     try {
       const ffmpeg = await loadFfmpeg();
       setStatus('processing');
@@ -44,8 +48,8 @@ export default function VideoCompressor() {
       setProgress('Compressing (this may take a while)...');
       await ffmpeg.exec([
         '-i', 'input',
-        '-vf', `scale=-2:${resolution}`,
-        '-crf', quality,
+        '-vf', `scale=-2:${safeResolution}`,
+        '-crf', safeQuality,
         '-preset', 'fast',
         '-movflags', '+faststart',
         'output.mp4',

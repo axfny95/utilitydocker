@@ -5,7 +5,7 @@ export default function TextToHandwriting() {
   const [fontSize, setFontSize] = useState(24);
   const [color, setColor] = useState('#1a1a2e');
   const [bgColor, setBgColor] = useState('#fffef2');
-  const [lineHeight, setLineHeight] = useState(1.8);
+  const [lineSpacing, setLineSpacing] = useState(2.0);
   const [tilt, setTilt] = useState(2);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -15,9 +15,35 @@ export default function TextToHandwriting() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    canvas.width = 800;
+    const lineHeightPx = fontSize * lineSpacing;
     const lines = text.split('\n');
-    canvas.height = Math.max(200, lines.length * fontSize * lineHeight + 80);
+    const marginLeft = 80;
+    const marginTop = 50;
+    const maxWidth = 720; // usable width
+
+    // Word-wrap long lines
+    const wrappedLines: string[] = [];
+    const baseFont = `${fontSize}px 'Segoe Script', 'Comic Sans MS', cursive`;
+    ctx.font = baseFont;
+
+    for (const line of lines) {
+      if (!line.trim()) { wrappedLines.push(''); continue; }
+      const words = line.split(' ');
+      let currentLine = '';
+      for (const word of words) {
+        const testLine = currentLine ? `${currentLine} ${word}` : word;
+        if (ctx.measureText(testLine).width > maxWidth && currentLine) {
+          wrappedLines.push(currentLine);
+          currentLine = word;
+        } else {
+          currentLine = testLine;
+        }
+      }
+      if (currentLine) wrappedLines.push(currentLine);
+    }
+
+    canvas.width = 800;
+    canvas.height = Math.max(250, wrappedLines.length * lineHeightPx + marginTop + 60);
 
     // Paper background
     ctx.fillStyle = bgColor;
@@ -26,7 +52,7 @@ export default function TextToHandwriting() {
     // Ruled lines
     ctx.strokeStyle = '#d4d4d8';
     ctx.lineWidth = 0.5;
-    for (let y = 60; y < canvas.height; y += fontSize * lineHeight) {
+    for (let y = marginTop + lineHeightPx; y < canvas.height - 20; y += lineHeightPx) {
       ctx.beginPath();
       ctx.moveTo(40, y);
       ctx.lineTo(canvas.width - 40, y);
@@ -37,34 +63,43 @@ export default function TextToHandwriting() {
     ctx.strokeStyle = '#fca5a5';
     ctx.lineWidth = 1;
     ctx.beginPath();
-    ctx.moveTo(70, 0);
-    ctx.lineTo(70, canvas.height);
+    ctx.moveTo(marginLeft - 10, 0);
+    ctx.lineTo(marginLeft - 10, canvas.height);
     ctx.stroke();
 
-    // Handwriting-style text
+    // Draw handwriting text
     ctx.fillStyle = color;
-    ctx.textBaseline = 'bottom';
 
-    lines.forEach((line, lineIdx) => {
-      const y = 60 + lineIdx * fontSize * lineHeight;
-      let x = 80;
+    wrappedLines.forEach((line, lineIdx) => {
+      const baseY = marginTop + (lineIdx + 1) * lineHeightPx;
+      let x = marginLeft;
+
+      // Set font BEFORE measuring
+      const charFont = `${fontSize}px 'Segoe Script', 'Comic Sans MS', cursive`;
+      ctx.font = charFont;
+
       for (const char of line) {
-        const offsetY = (Math.random() - 0.5) * 3;
-        const offsetX = (Math.random() - 0.5) * 1;
+        // Measure width with the correct font set
+        const charWidth = ctx.measureText(char).width;
+
+        // Small random variations for handwriting effect
+        const offsetY = (Math.random() - 0.5) * 2;
+        const offsetX = (Math.random() - 0.5) * 0.5;
         const rotation = ((Math.random() - 0.5) * tilt * Math.PI) / 180;
-        const sizeVariation = fontSize + (Math.random() - 0.5) * 2;
+        const sizeVar = fontSize + (Math.random() - 0.5) * 1;
 
         ctx.save();
-        ctx.translate(x + offsetX, y + offsetY);
+        ctx.font = `${sizeVar}px 'Segoe Script', 'Comic Sans MS', cursive`;
+        ctx.translate(x + offsetX, baseY + offsetY);
         ctx.rotate(rotation);
-        ctx.font = `${sizeVariation}px 'Segoe Script', 'Comic Sans MS', 'Brush Script MT', cursive`;
         ctx.fillText(char, 0, 0);
         ctx.restore();
 
-        x += ctx.measureText(char).width + (Math.random() - 0.5) * 2 + 1;
+        // Advance x by the measured character width plus small gap
+        x += charWidth + 0.5;
       }
     });
-  }, [text, fontSize, color, bgColor, lineHeight, tilt]);
+  }, [text, fontSize, color, bgColor, lineSpacing, tilt]);
 
   const download = () => {
     if (!canvasRef.current) return;

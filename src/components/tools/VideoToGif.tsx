@@ -29,6 +29,12 @@ export default function VideoToGif() {
 
   const convert = async () => {
     if (!file) return;
+    const safeStartTime = String(Math.max(0, parseFloat(startTime) || 0));
+    const safeDuration = String(Math.min(30, Math.max(1, parseFloat(duration) || 5)));
+    const allowedFps = ['5', '10', '15', '24'];
+    const safeFps = allowedFps.includes(fps) ? fps : '10';
+    const allowedWidths = ['320', '480', '640', '800'];
+    const safeWidth = allowedWidths.includes(width) ? width : '480';
     try {
       const ffmpeg = await loadFfmpeg();
       setStatus('processing');
@@ -40,9 +46,9 @@ export default function VideoToGif() {
       setProgress('Creating GIF...');
       const args = [
         '-i', 'input',
-        '-ss', startTime,
-        '-t', duration,
-        '-vf', `fps=${fps},scale=${width}:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse`,
+        '-ss', safeStartTime,
+        '-t', safeDuration,
+        '-vf', `fps=${safeFps},scale=${safeWidth}:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse`,
         '-loop', '0',
         'output.gif',
       ];

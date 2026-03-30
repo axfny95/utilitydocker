@@ -17,13 +17,19 @@ export default function JpgToPdfConverter() {
     const files = Array.from(e.target.files || []);
     const loaded = await Promise.all(files.map((file) => new Promise<ImageFile>((resolve) => {
       const img = new Image();
-      img.onload = () => resolve({ name: file.name, url: img.src, width: img.naturalWidth, height: img.naturalHeight });
-      img.src = URL.createObjectURL(file);
+      const objectUrl = URL.createObjectURL(file);
+      img.onload = () => {
+        resolve({ name: file.name, url: objectUrl, width: img.naturalWidth, height: img.naturalHeight });
+      };
+      img.src = objectUrl;
     })));
     setImages((prev) => [...prev, ...loaded]);
   };
 
-  const removeImage = (i: number) => setImages((prev) => prev.filter((_, idx) => idx !== i));
+  const removeImage = (i: number) => setImages((prev) => {
+    URL.revokeObjectURL(prev[i].url);
+    return prev.filter((_, idx) => idx !== i);
+  });
 
   const moveImage = (i: number, dir: -1 | 1) => {
     const j = i + dir;

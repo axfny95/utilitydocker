@@ -109,8 +109,8 @@ export default function ImageCropper() {
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
               <label className="mb-1 block text-xs text-surface-600">X: {cropX} | Y: {cropY}</label>
-              <input type="range" min={0} max={image.naturalWidth - cropW} value={cropX} onChange={(e) => setCropX(Number(e.target.value))} className="w-full" />
-              <input type="range" min={0} max={image.naturalHeight - cropH} value={cropY} onChange={(e) => setCropY(Number(e.target.value))} className="w-full" />
+              <input type="range" min={0} max={Math.max(0, image.naturalWidth - cropW)} value={cropX} onChange={(e) => setCropX(Number(e.target.value))} className="w-full" />
+              <input type="range" min={0} max={Math.max(0, image.naturalHeight - cropH)} value={cropY} onChange={(e) => setCropY(Number(e.target.value))} className="w-full" />
             </div>
             <div>
               <label className="mb-1 block text-xs text-surface-600">W: {cropW} | H: {cropH}</label>

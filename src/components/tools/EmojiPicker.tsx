@@ -22,7 +22,7 @@ export default function EmojiPicker() {
     const q = search.toLowerCase();
     return EMOJI_DATA.map((cat) => ({
       ...cat,
-      emojis: cat.emojis.filter(() => cat.category.toLowerCase().includes(q)),
+      emojis: cat.category.toLowerCase().includes(q) ? cat.emojis : [],
     })).filter((cat) => cat.emojis.length > 0 || cat.category.toLowerCase().includes(q));
   }, [search]);
 

@@ -39,7 +39,14 @@ export default function PdfMerger() {
       const mergedPdf = await PDFDocument.create();
 
       for (const file of files) {
-        const pdf = await PDFDocument.load(file.data);
+        let pdf;
+        try {
+          pdf = await PDFDocument.load(file.data);
+        } catch {
+          setError(`"${file.name}" is not a valid PDF file.`);
+          setProcessing(false);
+          return;
+        }
         const pages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
         pages.forEach((page) => mergedPdf.addPage(page));
       }

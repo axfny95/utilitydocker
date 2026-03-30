@@ -16,12 +16,15 @@ export default function ImageFormatConverter() {
   const [result, setResult] = useState<{ url: string; size: number } | null>(null);
 
   const handleFile = (file: File) => {
+    if (sourceFile) URL.revokeObjectURL(sourceFile.url);
+    if (result) URL.revokeObjectURL(result.url);
     setSourceFile({ name: file.name, url: URL.createObjectURL(file) });
     setResult(null);
   };
 
   const convert = () => {
     if (!sourceFile) return;
+    if (result) URL.revokeObjectURL(result.url);
     const img = new Image();
     img.onload = () => {
       const canvas = document.createElement('canvas');

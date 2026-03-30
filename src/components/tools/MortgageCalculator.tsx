@@ -15,9 +15,12 @@ export default function MortgageCalculator() {
     const taxMonthly = (parseFloat(propertyTax) || 0) / 12;
     const insMonthly = (parseFloat(insurance) || 0) / 12;
 
-    if (principal <= 0 || rate <= 0 || payments <= 0) return null;
+    if (principal <= 0 || payments <= 0 || isNaN(rate)) return null;
+    if (rate <= 0) return null;
 
-    const monthlyPrincipalInterest = principal * (rate * Math.pow(1 + rate, payments)) / (Math.pow(1 + rate, payments) - 1);
+    const denominator = Math.pow(1 + rate, payments) - 1;
+    if (denominator === 0 || !isFinite(denominator)) return null;
+    const monthlyPrincipalInterest = principal * (rate * Math.pow(1 + rate, payments)) / denominator;
     const monthlyTotal = monthlyPrincipalInterest + taxMonthly + insMonthly;
     const totalPaid = monthlyPrincipalInterest * payments;
     const totalInterest = totalPaid - principal;

@@ -31,7 +31,7 @@ export default function AspectRatioCalculator() {
 
   const calcNewHeight = (nw: string) => {
     setNewWidth(nw);
-    if (locked && w && h) {
+    if (locked && w > 0 && h > 0) {
       const val = parseInt(nw);
       if (!isNaN(val)) setNewHeight(String(Math.round(val * h / w)));
     }
@@ -39,7 +39,7 @@ export default function AspectRatioCalculator() {
 
   const calcNewWidth = (nh: string) => {
     setNewHeight(nh);
-    if (locked && w && h) {
+    if (locked && w > 0 && h > 0) {
       const val = parseInt(nh);
       if (!isNaN(val)) setNewWidth(String(Math.round(val * w / h)));
     }

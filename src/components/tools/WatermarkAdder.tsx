@@ -35,7 +35,7 @@ export default function WatermarkAdder() {
     if (position === 'tile') {
       const metrics = ctx.measureText(text);
       const textW = metrics.width + 60;
-      const textH = fontSize + 40;
+      const textH = Math.max(fontSize + 40, 10);
       ctx.save();
       ctx.translate(canvas.width / 2, canvas.height / 2);
       ctx.rotate(-Math.PI / 6);

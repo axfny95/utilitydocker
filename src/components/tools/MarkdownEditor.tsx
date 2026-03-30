@@ -40,7 +40,8 @@ export default function MarkdownEditor() {
 
   const html = useMemo(() => {
     try {
-      return marked(markdown, { async: false }) as string;
+      const html = marked(markdown, { async: false }) as string;
+      return html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
     } catch {
       return '<p>Error rendering markdown</p>';
     }

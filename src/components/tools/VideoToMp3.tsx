@@ -31,6 +31,8 @@ export default function VideoToMp3() {
 
   const convert = async () => {
     if (!file) return;
+    const allowedBitrates = ['128', '192', '256', '320'];
+    const safeBitrate = allowedBitrates.includes(bitrate) ? bitrate : '192';
     try {
       const ffmpeg = await loadFfmpeg();
       setStatus('processing');
@@ -40,7 +42,7 @@ export default function VideoToMp3() {
       await ffmpeg.writeFile('input', await fetchFile(file));
 
       setProgress('Extracting audio...');
-      await ffmpeg.exec(['-i', 'input', '-vn', '-b:a', `${bitrate}k`, '-f', 'mp3', 'output.mp3']);
+      await ffmpeg.exec(['-i', 'input', '-vn', '-b:a', `${safeBitrate}k`, '-f', 'mp3', 'output.mp3']);
 
       setProgress('Preparing download...');
       const data = await ffmpeg.readFile('output.mp3');

@@ -23,9 +23,9 @@ export default function BarcodeGenerator() {
     if (!ctx) return;
 
     // Simple barcode rendering using character-based patterns
-    const chars = text.toUpperCase().split('');
-    const totalBars = chars.length * 11 + 35; // approximate width
-    canvas.width = totalBars * width + 40;
+    const chars = text.toUpperCase().split('').slice(0, 50); // Limit to 50 chars
+    const totalBars = chars.length * 11 + 35;
+    canvas.width = Math.min(totalBars * width + 40, 2000); // Cap at 2000px
     canvas.height = height + (showText ? 30 : 10);
 
     // White background

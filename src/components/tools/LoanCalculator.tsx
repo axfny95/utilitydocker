@@ -13,7 +13,10 @@ export default function LoanCalculator() {
     if (!principal || !annualRate || !months || principal <= 0 || months <= 0) return null;
 
     const monthlyRate = annualRate / 100 / 12;
-    const payment = principal * (monthlyRate * Math.pow(1 + monthlyRate, months)) / (Math.pow(1 + monthlyRate, months) - 1);
+    if (monthlyRate <= 0) return null;
+    const denominator = Math.pow(1 + monthlyRate, months) - 1;
+    if (denominator === 0 || !isFinite(denominator)) return null;
+    const payment = principal * (monthlyRate * Math.pow(1 + monthlyRate, months)) / denominator;
     const totalPaid = payment * months;
     const totalInterest = totalPaid - principal;
 
