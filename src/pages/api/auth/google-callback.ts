@@ -7,7 +7,7 @@ export const prerender = false;
 
 export const GET: APIRoute = async ({ url, locals, redirect }) => {
   const code = url.searchParams.get('code');
-  if (!code) return redirect('/login?error=google_failed');
+  if (!code) const msg = error instanceof Error ? error.message : String(error); return new Response(JSON.stringify({ error: msg }), { status: 500, headers: { "Content-Type": "application/json" } });
 
   // Access env vars via cloudflare:workers (Astro v6 way)
   let cfEnv: any;
@@ -87,6 +87,6 @@ export const GET: APIRoute = async ({ url, locals, redirect }) => {
     });
   } catch (error) {
     console.error('[google/callback]', error);
-    return redirect('/login?error=google_failed');
+    const msg = error instanceof Error ? error.message : String(error); return new Response(JSON.stringify({ error: msg }), { status: 500, headers: { "Content-Type": "application/json" } });
   }
 };
