@@ -10,16 +10,38 @@ interface Props {
 const { position, class: className, isPremium = false } = Astro.props;
 const slot = AD_SLOTS[position];
 const isActive = ACTIVE_NETWORK !== 'none' && !isPremium;
+const isSticky = position === 'sticky-bottom';
+const isSidebar = position === 'sidebar';
 ---
 
 {isActive && (
   <div
-    class:list={['ad-slot text-center', className]}
+    class:list={[
+      'ad-slot',
+      isSticky ? 'fixed bottom-0 left-0 right-0 z-40 border-t border-surface-200 bg-white p-2 text-center md:hidden' : 'text-center',
+      isSidebar ? 'hidden lg:block' : '',
+      className,
+    ]}
     data-ad-slot={slot.id}
     data-ad-sizes={slot.sizes}
     data-ad-network={ACTIVE_NETWORK}
+    data-ad-position={position}
     id={slot.id}
   >
+    {/* Dismiss button for sticky bottom ad */}
+    {isSticky && (
+      <button
+        class="absolute -top-3 right-2 flex h-6 w-6 items-center justify-center rounded-full border border-surface-200 bg-white text-xs text-surface-400 shadow-sm hover:text-surface-600"
+        onclick="this.parentElement.remove()"
+        aria-label="Close ad"
+      >
+        &times;
+      </button>
+    )}
+
+    {/* Subtle "Ad" label for transparency */}
+    <span class="mb-1 block text-[10px] text-surface-300">Ad</span>
+
     <!-- Ad content injected by AdProvider.tsx at runtime -->
   </div>
 )}

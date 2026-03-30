@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ToolCard from '../components/shared/ToolCard.astro';
+import AdSlot from '../components/ads/AdSlot.astro';
 import { getCollection } from 'astro:content';
 
 const tools = await getCollection('tools');
@@ -78,6 +79,9 @@ const featuredTools = publishedTools.filter((t) => t.data.featured);
       </div>
     </section>
   )}
+
+  {/* Homepage ad — between featured tools and AI CTA, natural break */}
+  <AdSlot position="homepage-mid" class="mx-auto max-w-3xl px-4 py-6" />
 
   <!-- AI Tool Builder CTA -->
   <section class="mx-auto max-w-7xl px-4 py-12 sm:px-6">

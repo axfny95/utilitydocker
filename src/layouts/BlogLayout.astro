@@ -34,12 +34,11 @@ const { title, description, author, publishedAt, image, tags } = Astro.props;
       )}
     </header>
 
-    <AdSlot position="leaderboard" class="mb-8" />
-
     <div class="prose prose-surface lg:prose-lg">
       <slot />
     </div>
 
-    <AdSlot position="in-content" class="mt-8" />
+    {/* Blog ad: after content, before footer — reader finished the article */}
+    <AdSlot position="blog-mid" class="mt-8" />
   </article>
 </BaseLayout>

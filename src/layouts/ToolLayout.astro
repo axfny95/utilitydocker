@@ -40,7 +40,7 @@ const toolUrl = `/tools/${slug}`;
   <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6">
     <Breadcrumbs items={breadcrumbItems} />
 
-    <AdSlot position="leaderboard" class="mb-6" />
+    {/* NO ads above the tool — user gets value first */}
 
     <!-- Tool hero -->
     <div class="mb-6">
@@ -81,12 +81,16 @@ const toolUrl = `/tools/${slug}`;
       <slot name="tool" />
     </div>
 
-    <AdSlot position="in-content" class="mb-8" />
+    {/* Ad #1: After tool output — user already got value */}
+    <AdSlot position="after-tool" class="my-8" />
 
     <!-- SEO content (MDX body) -->
     <div class="prose prose-surface mx-auto max-w-none lg:prose-lg">
       <slot />
     </div>
+
+    {/* Ad #2: Between SEO content and FAQ — natural content break */}
+    <AdSlot position="in-content" class="my-8" />
 
     <!-- FAQ section -->
     {tool.faq.length > 0 && (
