@@ -43,9 +43,9 @@ const currentPath = Astro.url.pathname;
       ))}
     </nav>
 
-    <div class="flex items-center gap-2" id="auth-buttons">
-      {/* Default: show sign in buttons (replaced by JS if logged in) */}
-      <span id="auth-premium-badge" class="hidden rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-medium text-amber-800 sm:inline-flex" style="display:none">
+    <div class="flex items-center gap-2" id="auth-buttons" style="visibility:hidden">
+      {/* All buttons hidden until auth check completes — prevents flash */}
+      <span id="auth-premium-badge" class="rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-medium text-amber-800 sm:inline-flex" style="display:none">
         Premium
       </span>
       <a
@@ -62,7 +62,8 @@ const currentPath = Astro.url.pathname;
       <a
         id="auth-signin-btn"
         href="/login"
-        class="hidden rounded-lg px-3 py-2 text-sm font-medium text-surface-600 transition-colors hover:bg-surface-100 sm:inline-flex"
+        class="rounded-lg px-3 py-2 text-sm font-medium text-surface-600 transition-colors hover:bg-surface-100 sm:inline-flex"
+        style="display:none"
       >
         Sign In
       </a>
@@ -70,6 +71,7 @@ const currentPath = Astro.url.pathname;
         id="auth-signup-btn"
         href="/signup"
         class="rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-700"
+        style="display:none"
       >
         Get Started Free
       </a>
@@ -116,21 +118,20 @@ const currentPath = Astro.url.pathname;
 
   // Client-side auth check — updates header on ALL pages (including static)
   async function updateAuthUI() {
+    const container = document.getElementById('auth-buttons');
+    const signinBtn = document.getElementById('auth-signin-btn');
+    const signupBtn = document.getElementById('auth-signup-btn');
+    const accountBtn = document.getElementById('auth-account-btn');
+    const premiumBadge = document.getElementById('auth-premium-badge');
+
     try {
       const res = await fetch('/api/auth/me');
       const data = await res.json();
 
-      const signinBtn = document.getElementById('auth-signin-btn');
-      const signupBtn = document.getElementById('auth-signup-btn');
-      const accountBtn = document.getElementById('auth-account-btn');
-      const premiumBadge = document.getElementById('auth-premium-badge');
-
       if (data.user) {
-        // User is logged in — show account button, hide sign in/up
-        if (signinBtn) signinBtn.style.display = 'none';
-        if (signupBtn) signupBtn.style.display = 'none';
-        if (accountBtn) { accountBtn.style.display = 'flex'; }
-        if (data.isPremium && premiumBadge) { premiumBadge.style.display = ''; }
+        // Logged in — show account button
+        if (accountBtn) accountBtn.style.display = 'flex';
+        if (data.isPremium && premiumBadge) premiumBadge.style.display = '';
 
         // Update mobile menu too
         const mobileMenu = document.getElementById('mobile-menu');
@@ -155,7 +156,18 @@ const currentPath = Astro.url.pathname;
         }
       }
     } catch {
-      // Not logged in or auth check failed — keep default buttons
+      // Auth check failed — show sign in buttons
+      if (signinBtn) signinBtn.style.display = '';
+      if (signupBtn) signupBtn.style.display = '';
+    }
+
+    // Make buttons visible now that we know which to show
+    if (container) container.style.visibility = 'visible';
+
+    // If not logged in, show sign in/up
+    if (!accountBtn || accountBtn.style.display === 'none') {
+      if (signinBtn) signinBtn.style.display = '';
+      if (signupBtn) signupBtn.style.display = '';
     }
   }
 
