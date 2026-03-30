@@ -61,17 +61,13 @@ const adsenseClientId = import.meta.env.ADSENSE_CLIENT_ID;
   }
 </script>
 
-{/* Google Analytics 4 — only loads when PUBLIC_GA4_ID is set */}
-{ga4Id && (
-  <>
-    <script async src={`https://www.googletagmanager.com/gtag/js?id=${ga4Id}`}></script>
-    <script define:vars={{ ga4Id }}>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', ga4Id, { anonymize_ip: true });
-    </script>
-  </>
-)}
+{/* Google Analytics 4 */}
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G6JSXJ88FZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-G6JSXJ88FZ');
+</script>
 
 <slot />
