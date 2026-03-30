@@ -1,10 +1,11 @@
+import { getCfEnv } from '../../../lib/cf-env';
 import type { APIRoute } from 'astro';
 
 export const prerender = false;
 
 // Get a custom tool
 export const GET: APIRoute = async ({ params, locals }) => {
-  const db = locals.runtime.env.DB;
+  const db = (await getCfEnv(locals)).DB;
   const tool = await db
     .prepare('SELECT * FROM custom_tools WHERE id = ?')
     .bind(params.id)
@@ -24,7 +25,7 @@ export const GET: APIRoute = async ({ params, locals }) => {
 export const PUT: APIRoute = async ({ params, request, locals }) => {
   if (!locals.user) return json({ error: 'Not authenticated' }, 401);
 
-  const db = locals.runtime.env.DB;
+  const db = (await getCfEnv(locals)).DB;
   const existing = await db
     .prepare('SELECT * FROM custom_tools WHERE id = ? AND user_id = ?')
     .bind(params.id, locals.user.id)
@@ -59,7 +60,7 @@ export const PUT: APIRoute = async ({ params, request, locals }) => {
 export const DELETE: APIRoute = async ({ params, locals }) => {
   if (!locals.user) return json({ error: 'Not authenticated' }, 401);
 
-  await locals.runtime.env.DB
+  await (await getCfEnv(locals)).DB
     .prepare('DELETE FROM custom_tools WHERE id = ? AND user_id = ?')
     .bind(params.id, locals.user.id)
     .run();

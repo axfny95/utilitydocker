@@ -1,31 +1,27 @@
 /**
  * Authentication utilities for UtilityDocker.
- * Uses PBKDF2 via Web Crypto API (available in Cloudflare Workers).
+ * Uses SHA-256 HMAC with salt (fast, works on Cloudflare Workers).
  */
 
-const PBKDF2_ITERATIONS = 100000; // Cloudflare Workers max supported
 const SALT_LENGTH = 16;
-const HASH_LENGTH = 32;
 
 export async function hashPassword(password: string): Promise<string> {
   const salt = crypto.getRandomValues(new Uint8Array(SALT_LENGTH));
   const encoder = new TextEncoder();
-  const keyMaterial = await crypto.subtle.importKey(
+
+  // Use SHA-256 HMAC (fast, no iteration limit on Workers)
+  const key = await crypto.subtle.importKey(
     'raw',
-    encoder.encode(password),
-    'PBKDF2',
+    salt,
+    { name: 'HMAC', hash: 'SHA-256' },
     false,
-    ['deriveBits'],
+    ['sign'],
   );
 
-  const hash = await crypto.subtle.deriveBits(
-    { name: 'PBKDF2', salt, iterations: PBKDF2_ITERATIONS, hash: 'SHA-256' },
-    keyMaterial,
-    HASH_LENGTH * 8,
-  );
+  const sig = await crypto.subtle.sign('HMAC', key, encoder.encode(password));
 
   const saltHex = Array.from(salt, (b) => b.toString(16).padStart(2, '0')).join('');
-  const hashHex = Array.from(new Uint8Array(hash), (b) => b.toString(16).padStart(2, '0')).join('');
+  const hashHex = Array.from(new Uint8Array(sig), (b) => b.toString(16).padStart(2, '0')).join('');
   return `${saltHex}:${hashHex}`;
 }
 
@@ -35,21 +31,17 @@ export async function verifyPassword(password: string, storedHash: string): Prom
 
   const salt = new Uint8Array(saltHex.match(/.{2}/g)!.map((b) => parseInt(b, 16)));
   const encoder = new TextEncoder();
-  const keyMaterial = await crypto.subtle.importKey(
+
+  const key = await crypto.subtle.importKey(
     'raw',
-    encoder.encode(password),
-    'PBKDF2',
+    salt,
+    { name: 'HMAC', hash: 'SHA-256' },
     false,
-    ['deriveBits'],
+    ['sign'],
   );
 
-  const hash = await crypto.subtle.deriveBits(
-    { name: 'PBKDF2', salt, iterations: PBKDF2_ITERATIONS, hash: 'SHA-256' },
-    keyMaterial,
-    HASH_LENGTH * 8,
-  );
-
-  const hashHex = Array.from(new Uint8Array(hash), (b) => b.toString(16).padStart(2, '0')).join('');
+  const sig = await crypto.subtle.sign('HMAC', key, encoder.encode(password));
+  const hashHex = Array.from(new Uint8Array(sig), (b) => b.toString(16).padStart(2, '0')).join('');
   return hashHex === expectedHashHex;
 }
 

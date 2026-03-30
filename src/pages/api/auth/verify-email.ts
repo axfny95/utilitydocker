@@ -1,3 +1,4 @@
+import { getCfEnv } from '../../../lib/cf-env';
 import type { APIRoute } from 'astro';
 import { verifyUserEmail } from '../../../lib/db';
 
@@ -12,7 +13,7 @@ export const GET: APIRoute = async ({ url, locals }) => {
     });
   }
 
-  const verified = await verifyUserEmail(locals.runtime.env.DB, token);
+  const verified = await verifyUserEmail((await getCfEnv(locals)).DB, token);
   if (!verified) {
     return new Response(JSON.stringify({ error: 'Invalid or expired token' }), {
       status: 400,

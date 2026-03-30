@@ -1,3 +1,4 @@
+import { getCfEnv } from '../../../lib/cf-env';
 import type { APIRoute } from 'astro';
 import { hashPassword, generateToken, validateEmail, validatePassword } from '../../../lib/auth';
 import { getUserByEmail, createUser } from '../../../lib/db';
@@ -23,7 +24,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
       return json({ error: passwordCheck.error }, 400);
     }
 
-    const env = locals.runtime.env;
+    const env = (await getCfEnv(locals));
 
     // Check if user already exists
     const existing = await getUserByEmail(env.DB, email.toLowerCase());

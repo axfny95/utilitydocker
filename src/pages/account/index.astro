@@ -11,9 +11,10 @@ if (!Astro.locals.user) {
 }
 
 const user = Astro.locals.user;
-const env = Astro.locals.runtime.env;
-const favorites = await getUserFavorites(env.DB, user.id);
-const subscription = await getActiveSubscription(env.DB, user.id);
+let cfEnv: any;
+try { cfEnv = (await import('cloudflare:workers')).env; } catch { cfEnv = (Astro.locals as any).runtime?.env || {}; }
+const favorites = await getUserFavorites(cfEnv.DB, user.id);
+const subscription = await getActiveSubscription(cfEnv.DB, user.id);
 const allTools = await getCollection('tools');
 
 // Match favorite slugs to tool data

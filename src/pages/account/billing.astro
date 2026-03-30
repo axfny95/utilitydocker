@@ -9,7 +9,7 @@ if (!Astro.locals.user) {
 }
 
 const user = Astro.locals.user;
-const subscription = await getActiveSubscription(Astro.locals.runtime.env.DB, user.id);
+const subscription = await getActiveSubscription((await getCfEnv(Astro.locals)).DB, user.id);
 const isPremium = Astro.locals.isPremium;
 ---
 

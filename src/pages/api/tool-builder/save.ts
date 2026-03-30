@@ -1,3 +1,4 @@
+import { getCfEnv } from '../../../lib/cf-env';
 import type { APIRoute } from 'astro';
 
 export const prerender = false;
@@ -9,7 +10,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
   const { title, description, prompt, code, isPublic } = await request.json();
   if (!title || !prompt || !code) return json({ error: 'Missing required fields' }, 400);
 
-  const db = locals.runtime.env.DB;
+  const db = (await getCfEnv(locals)).DB;
   const id = crypto.randomUUID().replace(/-/g, '');
   const shareSlug = crypto.randomUUID().replace(/-/g, '').slice(0, 12);
   // Default to public (1). User must explicitly set private (0).

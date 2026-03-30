@@ -1,3 +1,4 @@
+import { getCfEnv } from '../../../lib/cf-env';
 import type { APIRoute } from 'astro';
 import { createCheckoutSession } from '../../../lib/stripe';
 

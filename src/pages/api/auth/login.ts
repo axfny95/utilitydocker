@@ -1,3 +1,4 @@
+import { getCfEnv } from '../../../lib/cf-env';
 import type { APIRoute } from 'astro';
 import { verifyPassword, validateEmail } from '../../../lib/auth';
 import { getUserByEmail } from '../../../lib/db';
@@ -17,7 +18,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
       return json({ error: 'Invalid email address' }, 400);
     }
 
-    const env = locals.runtime.env;
+    const env = (await getCfEnv(locals));
     const user = await getUserByEmail(env.DB, email.toLowerCase());
 
     if (!user) {

@@ -1,3 +1,4 @@
+import { getCfEnv } from '../../../lib/cf-env';
 import type { APIRoute } from 'astro';
 import { generateTool, MAX_GENERATIONS_PER_MONTH } from '../../../lib/tool-builder';
 import { countTodayGenerations } from '../../../lib/db';
@@ -16,7 +17,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
   }
 
   // Rate limit check (monthly)
-  const db = locals.runtime.env.DB;
+  const db = (await getCfEnv(locals)).DB;
   const monthStart = new Date();
   monthStart.setDate(1);
   monthStart.setHours(0, 0, 0, 0);

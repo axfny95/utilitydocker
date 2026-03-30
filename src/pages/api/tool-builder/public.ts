@@ -1,10 +1,11 @@
+import { getCfEnv } from '../../../lib/cf-env';
 import type { APIRoute } from 'astro';
 
 export const prerender = false;
 
 // List all public community tools
 export const GET: APIRoute = async ({ url, locals }) => {
-  const db = locals.runtime.env.DB;
+  const db = (await getCfEnv(locals)).DB;
   const page = parseInt(url.searchParams.get('page') || '1');
   const limit = 20;
   const offset = (page - 1) * limit;

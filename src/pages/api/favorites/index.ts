@@ -1,3 +1,4 @@
+import { getCfEnv } from '../../../lib/cf-env';
 import type { APIRoute } from 'astro';
 import { getUserFavorites, addFavorite } from '../../../lib/db';
 
@@ -9,7 +10,7 @@ function json(data: unknown, status: number = 200) {
 
 export const GET: APIRoute = async ({ locals }) => {
   if (!locals.user) return json({ error: 'Not authenticated' }, 401);
-  const favorites = await getUserFavorites(locals.runtime.env.DB, locals.user.id);
+  const favorites = await getUserFavorites((await getCfEnv(locals)).DB, locals.user.id);
   return json({ favorites: favorites.map((f) => f.tool_slug) });
 };
 
@@ -19,6 +20,6 @@ export const POST: APIRoute = async ({ request, locals }) => {
   const { toolSlug } = await request.json();
   if (!toolSlug || typeof toolSlug !== 'string') return json({ error: 'Invalid tool slug' }, 400);
 
-  await addFavorite(locals.runtime.env.DB, locals.user.id, toolSlug);
+  await addFavorite((await getCfEnv(locals)).DB, locals.user.id, toolSlug);
   return json({ ok: true });
 };

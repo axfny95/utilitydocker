@@ -1,3 +1,4 @@
+import { getCfEnv } from '../../../lib/cf-env';
 import type { APIRoute } from 'astro';
 import { removeFavorite } from '../../../lib/db';
 
@@ -19,7 +20,7 @@ export const DELETE: APIRoute = async ({ params, locals }) => {
     });
   }
 
-  await removeFavorite(locals.runtime.env.DB, locals.user.id, slug);
+  await removeFavorite((await getCfEnv(locals)).DB, locals.user.id, slug);
 
   return new Response(JSON.stringify({ ok: true }), {
     status: 200,

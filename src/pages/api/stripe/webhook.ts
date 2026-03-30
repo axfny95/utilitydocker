@@ -1,3 +1,4 @@
+import { getCfEnv } from '../../../lib/cf-env';
 import type { APIRoute } from 'astro';
 import { verifyWebhookSignature } from '../../../lib/stripe';
 import { upsertSubscription } from '../../../lib/db';
@@ -22,7 +23,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
   }
 
   const event = JSON.parse(payload);
-  const db = locals.runtime.env.DB;
+  const db = (await getCfEnv(locals)).DB;
 
   try {
     switch (event.type) {

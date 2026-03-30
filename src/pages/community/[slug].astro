@@ -5,7 +5,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { createSandboxHtml } from '../../lib/sandbox';
 
 const { slug } = Astro.params;
-const db = Astro.locals.runtime.env.DB;
+const db = (await getCfEnv(Astro.locals)).DB;
 
 const tool = await db
   .prepare('SELECT ct.*, u.email as creator_email FROM custom_tools ct JOIN users u ON ct.user_id = u.id WHERE ct.share_slug = ?')
