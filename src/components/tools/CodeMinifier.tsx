@@ -14,13 +14,16 @@ function minifyHtml(html: string): string {
 }
 
 function minifyCss(css: string): string {
-  return css
+  let result = css
     .replace(/\/\*[\s\S]*?\*\//g, '')
     .replace(/\s+/g, ' ')
     .replace(/\s*([{};:,>~+])\s*/g, '$1')
     .replace(/;}/g, '}')
     .replace(/\s*!important/g, '!important')
     .trim();
+  // Restore spaces around + and - inside calc() expressions
+  result = result.replace(/calc\([^)]+\)/g, match => match.replace(/([+-])/g, ' $1 '));
+  return result;
 }
 
 function minifyJs(js: string): string {

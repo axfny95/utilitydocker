@@ -18,23 +18,23 @@ function generateTerms(data: FormData): string {
 
 **Last updated:** ${date}
 
-## 1. Acceptance of Terms
+## Acceptance of Terms
 
 By accessing or using ${data.websiteUrl || '[Website URL]'} ("the Service"), operated by ${data.companyName || '[Company Name]'} ("we", "us", or "our"), you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use the Service.
 
-## 2. Description of Service
+## Description of Service
 
 The Service provides online tools and utilities accessible through our website. We reserve the right to modify, suspend, or discontinue any part of the Service at any time without prior notice.
 
-## 3. Eligibility
+## Eligibility
 
 You must be at least 13 years of age to use the Service. By using the Service, you represent and warrant that you meet this requirement.
 
-${data.hasUserAccounts ? `## 4. User Accounts
+${data.hasUserAccounts ? `## User Accounts
 
 When you create an account, you are responsible for maintaining the confidentiality of your credentials and for all activities under your account. You agree to notify us immediately of any unauthorized use. We reserve the right to terminate accounts that violate these terms.` : ''}
 
-${data.hasPayments ? `## ${data.hasUserAccounts ? '5' : '4'}. Payments and Subscriptions
+${data.hasPayments ? `## Payments and Subscriptions
 
 Paid features are billed in advance on a recurring basis. You may cancel at any time, but refunds are not provided for partial billing periods. We reserve the right to change pricing with 30 days' notice. All prices are in USD unless otherwise stated.` : ''}
 

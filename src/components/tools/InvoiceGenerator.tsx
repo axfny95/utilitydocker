@@ -155,7 +155,10 @@ export default function InvoiceGenerator() {
         </div>
         {items.map((item, i) => (
           <div key={i} className="mb-2 grid grid-cols-12 gap-2">
-            <input type="text" value={item.description} onChange={(e) => updateItem(i, 'description', e.target.value)} placeholder="Service or product" className="col-span-5 rounded-lg border border-surface-200 px-2 py-1.5 text-sm" />
+            <div className="col-span-5 relative">
+              <input type="text" value={item.description} onChange={(e) => updateItem(i, 'description', e.target.value)} maxLength={40} placeholder="Service or product" className="w-full rounded-lg border border-surface-200 px-2 py-1.5 text-sm" />
+              <span className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-surface-400">{item.description.length}/40</span>
+            </div>
             <input type="number" min={1} value={item.quantity} onChange={(e) => updateItem(i, 'quantity', Number(e.target.value))} className="col-span-2 rounded-lg border border-surface-200 px-2 py-1.5 text-sm" />
             <input type="number" min={0} step={0.01} value={item.unitPrice} onChange={(e) => updateItem(i, 'unitPrice', Number(e.target.value))} className="col-span-2 rounded-lg border border-surface-200 px-2 py-1.5 text-sm" />
             <span className="col-span-2 flex items-center text-sm font-mono">{fmt(item.quantity * item.unitPrice)}</span>

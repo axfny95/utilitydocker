@@ -81,7 +81,7 @@ export default function Notepad() {
       <div className="flex gap-4 text-xs text-surface-400">
         <span>{wordCount} words</span>
         <span>{charCount} characters</span>
-        <span>{text.split('\n').length} lines</span>
+        <span>{text === '' ? 0 : text.split('\n').length} {(text === '' ? 0 : text.split('\n').length) === 1 ? 'line' : 'lines'}</span>
         <span className="ml-auto">Auto-saved to browser storage</span>
       </div>
     </div>

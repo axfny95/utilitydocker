@@ -39,7 +39,7 @@ export default function EmojiPicker() {
         type="text"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        placeholder="Search emoji categories..."
+        placeholder="Search by category (Smileys, Animals, Food...)"
         className="w-full rounded-lg border border-surface-200 bg-surface-50 px-4 py-2 text-sm focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
       />
 

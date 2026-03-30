@@ -94,7 +94,7 @@ export default function ImageResizer() {
 
           <div className="flex flex-wrap gap-2">
             {presets.map((p) => (
-              <button key={p.label} onClick={() => { setWidth(p.w); setHeight(p.h); }} className="rounded-lg border border-surface-200 px-3 py-1 text-xs text-surface-600 hover:bg-surface-50">
+              <button key={p.label} onClick={() => { if (lockAspect) { updateWidth(p.w); } else { setWidth(p.w); setHeight(p.h); } }} className="rounded-lg border border-surface-200 px-3 py-1 text-xs text-surface-600 hover:bg-surface-50">
                 {p.label}
               </button>
             ))}
