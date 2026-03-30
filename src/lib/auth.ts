@@ -3,7 +3,7 @@
  * Uses PBKDF2 via Web Crypto API (available in Cloudflare Workers).
  */
 
-const PBKDF2_ITERATIONS = 600000;
+const PBKDF2_ITERATIONS = 100000; // Cloudflare Workers max supported
 const SALT_LENGTH = 16;
 const HASH_LENGTH = 32;
 
