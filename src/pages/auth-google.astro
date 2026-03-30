@@ -1,11 +1,28 @@
 ---
 export const prerender = false;
 
-const env = (Astro.locals.runtime?.env || {}) as Record<string, string>;
-const clientId = env.GOOGLE_CLIENT_ID;
+let clientId = '';
+
+try {
+  // Astro v6 + Cloudflare: try importing from cloudflare:workers
+  const { env } = await import('cloudflare:workers');
+  clientId = env.GOOGLE_CLIENT_ID || '';
+} catch {
+  // Fallback: try locals.runtime.env
+  try {
+    const runtimeEnv = (Astro.locals as any).runtime?.env || {};
+    clientId = runtimeEnv.GOOGLE_CLIENT_ID || '';
+  } catch {
+    // Last resort
+    clientId = '';
+  }
+}
 
 if (!clientId) {
-  return new Response('Google login not configured. GOOGLE_CLIENT_ID env var missing.', { status: 500 });
+  return new Response(JSON.stringify({ error: 'GOOGLE_CLIENT_ID not found in env' }), {
+    status: 500,
+    headers: { 'Content-Type': 'application/json' }
+  });
 }
 
 const redirectUri = 'https://utilitydocker.com/api/auth/google-callback';
