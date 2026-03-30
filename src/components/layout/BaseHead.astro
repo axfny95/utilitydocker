@@ -18,9 +18,11 @@ const {
 const siteName = 'UtilityDocker';
 const fullTitle = title === siteName ? title : `${title} - ${siteName}`;
 const ga4Id = import.meta.env.PUBLIC_GA4_ID;
+const adsenseClientId = import.meta.env.ADSENSE_CLIENT_ID;
 ---
 
 <meta charset="utf-8" />
+{adsenseClientId && <meta name="adsense-client" content={adsenseClientId} />}
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="generator" content={Astro.generator} />
 

@@ -4,6 +4,7 @@ import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import ToastContainer from '../components/shared/Toast';
 import CookieConsent from '../components/shared/CookieConsent';
+import AdProvider from '../components/ads/AdProvider';
 import '../styles/global.css';
 
 interface Props {
@@ -35,6 +36,7 @@ const isPremium = Astro.locals?.isPremium || false;
       <slot />
     </main>
     {!noFooter && <Footer />}
+    <AdProvider client:idle />
     <ToastContainer client:only="react" />
     <CookieConsent client:only="react" />
   </body>
