@@ -7,9 +7,8 @@ export const prerender = false;
 
 export const GET: APIRoute = async ({ url, locals, redirect }) => {
   const code = url.searchParams.get('code');
-  if (!code) const msg = error instanceof Error ? error.message : String(error); return new Response(JSON.stringify({ error: msg }), { status: 500, headers: { "Content-Type": "application/json" } });
+  if (!code) return redirect('/login?error=no_code');
 
-  // Access env vars via cloudflare:workers (Astro v6 way)
   let cfEnv: any;
   try {
     const mod = await import('cloudflare:workers');
@@ -22,10 +21,8 @@ export const GET: APIRoute = async ({ url, locals, redirect }) => {
   const clientSecret = cfEnv.GOOGLE_CLIENT_SECRET;
 
   if (!clientId || !clientSecret) {
-    return redirect('/login?error=google_not_configured');
+    return new Response(JSON.stringify({ error: 'Missing Google credentials' }), { status: 500 });
   }
-
-  const redirectUri = 'https://utilitydocker.com/api/auth/google-callback';
 
   try {
     // Exchange code for tokens
@@ -36,14 +33,14 @@ export const GET: APIRoute = async ({ url, locals, redirect }) => {
         code,
         client_id: clientId,
         client_secret: clientSecret,
-        redirect_uri: redirectUri,
+        redirect_uri: 'https://utilitydocker.com/api/auth/google-callback',
         grant_type: 'authorization_code',
       }),
     });
 
     if (!tokenRes.ok) {
-      console.error('[google] Token error:', await tokenRes.text());
-      return redirect('/login?error=google_token_failed');
+      const err = await tokenRes.text();
+      return new Response(JSON.stringify({ error: 'token_failed', details: err }), { status: 500 });
     }
 
     const tokens = await tokenRes.json();
@@ -53,31 +50,32 @@ export const GET: APIRoute = async ({ url, locals, redirect }) => {
       headers: { Authorization: `Bearer ${tokens.access_token}` },
     });
 
-    if (!userRes.ok) return redirect('/login?error=google_userinfo_failed');
+    if (!userRes.ok) {
+      return new Response(JSON.stringify({ error: 'userinfo_failed' }), { status: 500 });
+    }
 
     const googleUser = await userRes.json();
     const email = googleUser.email?.toLowerCase();
-    if (!email) return redirect('/login?error=no_email');
+    if (!email) {
+      return new Response(JSON.stringify({ error: 'no_email' }), { status: 500 });
+    }
 
-    // Access D1 and KV via cloudflare:workers env
     const db = cfEnv.DB;
     const sessions = cfEnv.SESSIONS;
 
     let user = await getUserByEmail(db, email);
 
     if (!user) {
-      // Auto-create account for Google users
       const pw = await hashPassword(generateToken());
       const userId = await createUser(db, email, pw, '');
-
-      // Google already verified the email
       await db.prepare('UPDATE users SET email_verified = 1, email_verify_token = NULL WHERE id = ?')
         .bind(userId).run();
-
       user = await getUserByEmail(db, email);
     }
 
-    if (!user) return redirect('/login?error=create_failed');
+    if (!user) {
+      return new Response(JSON.stringify({ error: 'create_failed' }), { status: 500 });
+    }
 
     const { cookie } = await createSession(sessions, user.id);
 
@@ -86,7 +84,10 @@ export const GET: APIRoute = async ({ url, locals, redirect }) => {
       headers: { Location: '/account', 'Set-Cookie': cookie },
     });
   } catch (error) {
-    console.error('[google/callback]', error);
-    const msg = error instanceof Error ? error.message : String(error); return new Response(JSON.stringify({ error: msg }), { status: 500, headers: { "Content-Type": "application/json" } });
+    const msg = error instanceof Error ? error.message : String(error);
+    return new Response(JSON.stringify({ error: 'callback_error', details: msg }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 };
