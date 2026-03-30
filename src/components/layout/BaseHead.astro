@@ -42,6 +42,16 @@ const ga4Id = import.meta.env.PUBLIC_GA4_ID;
 
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="sitemap" href="/sitemap-index.xml" />
+<link rel="manifest" href="/manifest.json" />
+<meta name="theme-color" content="#2563eb" />
+<link rel="apple-touch-icon" href="/icon-192.svg" />
+
+{/* Service Worker registration */}
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
+  }
+</script>
 
 {/* Google Analytics 4 — only loads when PUBLIC_GA4_ID is set */}
 {ga4Id && (

@@ -10,7 +10,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "og": "npx tsx scripts/generate-og-images.ts",
+    "seo": "npx tsx scripts/submit-to-search.ts",
     "new-tool": "bash scripts/new-tool.sh",
+    "postbuild": "npx tsx scripts/generate-og-images.ts",
     "astro": "astro"
   },
   "dependencies": {
