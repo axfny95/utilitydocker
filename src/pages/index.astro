@@ -9,12 +9,58 @@ const categories = await getCollection('categories');
 const publishedTools = tools
   .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
 const featuredTools = publishedTools.filter((t) => t.data.featured);
+
+// Popular tools — curated by highest search volume / demand
+// These are the tools people search for most on Google
+const popularSlugs = [
+  'json-formatter', 'image-compressor', 'unit-converter', 'qr-code-generator',
+  'jpg-to-pdf-converter', 'pdf-merger', 'percentage-calculator', 'image-resizer',
+  'video-to-mp3', 'mortgage-calculator', 'typing-speed-test', 'emoji-picker',
+];
+const popularTools = popularSlugs
+  .map((slug) => tools.find((t) => t.id === slug))
+  .filter(Boolean);
 ---
 
 <BaseLayout
   title="UtilityDocker - Free Online Tools That Respect Your Privacy"
   description={`${tools.length} free online tools that run entirely in your browser. No uploads, no signups, no data collection. JSON formatter, image compressor, PDF merger, and more.`}
 >
+  {/* Organization + WebSite schema for Google Search */}
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "UtilityDocker",
+      "url": "https://utilitydocker.com",
+      "description": `${tools.length} free online tools that run in your browser`,
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://utilitydocker.com/tools?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    })} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "UtilityDocker",
+      "url": "https://utilitydocker.com",
+      "logo": "https://utilitydocker.com/icon-512.svg",
+      "sameAs": []
+    })} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "Popular Tools",
+      "numberOfItems": popularSlugs.length,
+      "itemListElement": popularSlugs.map((slug, i) => ({
+        "@type": "ListItem",
+        "position": i + 1,
+        "url": `https://utilitydocker.com/tools/${slug}`
+      }))
+    })} />
+  </Fragment>
+
   <!-- Hero -->
   <section class="bg-gradient-to-b from-primary-50 to-white px-4 py-16 sm:py-24">
     <div class="mx-auto max-w-4xl text-center">
@@ -59,6 +105,27 @@ const featuredTools = publishedTools.filter((t) => t.data.featured);
           Client-Side Processing
         </span>
       </div>
+    </div>
+  </section>
+
+  <!-- Popular Tools — highest demand tools shown first -->
+  <section class="mx-auto max-w-7xl px-4 py-12 sm:px-6">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h2 class="text-2xl font-bold text-surface-900">Popular Tools</h2>
+        <p class="mt-1 text-sm text-surface-500">Most used tools by our community</p>
+      </div>
+      <a href="/tools" class="text-sm font-medium text-primary-600 hover:underline">View all {tools.length} tools &rarr;</a>
+    </div>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      {popularTools.map((tool) => tool && (
+        <ToolCard
+          title={tool.data.title}
+          description={tool.data.description}
+          slug={tool.id}
+          category={tool.data.category}
+        />
+      ))}
     </div>
   </section>
 
