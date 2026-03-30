@@ -18,3 +18,7 @@ id = "0baf5dbb766649c7b4e3335ea61af6af"
 binding = "DB"
 database_name = "utilitydocker"
 database_id = "21f3a37a-adf7-410c-9ed7-fedfbbd7ee3d"
+
+# Runtime environment variables (non-secret)
+[vars]
+GOOGLE_CLIENT_ID = "998378578877-iesb00ra3hmj37jlevq1l4dkpeidj2dq.apps.googleusercontent.com"
