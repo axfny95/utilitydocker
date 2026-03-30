@@ -2,8 +2,9 @@
 export const prerender = false;
 
 import AdminLayout from '../../layouts/AdminLayout.astro';
+import { getCfEnv } from "../../lib/cf-env";
 
-const adminPassword = import.meta.env.ADMIN_PASSWORD;
+const adminPassword = (await getCfEnv(Astro.locals)).ADMIN_PASSWORD;
 const authHeader = Astro.request.headers.get('authorization');
 const isAdmin = Astro.locals.user || (adminPassword && authHeader === `Bearer ${adminPassword}`);
 if (!isAdmin) {

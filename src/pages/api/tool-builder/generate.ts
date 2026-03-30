@@ -42,7 +42,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
   }
 
   // Generate
-  const apiKey = import.meta.env.CLAUDE_API_KEY;
+  const env = await getCfEnv(locals);
+  const apiKey = env.CLAUDE_API_KEY;
   if (!apiKey) {
     return json({ error: 'AI service not configured' }, 500);
   }

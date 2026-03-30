@@ -13,7 +13,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     const res = await fetch('https://api.stripe.com/v1/billing_portal/sessions', {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${import.meta.env.STRIPE_SECRET_KEY}`,
+        Authorization: `Bearer ${(await getCfEnv(locals)).STRIPE_SECRET_KEY}`,
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: new URLSearchParams({
