@@ -22,7 +22,7 @@ export const GET: APIRoute = async ({ redirect, locals, request }) => {
     );
   }
 
-  const redirectUri = 'https://utilitydocker.com/api/auth/google/callback';
+  const redirectUri = 'https://utilitydocker.com/api/auth/google-callback';
 
   const url = new URL('https://accounts.google.com/o/oauth2/v2/auth');
   url.searchParams.set('client_id', clientId);

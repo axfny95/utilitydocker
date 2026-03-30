@@ -17,7 +17,7 @@ export const GET: APIRoute = async ({ url, locals, redirect }) => {
     return redirect('/login?error=google_not_configured');
   }
 
-  const redirectUri = 'https://utilitydocker.com/api/auth/google/callback';
+  const redirectUri = 'https://utilitydocker.com/api/auth/google-callback';
 
   try {
     const tokenRes = await fetch('https://oauth2.googleapis.com/token', {

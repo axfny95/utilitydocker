@@ -127,7 +127,7 @@ export default function SignupForm() {
       </div>
 
       <a
-        href="/api/auth/google"
+        href="/api/auth/google-login"
         className="flex w-full items-center justify-center gap-3 rounded-lg border border-surface-200 py-2.5 text-sm font-medium text-surface-700 transition-colors hover:bg-surface-50"
       >
         <svg className="h-5 w-5" viewBox="0 0 24 24">
