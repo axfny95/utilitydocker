@@ -2,12 +2,24 @@ import type { APIRoute } from 'astro';
 
 export const prerender = false;
 
-export const GET: APIRoute = async ({ redirect, locals }) => {
-  const env = (locals.runtime?.env || {}) as Record<string, string>;
-  const clientId = env.GOOGLE_CLIENT_ID;
+export const GET: APIRoute = async ({ redirect, locals, request }) => {
+  // Try multiple ways to access the env
+  const runtime = locals.runtime || {};
+  const env = runtime.env || {};
+  const clientId = (env as any).GOOGLE_CLIENT_ID;
 
   if (!clientId) {
-    return new Response('Google login not configured', { status: 500 });
+    // Debug: show what's available
+    const envKeys = Object.keys(env);
+    return new Response(
+      JSON.stringify({
+        error: 'Google login not configured',
+        availableEnvKeys: envKeys,
+        hasRuntime: !!locals.runtime,
+        runtimeKeys: Object.keys(runtime),
+      }),
+      { status: 500, headers: { 'Content-Type': 'application/json' } }
+    );
   }
 
   const redirectUri = 'https://utilitydocker.com/api/auth/google/callback';
