@@ -14,7 +14,7 @@ import { join } from 'node:path';
 const SITE_URL = 'https://utilitydocker.com';
 const TOOLS_DIR = join(import.meta.dirname, '..', 'src', 'content', 'tools');
 const BLOG_DIR = join(import.meta.dirname, '..', 'src', 'content', 'blog');
-const INDEXNOW_KEY = process.env.INDEXNOW_KEY;
+const INDEXNOW_KEY = process.env.INDEXNOW_KEY || '6a83efa3036dcd6135a8480d61885f25';
 
 async function getToolUrls(): Promise<string[]> {
   const files = await readdir(TOOLS_DIR);

@@ -12,7 +12,7 @@
     "og": "npx tsx scripts/generate-og-images.ts",
     "seo": "npx tsx scripts/submit-to-search.ts",
     "new-tool": "bash scripts/new-tool.sh",
-    "postbuild": "npx tsx scripts/generate-og-images.ts",
+    "postbuild": "npx tsx scripts/generate-og-images.ts && npx tsx scripts/submit-to-search.ts",
     "astro": "astro"
   },
   "dependencies": {
