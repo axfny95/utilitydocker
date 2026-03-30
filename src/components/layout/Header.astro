@@ -43,40 +43,36 @@ const currentPath = Astro.url.pathname;
       ))}
     </nav>
 
-    <div class="flex items-center gap-2">
-      {user ? (
-        <>
-          {isPremium && (
-            <span class="hidden rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-medium text-amber-800 sm:inline-flex">
-              Premium
-            </span>
-          )}
-          <a
-            href="/account"
-            class="flex items-center gap-2 rounded-lg border border-surface-200 px-3 py-2 text-sm font-medium text-surface-700 transition-colors hover:bg-surface-50"
-          >
-            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-            </svg>
-            <span class="hidden sm:inline">Account</span>
-          </a>
-        </>
-      ) : (
-        <>
-          <a
-            href="/login"
-            class="hidden rounded-lg px-3 py-2 text-sm font-medium text-surface-600 transition-colors hover:bg-surface-100 sm:inline-flex"
-          >
-            Sign In
-          </a>
-          <a
-            href="/signup"
-            class="rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-700"
-          >
-            Get Started Free
-          </a>
-        </>
-      )}
+    <div class="flex items-center gap-2" id="auth-buttons">
+      {/* Default: show sign in buttons (replaced by JS if logged in) */}
+      <span id="auth-premium-badge" class="hidden rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-medium text-amber-800 sm:inline-flex" style="display:none">
+        Premium
+      </span>
+      <a
+        id="auth-account-btn"
+        href="/account"
+        class="items-center gap-2 rounded-lg border border-surface-200 px-3 py-2 text-sm font-medium text-surface-700 transition-colors hover:bg-surface-50"
+        style="display:none"
+      >
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+        </svg>
+        <span class="hidden sm:inline">Account</span>
+      </a>
+      <a
+        id="auth-signin-btn"
+        href="/login"
+        class="hidden rounded-lg px-3 py-2 text-sm font-medium text-surface-600 transition-colors hover:bg-surface-100 sm:inline-flex"
+      >
+        Sign In
+      </a>
+      <a
+        id="auth-signup-btn"
+        href="/signup"
+        class="rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-700"
+      >
+        Get Started Free
+      </a>
 
       <!-- Mobile menu button -->
       <button
@@ -107,15 +103,8 @@ const currentPath = Astro.url.pathname;
           {item.label}
         </a>
       ))}
-      {!user && (
-        <>
-          <a href="/login" class="rounded-lg px-3 py-2 text-sm font-medium text-surface-600 hover:bg-surface-100">Sign In</a>
-          <a href="/signup" class="rounded-lg px-3 py-2 text-sm font-medium text-primary-600 hover:bg-primary-50">Create Account</a>
-        </>
-      )}
-      {user && (
-        <a href="/account" class="rounded-lg px-3 py-2 text-sm font-medium text-surface-600 hover:bg-surface-100">My Account</a>
-      )}
+      <a href="/login" class="rounded-lg px-3 py-2 text-sm font-medium text-surface-600 hover:bg-surface-100">Sign In</a>
+      <a href="/signup" class="rounded-lg px-3 py-2 text-sm font-medium text-primary-600 hover:bg-primary-50">Create Account</a>
     </nav>
   </div>
 </header>
@@ -124,4 +113,51 @@ const currentPath = Astro.url.pathname;
   const btn = document.getElementById('mobile-menu-btn');
   const menu = document.getElementById('mobile-menu');
   btn?.addEventListener('click', () => menu?.classList.toggle('hidden'));
+
+  // Client-side auth check — updates header on ALL pages (including static)
+  async function updateAuthUI() {
+    try {
+      const res = await fetch('/api/auth/me');
+      const data = await res.json();
+
+      const signinBtn = document.getElementById('auth-signin-btn');
+      const signupBtn = document.getElementById('auth-signup-btn');
+      const accountBtn = document.getElementById('auth-account-btn');
+      const premiumBadge = document.getElementById('auth-premium-badge');
+
+      if (data.user) {
+        // User is logged in — show account button, hide sign in/up
+        if (signinBtn) signinBtn.style.display = 'none';
+        if (signupBtn) signupBtn.style.display = 'none';
+        if (accountBtn) { accountBtn.style.display = 'flex'; }
+        if (data.isPremium && premiumBadge) { premiumBadge.style.display = ''; }
+
+        // Update mobile menu too
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenu) {
+          const mobileLinks = mobileMenu.querySelectorAll('a');
+          mobileLinks.forEach((link) => {
+            if (link.href.includes('/login') || link.href.includes('/signup')) {
+              link.style.display = 'none';
+            }
+          });
+          // Add account link to mobile if not there
+          if (!mobileMenu.querySelector('a[href="/account"]')) {
+            const nav = mobileMenu.querySelector('nav');
+            if (nav) {
+              const accountLink = document.createElement('a');
+              accountLink.href = '/account';
+              accountLink.className = 'rounded-lg px-3 py-2 text-sm font-medium text-surface-600 hover:bg-surface-100';
+              accountLink.textContent = 'My Account';
+              nav.appendChild(accountLink);
+            }
+          }
+        }
+      }
+    } catch {
+      // Not logged in or auth check failed — keep default buttons
+    }
+  }
+
+  updateAuthUI();
 </script>
