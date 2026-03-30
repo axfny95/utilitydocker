@@ -11,6 +11,7 @@ export default defineConfig({
   output: 'static',
   adapter: cloudflare({
     platformProxy: { enabled: true },
+    sessionKVBindingName: 'SESSIONS',
   }),
   integrations: [
     react(),

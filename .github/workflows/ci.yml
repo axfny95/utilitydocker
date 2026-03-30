@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Type check
+        run: npx astro check
+
+      - name: Build
+        run: npm run build
+
+      - name: Verify page count
+        run: |
+          PAGE_COUNT=$(find dist -name "index.html" | wc -l)
+          echo "Built $PAGE_COUNT pages"
+          if [ "$PAGE_COUNT" -lt 30 ]; then
+            echo "ERROR: Expected at least 30 pages, got $PAGE_COUNT"
+            exit 1
+          fi
