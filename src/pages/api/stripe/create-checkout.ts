@@ -1,6 +1,5 @@
 import { getCfEnv } from '../../../lib/cf-env';
 import type { APIRoute } from 'astro';
-import { createCheckoutSession } from '../../../lib/stripe';
 
 export const prerender = false;
 
@@ -12,26 +11,46 @@ export const POST: APIRoute = async ({ request, locals }) => {
   try {
     const body = await request.json().catch(() => ({}));
     const plan = body.plan || 'premium_plus';
-
     const origin = new URL(request.url).origin;
 
-    // Select price ID based on plan
-    const priceId = plan === 'premium'
-      ? import.meta.env.STRIPE_PRICE_ID_PREMIUM      // $5/mo
-      : import.meta.env.STRIPE_PRICE_ID_PREMIUM_PLUS; // $7/mo
+    // Get env vars from Cloudflare Workers runtime
+    const env = await getCfEnv(locals);
 
-    if (!priceId) {
+    const priceId = plan === 'premium'
+      ? env.STRIPE_PRICE_ID_PREMIUM
+      : env.STRIPE_PRICE_ID_PREMIUM_PLUS;
+
+    const stripeKey = env.STRIPE_SECRET_KEY;
+
+    if (!priceId || !stripeKey) {
       return json({ error: 'Stripe not configured for this plan' }, 500);
     }
 
-    const { url } = await createCheckoutSession({
-      priceId,
-      successUrl: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancelUrl: `${origin}/checkout/cancel`,
-      customerEmail: locals.user.email,
+    // Create Stripe Checkout Session directly
+    const response = await fetch('https://api.stripe.com/v1/checkout/sessions', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${stripeKey}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        'payment_method_types[]': 'card',
+        'line_items[0][price]': priceId,
+        'line_items[0][quantity]': '1',
+        mode: 'subscription',
+        success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${origin}/checkout/cancel`,
+        customer_email: locals.user.email,
+      }),
     });
 
-    return json({ url });
+    if (!response.ok) {
+      const err = await response.json();
+      return json({ error: err.error?.message || 'Stripe error' }, 500);
+    }
+
+    const session = await response.json();
+    return json({ url: session.url });
   } catch (error) {
     console.error('[stripe/create-checkout]', error);
     return json({ error: 'Failed to create checkout session' }, 500);
