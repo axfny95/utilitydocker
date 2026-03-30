@@ -112,6 +112,7 @@ export default function TypingSpeedTest() {
             type="text"
             value={input}
             onChange={(e) => handleInput(e.target.value)}
+            onPaste={(e) => e.preventDefault()}
             disabled={status === 'done'}
             className="w-full rounded-lg border border-surface-200 bg-surface-50 px-4 py-3 font-mono text-lg focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
             placeholder={status === 'typing' ? 'Start typing...' : ''}

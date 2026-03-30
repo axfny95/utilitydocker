@@ -9,28 +9,41 @@ export default function RandomNumberGenerator() {
   const [results, setResults] = useState<number[]>([]);
   const [mode, setMode] = useState<'number' | 'coin' | 'dice'>('number');
 
+  const [error, setError] = useState<string | null>(null);
+
+  // Cryptographically secure random integer in [min, max]
+  const secureRandom = (lo: number, hi: number): number => {
+    const range = hi - lo + 1;
+    const array = new Uint32Array(1);
+    crypto.getRandomValues(array);
+    return lo + (array[0] % range);
+  };
+
   const generate = () => {
+    setError(null);
     if (mode === 'coin') {
-      setResults(Array.from({ length: count }, () => Math.random() < 0.5 ? 0 : 1));
+      setResults(Array.from({ length: count }, () => secureRandom(0, 1)));
       return;
     }
     if (mode === 'dice') {
-      setResults(Array.from({ length: count }, () => Math.floor(Math.random() * 6) + 1));
+      setResults(Array.from({ length: count }, () => secureRandom(1, 6)));
       return;
     }
+    if (min > max) { setError('Min must be less than or equal to Max'); return; }
     if (unique && (max - min + 1) < count) {
-      setResults([]);
+      setError(`Cannot generate ${count} unique numbers from range ${min}-${max} (only ${max - min + 1} possible values)`);
       return;
     }
     if (unique) {
       const pool = Array.from({ length: max - min + 1 }, (_, i) => i + min);
+      // Fisher-Yates shuffle with crypto random
       for (let i = pool.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
+        const j = secureRandom(0, i);
         [pool[i], pool[j]] = [pool[j], pool[i]];
       }
       setResults(pool.slice(0, count));
     } else {
-      setResults(Array.from({ length: count }, () => Math.floor(Math.random() * (max - min + 1)) + min));
+      setResults(Array.from({ length: count }, () => secureRandom(min, max)));
     }
   };
 
@@ -78,6 +91,8 @@ export default function RandomNumberGenerator() {
       <button onClick={generate} className="rounded-lg bg-primary-600 px-6 py-3 text-sm font-medium text-white hover:bg-primary-700">
         {mode === 'number' ? 'Generate' : mode === 'coin' ? 'Flip!' : 'Roll!'}
       </button>
+
+      {error && <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>}
 
       {results.length > 0 && (
         <div>
