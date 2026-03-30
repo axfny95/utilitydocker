@@ -1,0 +1,352 @@
+---
+title: "The Complete Markdown Guide: Syntax, Tips, and Tools"
+description: "Master Markdown syntax with this comprehensive guide. Learn headings, lists, links, tables, code blocks, and advanced tips for every platform."
+author: "UtilityDocker Team"
+publishedAt: 2026-03-29
+tags: ["markdown", "writing", "documentation", "development"]
+relatedTools: ["markdown-editor", "html-to-markdown"]
+---
+
+## What Is Markdown?
+
+Markdown is a lightweight markup language created by John Gruber in 2004. It lets you format text using simple, readable syntax that converts to HTML. Instead of clicking toolbar buttons or memorizing HTML tags, you type characters like `#`, `*`, and `-` to create headings, bold text, and lists.
+
+Today, Markdown is everywhere. GitHub uses it for READMEs and documentation. Static site generators like Astro, Hugo, and Jekyll use it for content. Note-taking apps like Obsidian and Notion support it. Technical writers, bloggers, and developers have adopted it as the standard way to write structured content.
+
+This guide covers every piece of syntax you need, from basic formatting to advanced features.
+
+## Basic Formatting
+
+### Headings
+
+Create headings with hash symbols. More hashes mean smaller headings:
+
+```markdown
+# Heading 1
+## Heading 2
+### Heading 3
+#### Heading 4
+##### Heading 5
+###### Heading 6
+```
+
+Always put a space after the hash symbols. Most Markdown processors require it.
+
+### Emphasis
+
+```markdown
+*Italic text* or _italic text_
+**Bold text** or __bold text__
+***Bold and italic*** or ___bold and italic___
+~~Strikethrough text~~
+```
+
+Renders as:
+- *Italic text*
+- **Bold text**
+- ***Bold and italic***
+- ~~Strikethrough text~~
+
+Convention tip: Most style guides recommend asterisks (`*`) over underscores (`_`) for emphasis because asterisks work consistently even within words.
+
+### Paragraphs and Line Breaks
+
+Separate paragraphs with a blank line. For a line break within a paragraph, end the line with two spaces or use a `<br>` tag.
+
+```markdown
+This is the first paragraph.
+
+This is the second paragraph.
+
+This line has a break
+right here.
+```
+
+## Lists
+
+### Unordered Lists
+
+Use `-`, `*`, or `+` followed by a space:
+
+```markdown
+- First item
+- Second item
+  - Nested item
+  - Another nested item
+- Third item
+```
+
+### Ordered Lists
+
+Use numbers followed by a period:
+
+```markdown
+1. First step
+2. Second step
+3. Third step
+   1. Sub-step A
+   2. Sub-step B
+```
+
+Interesting fact: the actual numbers do not matter. Markdown will auto-number the list. You could write `1. 1. 1.` and it would still render as 1, 2, 3. However, starting with `1` and incrementing is the convention for readability.
+
+### Task Lists
+
+Supported on GitHub and many Markdown processors:
+
+```markdown
+- [x] Completed task
+- [ ] Incomplete task
+- [ ] Another task
+```
+
+## Links and Images
+
+### Links
+
+```markdown
+[Link text](https://example.com)
+[Link with title](https://example.com "Hover text")
+```
+
+For internal links on a website, use relative paths:
+
+```markdown
+[Check out our Markdown Editor](/tools/markdown-editor)
+```
+
+### Reference Links
+
+For documents with many links, reference-style keeps the text clean:
+
+```markdown
+Read the [Markdown spec][1] and the [CommonMark spec][2].
+
+[1]: https://daringfireball.net/projects/markdown/
+[2]: https://commonmark.org/
+```
+
+### Images
+
+```markdown
+![Alt text](image-url.jpg)
+![Alt text](image-url.jpg "Optional title")
+```
+
+Images in Markdown do not support sizing natively. If you need to control dimensions, use HTML:
+
+```html
+<img src="image.jpg" alt="Description" width="600" />
+```
+
+## Code
+
+### Inline Code
+
+Wrap code with single backticks:
+
+```markdown
+Use the `console.log()` function for debugging.
+```
+
+### Code Blocks
+
+Use triple backticks with an optional language identifier for syntax highlighting:
+
+````markdown
+```javascript
+function greet(name) {
+  return `Hello, ${name}!`;
+}
+```
+````
+
+Common language identifiers: `javascript`, `python`, `bash`, `css`, `html`, `json`, `sql`, `typescript`, `go`, `rust`.
+
+If you are writing content that includes code blocks, a [Markdown Editor](/tools/markdown-editor) with live preview lets you verify that your syntax highlighting renders correctly before publishing.
+
+## Tables
+
+Create tables using pipes and hyphens:
+
+```markdown
+| Feature | Free Plan | Pro Plan |
+|---------|-----------|----------|
+| Storage | 5 GB | 100 GB |
+| Users | 1 | Unlimited |
+| Support | Email | Priority |
+```
+
+Alignment control:
+
+```markdown
+| Left-aligned | Center-aligned | Right-aligned |
+|:-------------|:--------------:|--------------:|
+| Text | Text | Text |
+```
+
+Use colons in the separator row: left colon for left-align, both sides for center, right side for right-align.
+
+Tables are one of the more tedious elements to type manually. Many Markdown editors include table generators, or you can build your table in a spreadsheet and convert it.
+
+## Blockquotes
+
+Prefix lines with `>`:
+
+```markdown
+> This is a blockquote.
+>
+> It can span multiple paragraphs.
+>
+> > And it can be nested.
+```
+
+Blockquotes are commonly used for:
+- Quoting external sources
+- Highlighting important notes or warnings
+- Showing email-style threaded replies
+
+## Horizontal Rules
+
+Create a horizontal rule with three or more hyphens, asterisks, or underscores:
+
+```markdown
+---
+***
+___
+```
+
+All three produce the same visual result. Hyphens (`---`) are the most common convention.
+
+## Advanced Syntax
+
+### Footnotes
+
+```markdown
+Here is a statement that needs a source.[^1]
+
+[^1]: This is the footnote content.
+```
+
+Footnotes are supported in GitHub Flavored Markdown, PHP Markdown Extra, and many static site generators.
+
+### Definition Lists
+
+```markdown
+Term
+: Definition of the term.
+
+Another term
+: Another definition.
+```
+
+Support varies by processor. Check your target platform before using these.
+
+### Abbreviations
+
+```markdown
+The HTML specification is maintained by the W3C.
+
+*[HTML]: Hyper Text Markup Language
+*[W3C]: World Wide Web Consortium
+```
+
+When supported, hovering over the abbreviated term shows the full form.
+
+## Markdown Flavors
+
+Markdown has evolved into several "flavors" with different extensions:
+
+| Flavor | Used By | Key Extensions |
+|--------|---------|---------------|
+| CommonMark | Standard specification | Strict, consistent parsing rules |
+| GitHub Flavored (GFM) | GitHub | Task lists, tables, autolinks, strikethrough |
+| MDX | React-based sites | JSX components, imports, expressions |
+| MultiMarkdown | Academic writing | Citations, cross-references, math |
+| Pandoc | Document conversion | Nearly every extension imaginable |
+
+If you are writing for a specific platform, check which flavor it supports. GFM is the most widely supported beyond basic Markdown.
+
+## Converting Between Markdown and HTML
+
+There are times when you need to go in both directions:
+
+**Markdown to HTML:** Every Markdown processor does this. Static site generators, GitHub, and CMS platforms convert your Markdown to HTML automatically.
+
+**HTML to Markdown:** This is less common but equally useful. You might want to convert an existing HTML blog post into Markdown for a new platform, or clean up content that was originally written in a WYSIWYG editor.
+
+An [HTML to Markdown](/tools/html-to-markdown) converter handles this transformation, preserving headings, links, images, lists, and tables while stripping out the HTML tags.
+
+## Best Practices
+
+### Consistency
+
+Pick one style and stick with it throughout a document:
+- Use `*` for emphasis consistently (do not mix with `_`)
+- Use `-` for unordered lists consistently (do not mix with `*` and `+`)
+- Use ATX-style headings (`#`) rather than Setext-style (underlines)
+
+### Readable Source
+
+Markdown source files should be readable even without rendering. That means:
+- Use blank lines between different elements (headings, paragraphs, lists, code blocks)
+- Keep lines under 80-120 characters when practical
+- Use reference links for documents with many URLs
+
+### Accessible Content
+
+- Always include alt text for images
+- Use headings hierarchically (do not skip levels)
+- Make link text descriptive (avoid "click here")
+- Use tables only for tabular data, not for layout
+
+### Documentation Structure
+
+For longer documents:
+
+```markdown
+# Project Title
+
+Brief description.
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+- [Configuration](#configuration)
+
+## Installation
+
+Step-by-step instructions...
+
+## Usage
+
+Examples and common patterns...
+```
+
+## Writing and Editing Tools
+
+A good Markdown workflow involves two tools:
+
+1. **A Markdown editor with live preview.** The [Markdown Editor](/tools/markdown-editor) shows your formatted output alongside the source, catching formatting mistakes immediately. This is invaluable for complex content with tables, code blocks, and nested lists.
+
+2. **An HTML converter.** When migrating existing content or cleaning up HTML from a CMS, the [HTML to Markdown](/tools/html-to-markdown) tool converts markup into clean Markdown. This saves hours of manual reformatting.
+
+## Quick Reference Card
+
+| Element | Syntax |
+|---------|--------|
+| Heading | `# H1` through `###### H6` |
+| Bold | `**text**` |
+| Italic | `*text*` |
+| Link | `[text](url)` |
+| Image | `![alt](url)` |
+| Unordered list | `- item` |
+| Ordered list | `1. item` |
+| Code (inline) | `` `code` `` |
+| Code block | ```` ``` language ```` |
+| Blockquote | `> text` |
+| Horizontal rule | `---` |
+| Table | `| col | col |` |
+
+Bookmark this guide and the [Markdown Editor](/tools/markdown-editor) for reference. Markdown's simplicity is its greatest strength: once the syntax becomes muscle memory, you will write faster and more consistently than in any WYSIWYG editor.
