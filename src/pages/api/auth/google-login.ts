@@ -35,3 +35,4 @@ export const GET: APIRoute = async ({ redirect, locals, request }) => {
 
   return redirect(url.toString());
 };
+
