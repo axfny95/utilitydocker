@@ -1,17 +1,37 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface Props {
   toolSlug: string;
-  initialStarred?: boolean;
-  isLoggedIn?: boolean;
 }
 
-export default function StarButton({ toolSlug, initialStarred = false, isLoggedIn = false }: Props) {
-  const [starred, setStarred] = useState(initialStarred);
+export default function StarButton({ toolSlug }: Props) {
+  const [starred, setStarred] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [checked, setChecked] = useState(false);
+
+  // Check auth and favorite status on mount
+  useEffect(() => {
+    async function checkStatus() {
+      try {
+        const meRes = await fetch('/api/auth/me');
+        const meData = await meRes.json();
+        if (!meData.user) { setChecked(true); return; }
+
+        setLoggedIn(true);
+
+        const favRes = await fetch('/api/favorites');
+        const favData = await favRes.json();
+        const favorites = new Set(favData.favorites || []);
+        setStarred(favorites.has(toolSlug));
+      } catch {}
+      setChecked(true);
+    }
+    checkStatus();
+  }, [toolSlug]);
 
   const toggle = async () => {
-    if (!isLoggedIn) {
+    if (!loggedIn) {
       window.location.href = `/login?redirect=/tools/${toolSlug}`;
       return;
     }
@@ -29,12 +49,12 @@ export default function StarButton({ toolSlug, initialStarred = false, isLoggedI
         });
         setStarred(true);
       }
-    } catch {
-      // Silently fail
-    } finally {
-      setLoading(false);
-    }
+    } catch {}
+    setLoading(false);
   };
+
+  // Don't show until we've checked auth
+  if (!checked) return null;
 
   return (
     <button
@@ -45,7 +65,7 @@ export default function StarButton({ toolSlug, initialStarred = false, isLoggedI
           ? 'border-amber-300 bg-amber-50 text-amber-700 hover:bg-amber-100'
           : 'border-surface-200 text-surface-500 hover:bg-surface-50 hover:text-amber-600'
       }`}
-      title={starred ? 'Remove from favorites' : 'Add to favorites'}
+      title={starred ? 'Remove from favorites' : loggedIn ? 'Add to favorites' : 'Sign in to save'}
     >
       <svg
         className={`h-4 w-4 ${starred ? 'fill-amber-400 text-amber-400' : 'fill-none text-current'}`}
