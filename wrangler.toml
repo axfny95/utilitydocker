@@ -1,33 +1,20 @@
-# Cloudflare Workers / Pages configuration
-# Used when deploying with the Cloudflare adapter for server-side routes
+# Cloudflare Workers configuration for UtilityDocker
 
 name = "utilitydocker"
 compatibility_date = "2026-03-01"
 compatibility_flags = ["nodejs_compat"]
 
-# KV Namespaces — create via: wrangler kv:namespace create <NAME>
-# Then paste the IDs below
-
+# KV Namespaces
 [[kv_namespaces]]
 binding = "SESSIONS"
-id = "REPLACE_WITH_KV_ID"
+id = "1ed9777fd1c8437a9274b7d08217e02b"
 
 [[kv_namespaces]]
 binding = "RATE_LIMIT"
-id = "REPLACE_WITH_KV_ID"
+id = "0baf5dbb766649c7b4e3335ea61af6af"
 
-# D1 Database — create via: wrangler d1 create utilitydocker
-# Then paste the database_id below
-# Run migrations via: wrangler d1 execute utilitydocker --file=db/migrations/001_initial.sql
-
+# D1 Database
 [[d1_databases]]
 binding = "DB"
 database_name = "utilitydocker"
-database_id = "REPLACE_WITH_D1_ID"
-
-# Environment variables (set via Cloudflare Pages dashboard, not here)
-# STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, STRIPE_PRICE_ID_MONTHLY
-# RESEND_API_KEY, RESEND_AUDIENCE_ID, RESEND_FROM_EMAIL
-# CLAUDE_API_KEY
-# JWT_SECRET
-# PUBLIC_AD_NETWORK, PUBLIC_GA4_ID
+database_id = "21f3a37a-adf7-410c-9ed7-fedfbbd7ee3d"
