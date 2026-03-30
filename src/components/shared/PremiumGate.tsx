@@ -28,7 +28,7 @@ export default function PremiumGate({ feature, isPremium = false, children, fall
           <h3 className="text-lg font-semibold text-surface-900">Premium Feature</h3>
           <p className="mt-1 text-sm text-surface-600">{feature}</p>
           <a href="/pricing" className="mt-4 inline-block rounded-lg bg-primary-600 px-6 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-700">
-            Upgrade — starting at $5/mo
+            Upgrade — $7/mo
           </a>
         </div>
       </div>

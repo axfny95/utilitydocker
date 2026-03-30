@@ -16,9 +16,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
     // Get env vars from Cloudflare Workers runtime
     const env = await getCfEnv(locals);
 
-    const priceId = plan === 'premium'
-      ? env.STRIPE_PRICE_ID_PREMIUM
-      : env.STRIPE_PRICE_ID_PREMIUM_PLUS;
+    // Single premium plan at $7/mo — use PREMIUM_PLUS price ID
+    const priceId = env.STRIPE_PRICE_ID_PREMIUM_PLUS || env.STRIPE_PRICE_ID_PREMIUM;
 
     const stripeKey = env.STRIPE_SECRET_KEY;
 
