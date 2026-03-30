@@ -1,8 +1,1 @@
-# Authorized Digital Sellers
-# Update this file when you join an ad network
-#
-# Google AdSense (uncomment when approved):
-# google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
-#
-# Ezoic (uncomment when approved):
-# ezoic.com, XXXXX, DIRECT
+google.com, pub-1657915040878664, DIRECT, f08c47fec0942fa0
